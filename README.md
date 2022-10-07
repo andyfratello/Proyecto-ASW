@@ -1,4 +1,4 @@
-# Proyecto-ASW
+# Hacker News - ASW
 ## Link to our Taiga's project
 https://tree.taiga.io/project/herrero-ruby-on-rails/timeline
 
