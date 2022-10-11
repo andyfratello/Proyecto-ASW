@@ -27,3 +27,12 @@ group :test do
   gem "selenium-webdriver", "4.2.0"
   gem "webdrivers",         "5.0.0"
 end
+
+group :production do
+  gem "pg", "1.3.5"
+end
+
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem.
+# Uncomment the following line if you're running Rails
+# on a native Windows system:
+# gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
