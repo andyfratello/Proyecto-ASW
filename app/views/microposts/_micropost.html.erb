@@ -1,7 +1,7 @@
 <div id="<%= dom_id micropost %>">
   <p>
-    <span> <strong>Content:</strong></span>
-    <%= micropost.title %>
+    <span class="title"> <a href="<%= micropost.url %>"><%= micropost.title %> </a></span>
+    <span class="url_post"><a href="<%= micropost.url %>"> (<%= micropost.url %>) </a></span>
 
   </p>
 
