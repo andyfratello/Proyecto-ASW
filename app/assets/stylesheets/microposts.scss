@@ -2,7 +2,6 @@ html {
   font-family: Verdana, Geneva, sans-serif;
   font-size: 10pt;
   & > body {
-    margin-top: 8px;
     a {
       text-decoration: none;
 
@@ -24,7 +23,7 @@ html {
 
 .pagetop {
   text-decoration: none;
-  color: #23457a;
+  color: black;
 }
 
 .taula_submit {
@@ -55,22 +54,41 @@ input {
   font-size: 8pt;
 }
 
+.url_post a:hover{
+  color: #828282 !important;
+  font-size: 8pt;
+  text-decoration: underline;
+}
 
 .title a{
   font-family:Verdana, Geneva, sans-serif;
-  font-size: 11pt;
+  font-size: 10pt;
   color:black;
 }
 
 .title a:visited{
   font-family:Verdana, Geneva, sans-serif;
-  font-size: 11pt;
+  font-size: 10pt;
   color:#828282;
 }
 
+.post_info {
+    font-size: 7pt;
+    color: #828282;
+    padding-left: 15px;
+}
 
+.enum {
+  color: #828282;
+  width: 25px;
+  font-size: 10pt;
+}
 
+.upvote {
+  font-size: 7pt;
+  color: #9a9a9a;
+}
 
-
-
-
+.sub {
+  padding-bottom: 7px
+}

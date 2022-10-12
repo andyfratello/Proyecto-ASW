@@ -14,7 +14,8 @@
           </td>
           <td style="line-height:12pt; height:10px;">
             <span class="pagetop"><b class="=hname"><%= link_to 'Hacker News', root_path %></b></span>
-
+            | <span class="pagetop"><%= link_to 'new', root_path %></span>
+            | <span class="pagetop"><%= link_to 'submit', root_path %></span>
           </td>
         </tr>
         </tbody>
@@ -26,10 +27,13 @@
 </thead>
 <tbody border="0" cellpadding="0" cellspacing="0" class="itemlist">
 
+<% i=0 %>
 <% @microposts.each do |micropost| %>
+  <% i = i + 1 %>
   <table border="0" cellpadding="0" align="center" cellspacing="0" width="85%" bgcolor="#f6f6ef">
     <tr>
-      <td>
+      <td class="enum"><span><%= i %>.</span></td>
+      <td class="sub">
         <%= render micropost %>
       </td>
     </tr>
