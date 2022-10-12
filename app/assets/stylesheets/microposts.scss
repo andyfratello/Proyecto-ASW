@@ -36,6 +36,15 @@ html {
   color: #828282;
 }
 
+.foot a{
+  text-decoration: underline;
+}
+
+.foot a:visited {
+  color: #828282;
+  text-decoration: underline;
+}
+
 input {
   font-family: monospace;
   font-size: 10pt;
