@@ -12,6 +12,16 @@
   <% end %>
 
   <div>
+    <%= form.label :title, style: "display: block" %>
+    <%= form.text_area :title %>
+  </div>
+
+  <div>
+    <%= form.label :url, style: "display: block" %>
+    <%= form.text_area :url %>
+  </div>
+
+  <div>
     <%= form.label :content, style: "display: block" %>
     <%= form.text_area :content %>
   </div>
