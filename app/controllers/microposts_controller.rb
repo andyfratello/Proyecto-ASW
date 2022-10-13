@@ -4,6 +4,13 @@ class MicropostsController < ApplicationController
   # GET /microposts or /microposts.json
   def index
     @microposts = Micropost.all
+
+    sort = params[:sort]
+
+    if sort == 'date'
+      @microposts = Micropost.order(created_at: :desc)
+    end
+
   end
 
   # GET /microposts/1 or /microposts/1.json
@@ -25,7 +32,7 @@ class MicropostsController < ApplicationController
 
     respond_to do |format|
       if @micropost.save
-        format.html { redirect_to micropost_url(@micropost), notice: "Micropost was successfully created." }
+        format.html { redirect_to action: "index", notice: "Micropost was successfully created." }
         format.json { render :show, status: :created, location: @micropost }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -65,6 +72,6 @@ class MicropostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def micropost_params
-      params.require(:micropost).permit(:content, :user_id)
+      params.require(:micropost).permit(:title, :url, :text, :user_id)
     end
 end

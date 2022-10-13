@@ -1,12 +1,37 @@
 <div id="<%= dom_id micropost %>">
-  <p>
-    <strong>Content:</strong>
-    <%= micropost.content %>
-  </p>
-
-  <p>
-    <strong>User:</strong>
-    <%= micropost.user_id %>
-  </p>
-
+  <span class="upvote">▲</span>
+  <span class="title"><a href="<%= micropost.url %>"><%= micropost.title %> </a></span>
+  <span class="url_post"><a href="<%= micropost.url %>">(<%= micropost.url %>)</a></span>
+  <br>
+  <div class="post_info">
+  <span><!--punts--> points by <%= micropost.user_id %> </span>
+  <span>
+    <% if ((Time.now - micropost.created_at) / 1.year).round >= 1 %>
+              <%= ((Time.now - micropost.created_at) / 1.year).round  %>  years ago
+            <% else %>
+              <% if ((Time.now - micropost.created_at) / 1.month).round >= 1 %>
+                <%= ((Time.now - micropost.created_at) / 1.month).round %> months ago
+              <% else %>
+                <% if ((Time.now - micropost.created_at) / 1.week).round >= 1 %>
+                  <%= ((Time.now - micropost.created_at) / 1.week).round %> weeks ago 
+                <% else %>
+                  <% if ((Time.now - micropost.created_at) / 1.day).round >= 1 %>
+                    <%= ((Time.now - micropost.created_at) / 1.day).round %>  days ago
+                  <% else %>
+                    <% if ((Time.now - micropost.created_at) / 1.hour).round >= 1 %>
+                      <%= ((Time.now - micropost.created_at) / 1.hour).round %> hours ago
+                    <% else %>
+                      <% if ((Time.now - micropost.created_at) / 1.minute).round >= 1 %>
+                        <%= ((Time.now - micropost.created_at) / 1.minute).round %> minutes ago
+                      <% else %>
+                        <%= ((Time.now - micropost.created_at) / 1.second).round %> seconds ago 
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              <% end %>
+            <% end %>
+  </span>
+  <span>| hide | <!--num comments--> comments</span>
+  </div>
 </div>
