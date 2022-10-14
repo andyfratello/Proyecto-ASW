@@ -14,8 +14,9 @@
           </td>
           <td style="line-height:12pt; height:10px;">
             <span class="pagetop"><b class="=hname"><%= link_to 'Hacker News', microposts_url %></b></span>
+            | <span class="pagetop"><%= link_to 'news', microposts_url %></span>
             | <span class="pagetop"><%= link_to 'newest', microposts_url(:sort =>"date") %></span>
-            | <span class="pagetop"><%= link_to 'submit', new_micropost_url %></span>
+            | <span class="pagetop"><%= link_to 'new', new_micropost_url %></span>
           </td>
         </tr>
         </tbody>
