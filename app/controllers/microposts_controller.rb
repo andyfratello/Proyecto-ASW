@@ -9,6 +9,9 @@ class MicropostsController < ApplicationController
 
     if sort == 'date'
       @microposts = Micropost.order(created_at: :desc)
+    else if sort == 'type_ask'
+      @microposts = Micropost.find_by(url: [nil, ""])
+      end
     end
 
   end
@@ -29,8 +32,15 @@ class MicropostsController < ApplicationController
   # POST /microposts or /microposts.json
   def create
     @micropost = Micropost.new(micropost_params)
+    @micropost.user_id = 0
 
     respond_to do |format|
+      if micropost_params[:url] != "" && Micropost.exists?(url: micropost_params[:url])
+        @micropost = Micropost.find_by(url: micropost_params[:url])
+        format.html { redirect_to  @micropost, notice: "The url provided is already used on another micropost." }
+        # CAMBIAR ^ para que redireccione a la vista
+        format.json { render json: @micropost.errors, status: :unprocessable_entity }
+      end
       if @micropost.save
         format.html { redirect_to  microposts_url(:sort => "date"), notice: "Micropost was successfully created." }
         format.json { render :show, status: :created, location: @micropost }
