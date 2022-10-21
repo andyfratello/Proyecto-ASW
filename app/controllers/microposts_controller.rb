@@ -6,12 +6,13 @@ class MicropostsController < ApplicationController
     @microposts = Micropost.all
 
     sort = params[:sort]
+    type = params[:type]
 
     if sort == 'date'
       @microposts = Micropost.order(created_at: :desc)
-    else if sort == 'type_ask'
-      @microposts = Micropost.find_by(url: [nil, ""])
-      end
+    end
+    if type == 'ask'
+      @microposts = Micropost.where(url: [nil, ""])
     end
 
   end
