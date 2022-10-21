@@ -1,0 +1,50 @@
+<%= form_with(model: comment) do |form| %>
+  <% if comment.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+
+      <ul>
+        <% comment.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!--
+  <div class="field">
+    <%= form.text_area(:content, size: '60x6') %>
+  </div>
+  <%= form.hidden_field :contribution_id, :value => @contribution.id %>
+  <div class="actions">
+    <%= form.submit "add comment" %>
+  </div>
+-->
+
+  <div class="field">
+    <%= form.label :text, style: "display: block" %>
+    <%= form.text_area :text %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "add comment"%>
+  </div>
+
+  <!--
+   <div>
+    <%= form.label :userId, style: "display: block" %>
+  <%= form.number_field :userId %>
+  </div>
+
+  <div>
+    <%= form.label :upVotes, style: "display: block" %>
+    <%= form.number_field :upVotes %>
+  </div>
+
+  <div>
+    <%= form.label :time, style: "display: block" %>
+    <%= form.datetime_field :time %>
+  </div>
+-->
+
+<% end %>

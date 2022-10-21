@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  userId: 1
+  upVotes: 1
+  text: MyText
+  time: 2022-10-21 12:56:11
+
+two:
+  userId: 1
+  upVotes: 1
+  text: MyText
+  time: 2022-10-21 12:56:11
