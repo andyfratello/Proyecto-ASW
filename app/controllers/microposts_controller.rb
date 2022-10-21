@@ -29,8 +29,15 @@ class MicropostsController < ApplicationController
   # POST /microposts or /microposts.json
   def create
     @micropost = Micropost.new(micropost_params)
+    @micropost.user_id = 0
 
     respond_to do |format|
+      if Micropost.exists?(url: micropost_params[:url])
+        @micropost = Micropost.find_by(url: micropost_params[:url])
+        format.html { redirect_to  @micropost, notice: "The url provided is already used on another micropost." }
+        # CAMBIAR ^
+        format.json { render json: @micropost.errors, status: :unprocessable_entity }
+      end
       if @micropost.save
         format.html { redirect_to  microposts_url(:sort => "date"), notice: "Micropost was successfully created." }
         format.json { render :show, status: :created, location: @micropost }
