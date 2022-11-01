@@ -33,7 +33,7 @@ class MicropostsController < ApplicationController
   # POST /microposts or /microposts.json
   def create
     @micropost = Micropost.new(micropost_params)
-    # @micropost.user_id = 0
+    @micropost.user_id = 0
 
     respond_to do |format|
       if micropost_params[:url] != "" && Micropost.exists?(url: micropost_params[:url])
@@ -51,6 +51,7 @@ class MicropostsController < ApplicationController
       end
     end
   end
+
   # PATCH/PUT /microposts/1 or /microposts/1.json
   def update
     respond_to do |format|

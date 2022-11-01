@@ -18,6 +18,15 @@
             | <span class="pagetop"><%= link_to 'ask', microposts_url(:type =>"ask") %></span>
             | <span class="pagetop"><%= link_to 'submit', new_micropost_url %></span>
           </td>
+          <td style="text-align:right;padding-right:4px;">
+            <% if current_user %>
+              <%= current_user.email %>
+              <%= link_to 'Edit Account', edit_user_registration_path %>
+              <%= button_to 'Logout', destroy_user_session_path, data: {turbo: "false"}, method: :delete %>
+            <% else %>
+              <%= link_to 'login', new_user_session_path %>
+            <% end %>
+          </td>
         </tr>
         </tbody>
       </table>

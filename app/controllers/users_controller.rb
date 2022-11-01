@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
+  before_action :create_local_user
 
   # GET /users or /users.json
   def index
@@ -61,6 +62,13 @@ class UsersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
+    end
+
+    def create_local_user
+      if (!User.any?)
+        @current_user = User.create(:id => 0, :name => "hardcoded_user", :email => "current@user.com")
+        @current_user.save()
+      end
     end
 
     # Only allow a list of trusted parameters through.
