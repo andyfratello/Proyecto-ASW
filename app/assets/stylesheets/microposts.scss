@@ -26,6 +26,12 @@ html {
   color: black;
 }
 
+.pagetop_new {
+  text-decoration: none;
+  color: black;
+  padding-left: 5px;
+}
+
 .taula_submit {
   text-transform: lowercase;
 }
@@ -47,6 +53,11 @@ html {
 input {
   font-family: monospace;
   font-size: 10pt;
+}
+
+.url_post {
+  color: #828282 !important;
+  font-size: 8pt;
 }
 
 .url_post a{
@@ -147,4 +158,26 @@ input {
 
 .peu_user {
   color: #f6f7f0;
+}
+
+.ruby_link {
+  color: black;
+}
+
+.area_text {
+  padding-left: 20px;
+}
+
+.user_logged {
+  color: #828282;
+  padding-left: 27px;
+}
+
+.update_user {
+  padding-top: 15px;
+}
+
+.time_ago {
+  color: black;
+  padding-left: 5px;
 }

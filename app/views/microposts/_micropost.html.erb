@@ -2,7 +2,9 @@
   <span class="upvote">▲</span>
   <span class="title"><a href="<%= micropost.url %>"><%= micropost.title %> </a></span>
   <!--<span class="url_post"><a href="<%= micropost.url %>">(<%= micropost.url %>)</a></span>-->
-  <span class="url_post"><%= link_to micropost.url, "http://#{micropost.url}" %></span>
+  <span class="url_post">
+    <%= link_to micropost.url, "http://#{micropost.url}" %>
+  </span>
   <br>
   <div class="post_info">
     <span><!--punts--> points by <a href="/users/<%= micropost.user_id %>"><%= User.search_name(micropost.user_id) %></a> </span>
