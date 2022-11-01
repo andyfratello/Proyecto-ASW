@@ -95,3 +95,56 @@ input {
   padding-bottom: 7px;
 }
 
+.label_user {
+  width: 90px;
+  color: #828282;
+  padding-top: 15px;
+  padding-left: 2px;
+}
+
+.label {
+  width: 90px;
+  color: #828282;
+  padding-top: 5px;
+  padding-left: 2px;
+}
+
+.value_karma {
+  padding-left: 8px;
+}
+
+.value_user {
+  padding-left: 22px;
+}
+
+.value_about {
+    padding-left: 13px;
+}
+
+.link_stories {
+  color: black;
+  font-size: 10pt;
+  text-decoration: underline;
+  padding-left: 32px;
+  padding-top: 5px;
+}
+
+.link_stories:visited {
+  color: #828282;
+}
+
+.link_comments {
+  color: black;
+  font-size: 10pt;
+  text-decoration: underline;
+  padding-left: 32px;
+  padding-top: 5px;
+}
+
+.link_comments:visited {
+  color: #828282;
+}
+
+.peu_user {
+  color: #f6f7f0;
+}
