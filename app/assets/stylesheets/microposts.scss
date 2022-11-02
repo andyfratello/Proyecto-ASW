@@ -199,3 +199,33 @@ input {
 .unable_unvote {
   color: orangered;
 }
+
+.link_upvoted {
+  color: black;
+  padding-left: 63px;
+  padding-top: 5px;
+}
+
+.link_upvoted_sub {
+  color: black;
+  text-decoration: underline;
+}
+
+.link_upvoted_sub:visited {
+  color: #828282;
+}
+
+.link_upvoted_com {
+  color: black;
+  text-decoration: underline;
+}
+
+.link_upvoted_com:visited {
+  color: #828282;
+}
+
+.private {
+  color: #828282;
+  font-style: italic;
+  padding-left: 5px;
+}

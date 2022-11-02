@@ -33,6 +33,18 @@
         </a>
       </td>
     </tr>
+    <tr>
+      <td class="link_upvoted">
+        <a href="/users/upvoted_submissions/<%= @user.id %>">
+          <span class="link_upvoted_sub">upvoted submissions</span>
+        </a>
+        /
+        <a href="/users/upvoted_comments/<%= @user.id %>">
+          <span class="link_upvoted_com">comments</span>
+        </a>
+        <span class="private">(private)</span>
+      </td>
+    </tr>
     </tbody>
   </table>
 
