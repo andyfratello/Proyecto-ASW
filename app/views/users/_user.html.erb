@@ -14,7 +14,9 @@
             <td style="line-height:12pt; height:10px;">
               <span class="pagetop"><b class="=hname"><%= link_to 'Hacker News', microposts_url, class: 'ruby_link' %></b></span>
               <span class="pagetop_new"><%= link_to 'new', microposts_url(:sort =>"date"), class: 'ruby_link' %></span>
-              | <span class="pagetop"><%= link_to 'threads', microposts_url, class: 'ruby_link' %></span> <!-- Cal fer un link de threads -->
+              <% if current_user %>
+                | <span class="pagetop"><%= link_to 'threads', microposts_url, class: 'ruby_link' %></span> <!-- Cal fer un link de threads -->
+              <% end %>
               | <span class="pagetop"><%= link_to 'ask', microposts_url(:type =>"ask"), class: 'ruby_link' %></span>
               | <span class="pagetop"><%= link_to 'submit', new_micropost_url, class: 'ruby_link' %></span>
             </td>
@@ -35,17 +37,17 @@
   <tbody>
     <tr>
       <td class="label_user">
-        user: <span class="value_user"><%= user.name %></span>
+        user:
+        <% if user.name != nil %>
+          <span class="value_user"><%= user.name %></span>
+        <% else %>
+          <span class="value_user"><%= user.email %></span>
+        <% end %>
       </td>
     </tr>
     <tr>
       <td class="label">
         created: <span style="color: black"><%= user.created_at.strftime('%B %-d, %Y') %></span>
-      </td>
-    </tr>
-    <tr>
-      <td class="label">
-        karma: <span class="value_karma"><%= user.karma %></span>
       </td>
     </tr>
     <tr>

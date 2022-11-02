@@ -18,6 +18,10 @@ class User < ApplicationRecord
 
   def self.search_name(id)
     @user = User.find(id)
-    @user.name
+    if @user.name != nil
+      return @user.name
+    else
+      return @user.email
+    end
   end
 end

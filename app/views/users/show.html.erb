@@ -1,4 +1,7 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @user %>
-
+<% if @user != nil %>
+  <%= render @user %>
+<% else %>
+  <%= controller.redirect_to root_path %>
+<% end %>

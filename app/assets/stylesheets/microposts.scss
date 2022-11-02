@@ -102,6 +102,16 @@ input {
   color: #9a9a9a;
 }
 
+.upvote a {
+  font-size: 7pt;
+  color: #9a9a9a;
+}
+
+.upvote a:visited {
+  font-size: 7pt;
+  color: #9a9a9a;
+}
+
 .sub {
   padding-bottom: 7px;
 }
@@ -180,4 +190,12 @@ input {
 .time_ago {
   color: black;
   padding-left: 5px;
+}
+
+.link_user {
+  color: black;
+}
+
+.unable_unvote {
+  color: orangered;
 }
