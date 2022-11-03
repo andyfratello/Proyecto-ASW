@@ -11,15 +11,14 @@
     </div>
   <% end %>
 
-  <!--
   <div class="field">
     <%= form.text_area(:content, size: '60x6') %>
   </div>
-  <%= form.hidden_field :contribution_id, :value => @contribution.id %>
+  <%= form.hidden_field :micropostId, :value => @micropost.id %>
   <div class="actions">
     <%= form.submit "add comment" %>
   </div>
--->
+
 
   <div class="field">
     <%= form.label :text, style: "display: block" %>

@@ -5,7 +5,7 @@ class CreateComments < ActiveRecord::Migration[7.0]
       t.integer :upVotes, default: 0
       t.text :text
       t.timestamp :time
-
+      t.integer :micropostId
       t.timestamps
     end
   end

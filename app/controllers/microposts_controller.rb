@@ -19,6 +19,17 @@ class MicropostsController < ApplicationController
 
   # GET /microposts/1 or /microposts/1.json
   def show
+    @micropost = Micropost.find(params[:id])
+    @comment = Comment.new
+    @comment = Comment.where(micropostId: @micropost.id)
+    @micropost.commentId = @comment.id
+=begin
+    @like = Like.new
+    @likes = Like.new
+    if !current_user.nil?
+      @likes = Like.where(user_id: current_user.id)
+    end
+=end
   end
 
   # GET /microposts/new
@@ -83,6 +94,6 @@ class MicropostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def micropost_params
-      params.require(:micropost).permit(:title, :url, :text, :user_id)
+      params.require(:micropost).permit(:title, :url, :text, :user_id, :commentId)
     end
 end
