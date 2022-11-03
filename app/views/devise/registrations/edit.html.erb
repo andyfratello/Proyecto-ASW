@@ -46,7 +46,7 @@
   </tr>
   <tr>
     <td class="label">
-      created: <span class="time_ago">
+      <span class="label_created">created:</span> <span class="time_ago">
       <% if ((Time.now - current_user.created_at) / 1.year).round >= 1 %>
       <%= ((Time.now - current_user.created_at) / 1.year).round  %>  years ago
       <% else %>
