@@ -13,10 +13,21 @@
             </a>
           </td>
           <td style="line-height:12pt; height:10px;">
-            <span class="pagetop"><b class="=hname"><%= link_to 'Hacker News', microposts_url %></b></span>
-            | <span class="pagetop"><%= link_to 'news', microposts_url %></span>
-            | <span class="pagetop"><%= link_to 'newest', microposts_url(:sort =>"date") %></span>
-            | <span class="pagetop"><%= link_to 'new', new_micropost_url %></span>
+            <span class="pagetop"><b class="=hname"><%= link_to 'Hacker News', microposts_url, class: 'ruby_link' %></b></span>
+            <span class="pagetop_new"><%= link_to 'new', microposts_url(:sort =>"date"), class: 'ruby_link' %></span>
+            <% if current_user %>
+              | <span class="pagetop"><%= link_to 'threads', microposts_url, class: 'ruby_link' %></span> <!-- Cal fer un link de threads -->
+            <% end %>
+            | <span class="pagetop"><%= link_to 'ask', microposts_url(:type =>"ask"), class: 'ruby_link' %></span>
+            | <span class="pagetop"><%= link_to 'submit', new_micropost_url, class: 'ruby_link' %></span>
+          </td>
+          <td style="text-align:right;padding-right:4px;color: black">
+            <% if current_user %>
+              <%= link_to current_user.email, edit_user_registration_path, class: 'ruby_link' %>
+              | <%= link_to 'logout', destroy_user_session_path, class: 'ruby_link', data: {turbo: "false"}, method: :delete %>
+            <% else %>
+              <%= link_to 'login', new_user_session_path, class: 'ruby_link' %>
+            <% end %>
           </td>
         </tr>
         </tbody>

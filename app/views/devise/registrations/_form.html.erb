@@ -1,0 +1,44 @@
+<%= form_with(model: user) do |form| %>
+  <% if user.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+        <% user.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table border="0">
+    <tbody>
+    <tr>
+      <td class=taula_submit>
+        <span class="about"><%= form.label :about %></span>
+        <span class="area_text"><%= form.text_area :title, :size => "50x4" %></span>
+      </td>
+    </tr>
+    <tr>
+      <td class="link_stories">
+        <a href="/contributions?user=<%= @user.id %>">
+          <span class="link_stories">submissions</span>
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td class="link_comments">
+        <a href="/users/<%= @user.id %>/comments">
+          <span class="link_comments">comments</span>
+        </a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="update_user">
+    <%= form.submit "update" %>
+  </div>
+
+  <br><br><br>
+<% end %>

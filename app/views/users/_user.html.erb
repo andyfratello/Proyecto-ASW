@@ -1,12 +1,74 @@
-<div id="<%= dom_id user %>">
-  <p>
-    <strong>Name:</strong>
-    <%= user.name %>
-  </p>
-
-  <p>
-    <strong>Email:</strong>
-    <%= user.email %>
-  </p>
-
-</div>
+<thead>
+<table id="hnmain" border="0" cellpadding="0" align="center" cellspacing="0" width="85%" bgcolor="#f6f6ef">
+  <thead>
+    <tr>
+      <td bgcolor="#ff6600">
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" >
+          <tbody>
+          <tr>
+            <td style="width:18px;padding-right:4px">
+              <a href=http://www.ycombinator.com/>
+                <img src="https://news.ycombinator.com/y18.gif" width="18" height="18" style="border:1px white solid;">
+              </a>
+            </td>
+            <td style="line-height:12pt; height:10px;">
+              <span class="pagetop"><b class="=hname"><%= link_to 'Hacker News', microposts_url, class: 'ruby_link' %></b></span>
+              <span class="pagetop_new"><%= link_to 'new', microposts_url(:sort =>"date"), class: 'ruby_link' %></span>
+              <% if current_user %>
+                | <span class="pagetop"><%= link_to 'threads', microposts_url, class: 'ruby_link' %></span> <!-- Cal fer un link de threads -->
+              <% end %>
+              | <span class="pagetop"><%= link_to 'ask', microposts_url(:type =>"ask"), class: 'ruby_link' %></span>
+              | <span class="pagetop"><%= link_to 'submit', new_micropost_url, class: 'ruby_link' %></span>
+            </td>
+            <td style="text-align:right;padding-right:4px;">
+              <% if current_user %>
+                <%= link_to current_user.email, edit_user_registration_path, class: 'ruby_link' %>
+                | <%= link_to 'logout', destroy_user_session_path, class: 'ruby_link', data: {turbo: "false"}, method: :delete %>
+              <% else %>
+                <%= link_to 'login', new_user_session_path, class: 'ruby_link' %>
+              <% end %>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="label_user">
+        user:
+        <% if user.name != nil %>
+          <span class="value_user"><%= user.name %></span>
+        <% else %>
+          <span class="value_user"><%= user.email %></span>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">
+        created: <span style="color: black"><%= user.created_at.strftime('%B %-d, %Y') %></span>
+      </td>
+    </tr>
+    <tr>
+      <td class="label">
+        about: <span class="value_about"><%= user.about %></span>
+      </td>
+    </tr>
+    <tr>
+      <td class="link_stories">
+        <a href="/contributions?user=<%= @user.id %>">
+          <span class="link_stories">submissions</span>
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td class="link_comments">
+        <a href="/users/<%= @user.id %>/comments">
+          <span class="link_comments">comments</span>
+        </a>
+      </td>
+    </tr>
+  <span class="peu_user"><tr><td class="peu_user">.</td></tr><tr><td class="peu_user">.</td></tr></span>
+  </tbody>
+</table>

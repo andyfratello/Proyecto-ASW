@@ -26,6 +26,12 @@ html {
   color: black;
 }
 
+.pagetop_new {
+  text-decoration: none;
+  color: black;
+  padding-left: 5px;
+}
+
 .taula_submit {
   text-transform: lowercase;
 }
@@ -47,6 +53,11 @@ html {
 input {
   font-family: monospace;
   font-size: 10pt;
+}
+
+.url_post {
+  color: #828282 !important;
+  font-size: 8pt;
 }
 
 .url_post a{
@@ -91,7 +102,100 @@ input {
   color: #9a9a9a;
 }
 
+.upvote a {
+  font-size: 7pt;
+  color: #9a9a9a;
+}
+
+.upvote a:visited {
+  font-size: 7pt;
+  color: #9a9a9a;
+}
+
 .sub {
   padding-bottom: 7px;
 }
 
+.label_user {
+  width: 90px;
+  color: #828282;
+  padding-top: 15px;
+  padding-left: 2px;
+}
+
+.label {
+  width: 90px;
+  color: #828282;
+  padding-top: 5px;
+  padding-left: 2px;
+}
+
+.value_karma {
+  padding-left: 8px;
+}
+
+.value_user {
+  padding-left: 22px;
+}
+
+.value_about {
+    padding-left: 13px;
+}
+
+.link_stories {
+  color: black;
+  font-size: 10pt;
+  text-decoration: underline;
+  padding-left: 32px;
+  padding-top: 5px;
+}
+
+.link_stories:visited {
+  color: #828282;
+}
+
+.link_comments {
+  color: black;
+  font-size: 10pt;
+  text-decoration: underline;
+  padding-left: 32px;
+  padding-top: 5px;
+}
+
+.link_comments:visited {
+  color: #828282;
+}
+
+.peu_user {
+  color: #f6f7f0;
+}
+
+.ruby_link {
+  color: black;
+}
+
+.area_text {
+  padding-left: 20px;
+}
+
+.user_logged {
+  color: #828282;
+  padding-left: 27px;
+}
+
+.update_user {
+  padding-top: 15px;
+}
+
+.time_ago {
+  color: black;
+  padding-left: 5px;
+}
+
+.link_user {
+  color: black;
+}
+
+.unable_unvote {
+  color: orangered;
+}
