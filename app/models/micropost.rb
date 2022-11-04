@@ -1,5 +1,5 @@
 class Micropost < ApplicationRecord
-  acts_as_votable
+  has_many :likes, dependent: :destroy
   belongs_to :user
   validates :title, presence: true
   validate :isThereAnyUrlOrText
