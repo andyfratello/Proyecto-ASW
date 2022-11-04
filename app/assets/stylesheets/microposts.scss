@@ -97,12 +97,6 @@ input {
   padding-left: 7px;
 }
 
-.upvoted_button {
-  font-size: 7pt;
-  color: #9a9a9a;
-}
-
-
 .upvote {
   font-size: 7pt;
   color: #9a9a9a;
@@ -250,4 +244,43 @@ input {
 
 .about_title {
   padding-left: -10px;
+}
+
+.upvoted_button_c {
+  font-size: 9pt;
+  color: #828282;
+  outline: none;
+  border: none;
+  background: none;
+  width: 20px;
+  height: 20px;
+  text-align: left;
+  cursor: pointer;
+  line-height: 0;
+}
+
+.downvoted_button_c {
+  font-size: 7pt;
+  color: #828282;
+  outline: none;
+  border: none;
+  background: none;
+  width: 40px;
+  text-align: left;
+  cursor: pointer;
+  font-family: Verdana, Geneva, sans-serif;
+  padding-left: 5px;
+}
+
+.non-existent-vote {
+    font-size: 7pt;
+    color: #F6F6EF;
+    outline: none;
+    border: none;
+    background: none;
+    width: 40px;
+    text-align: left;
+    cursor: pointer;
+    font-family: Verdana, Geneva, sans-serif;
+    padding-left: 5px;
 }
