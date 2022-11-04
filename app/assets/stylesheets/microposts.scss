@@ -43,6 +43,7 @@ html {
 
 .foot a{
   text-decoration: underline;
+  alignment: left;
 }
 
 .foot a:visited {
@@ -216,4 +217,11 @@ input {
   line-break: anywhere;
   cursor: pointer;
   color: #828282;
+}
+
+.post_text {
+  background-color: #f6f7f0;
+  color: #828282;
+  alignment: center;
+  width: 85%;
 }

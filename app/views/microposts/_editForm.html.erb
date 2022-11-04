@@ -1,0 +1,76 @@
+<%= form_with(model: micropost) do |editForm| %>
+  <% if micropost.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(micropost.errors.count, "error") %> prohibited this micropost from being saved:</h2>
+
+      <ul>
+        <% micropost.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table border="0">
+    <tbody>
+    <tr>
+      <td class=taula_submit>
+        <%= editForm.label :title %>:
+      </td>
+      <td>
+        <%= editForm.text_field :title, :size => 50 %>
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+    </tr>
+    <tr>
+      <td class=taula_submit>
+        <%= editForm.label :url %>:
+      </td>
+      <td>
+        <% if micropost.url != "" %>
+          <%= editForm.text_field :url, :size => 50 %>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td class=taula_submit valign = "top">
+        <%= editForm.label :text %>:
+      </td>
+      <td><%= editForm.text_area :text, :size => "50x4"%></td>
+    </tr>
+    <!--
+    <tr>
+      <td class=taula_submit>
+        <%= editForm.label :user_id, style: "display: block" %>
+      </td>
+      <td>
+        <%= editForm.number_field :user_id %>
+      </td>
+    </tr>
+-->
+    <tr>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>
+        <%= editForm.submit "update" %>
+      </td>
+    </tr>
+    <tr height="20px"></tr>
+    <tr>
+      <td></td>
+      <td class="foot">
+        Leave url blank to submit a question for discussion. If there is no url, text will appear at the top of the thread. If there is a url, text is optional.
+        <br><br>
+        You can also submit via
+        <a href="https://news.ycombinator.com/bookmarklet.html">bookmarklet</a>.
+        <br><br>
+      </td>
+    </tbody>
+  </table>
+
+<% end %>

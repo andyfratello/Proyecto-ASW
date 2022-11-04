@@ -9,8 +9,6 @@
     <span class="upvote"><a href="<%= new_user_session_path %>">▲</a></span>
   <% end %>
   <span class="title"><a href="<%="/microposts/"%><%=micropost.id%>"><%= micropost.title %></a> </span>
-
-  <!--<span class="url_post"><a href="<%= micropost.url %>">(<%= micropost.url %>)</a></span>-->
   <span class="url_post">
     <%= link_to micropost.url, "http://#{micropost.url}" %>
   </span>
