@@ -22,7 +22,7 @@ class MicropostsController < ApplicationController
     @micropost = Micropost.find(params[:id])
     @comment = Comment.new
     @comment = Comment.where(micropostId: @micropost.id)
-    @micropost.commentId = @comment.id
+
 =begin
     @like = Like.new
     @likes = Like.new

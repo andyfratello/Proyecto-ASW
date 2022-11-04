@@ -97,7 +97,7 @@ class CommentsController < ApplicationController
     end
     respond_to do |format|
       format.html { redirect_back(fallback_location: root_path) }
-      format.html { notice 'Contribution was successfully liked' }
+      format.html { notice 'Micropost was successfully liked' }
       format.json { head :no_content }
     end
 =end
@@ -117,7 +117,7 @@ class CommentsController < ApplicationController
     end
     respond_to do |format|
       format.html { redirect_back(fallback_location: root_path) }
-      format.html { notice 'Contribution was successfully disliked' }
+      format.html { notice 'Micropost was successfully disliked' }
       format.json { head :no_content }
     end
 =end

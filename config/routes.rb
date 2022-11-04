@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   get 'microposts/new', to: 'microposts#new', as: 'microposts_new'
+  get 'microposts/:id/edit', to: 'microposts#show', as: 'microposts_edit'
   # Defines the root path route ("/")
   # root "articles#index"
 end
