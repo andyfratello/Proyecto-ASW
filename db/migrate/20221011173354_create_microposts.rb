@@ -6,7 +6,6 @@ class CreateMicroposts < ActiveRecord::Migration[7.0]
       t.text :url
       t.text :text
       t.integer :user_id
-
       t.timestamps
     end
   end

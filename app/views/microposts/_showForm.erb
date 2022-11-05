@@ -1,0 +1,30 @@
+<%= form_with(model: micropost) do |showForm| %>
+  <% if micropost.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(micropost.errors.count, "error") %> prohibited this micropost from being saved:</h2>
+
+      <ul>
+        <% micropost.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table class="area_text">
+    <tbody>
+    <br>
+    <tr class = area_text>
+      <td><%= showForm.text_area :must_be_empty, :size => "80x8"%></td>
+    </tr>
+    <tr>
+      <td align="left">
+        <br>
+        <%= showForm.submit "add comment" %>
+      </td>
+    </tr>
+    <tr height="20px"></tr>
+    </tbody>
+  </table>
+
+<% end %>

@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_04_101703) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_31_115754) do
+  create_table "comments", force: :cascade do |t|
+    t.integer "userId"
+    t.integer "upVotes", default: 0
+    t.text "text"
+    t.datetime "time", precision: nil
+    t.integer "micropostId"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+  
   create_table "likes", force: :cascade do |t|
     t.integer "micropost_id", null: false
     t.integer "user_id", null: false

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :comments
   root 'microposts#index'
   devise_for :users, controllers: {
     registrations: 'users/registrations',
@@ -10,6 +11,8 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   get 'microposts/new', to: 'microposts#new', as: 'microposts_new'
+  get 'microposts/:id/edit', to: 'microposts#show', as: 'microposts_edit'
+
   get 'microposts/:id', to: 'microposts#show'
   get 'likes_new', to: 'likes#create'
   delete 'microposts/:id/likes', to: 'likes#destroy'

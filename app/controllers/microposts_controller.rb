@@ -19,6 +19,17 @@ class MicropostsController < ApplicationController
 
   # GET /microposts/1 or /microposts/1.json
   def show
+    @micropost = Micropost.find(params[:id])
+    @comment = Comment.new
+    @comment = Comment.where(micropostId: @micropost.id)
+
+=begin
+    @like = Like.new
+    @likes = Like.new
+    if !current_user.nil?
+      @likes = Like.where(user_id: current_user.id)
+    end
+=end
   end
 
   # GET /microposts/new
