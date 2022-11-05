@@ -71,7 +71,7 @@
     <span>
       <% if current_user %>
         <% if current_user.email == User.search_name(micropost.user_id)%>
-          <%= button_to 'delete', micropost, method: :delete, form_class: 'delete_button',class: 'delete'%>
+          | <%= button_to 'delete', micropost, method: :delete, form_class: 'delete_button', class: 'delete'%>
         <% end %>
       <% end %>
     </span>
