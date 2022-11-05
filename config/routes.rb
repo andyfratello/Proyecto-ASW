@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :comment_likes
+  get 'comments/new'
+  get 'comments/create'
   resources :comments
   root 'microposts#index'
   devise_for :users, controllers: {
