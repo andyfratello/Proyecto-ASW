@@ -12,11 +12,11 @@ gem "stimulus-rails",  "1.0.4"
 gem "jbuilder",        "2.11.5"
 gem "puma",            "5.6.4"
 gem "bootsnap",        "1.12.0", require: false
+gem "omniauth-rails_csrf_protection"
 
 gem 'devise'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
-gem 'omniauth-rails_csrf_protection', '~> 1.0'
 
 group :development, :test do
   gem "sqlite3", "1.4.2"
@@ -41,3 +41,4 @@ end
 # Uncomment the following line if you're running Rails
 # on a native Windows system:
 # gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', '1.2022.4'

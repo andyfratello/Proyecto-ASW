@@ -13,3 +13,15 @@
  *= require_tree .
  *= require_self
  */
+
+.upvoted_button {
+    display: inline;
+    text-align: left;
+    text-autospace: none;
+}
+
+.downvoted_button {
+    font-size: 10pt;
+    color: #828282;
+    display: inline;
+}

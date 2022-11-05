@@ -120,7 +120,15 @@ input {
   width: 90px;
   color: #828282;
   padding-top: 15px;
-  padding-left: 2px;
+  padding-left: 4px;
+}
+
+.label_created{
+  width: 90px;
+  color: #828282;
+  padding-top: 5px;
+  padding-left: 3px;
+
 }
 
 .label {
@@ -198,4 +206,81 @@ input {
 
 .unable_unvote {
   color: orangered;
+}
+
+.link_upvoted {
+  color: black;
+  padding-left: 63px;
+  padding-top: 5px;
+}
+
+.link_upvoted_sub {
+  color: black;
+  text-decoration: underline;
+}
+
+.link_upvoted_sub:visited {
+  color: #828282;
+}
+
+.link_upvoted_com {
+  color: black;
+  text-decoration: underline;
+}
+
+.link_upvoted_com:visited {
+  color: #828282;
+}
+
+.private {
+  color: #828282;
+  font-style: italic;
+  padding-left: 5px;
+}
+
+.about_txt {
+  padding-left: 15px;
+}
+
+.about_title {
+  padding-left: -10px;
+}
+
+.upvoted_button_c {
+  font-size: 9pt;
+  color: #828282;
+  outline: none;
+  border: none;
+  background: none;
+  width: 20px;
+  height: 20px;
+  text-align: left;
+  cursor: pointer;
+  line-height: 0;
+}
+
+.downvoted_button_c {
+  font-size: 7pt;
+  color: #828282;
+  outline: none;
+  border: none;
+  background: none;
+  width: 40px;
+  text-align: left;
+  cursor: pointer;
+  font-family: Verdana, Geneva, sans-serif;
+  padding-left: 5px;
+}
+
+.non-existent-vote {
+    font-size: 7pt;
+    color: #F6F6EF;
+    outline: none;
+    border: none;
+    background: none;
+    width: 40px;
+    text-align: left;
+    cursor: pointer;
+    font-family: Verdana, Geneva, sans-serif;
+    padding-left: 5px;
 }

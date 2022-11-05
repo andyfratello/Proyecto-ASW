@@ -10,6 +10,14 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   get 'microposts/new', to: 'microposts#new', as: 'microposts_new'
+  get 'microposts/:id', to: 'microposts#show'
+  get 'likes_new', to: 'likes#create'
+  delete 'microposts/:id/likes', to: 'likes#destroy'
+
+  resources :microposts do
+    resources :likes
+  end
+
   # Defines the root path route ("/")
   # root "articles#index"
 end

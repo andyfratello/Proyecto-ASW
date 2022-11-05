@@ -1,5 +1,5 @@
 class MicropostsController < ApplicationController
-  before_action :set_micropost, only: %i[ show edit update destroy ]
+  before_action :set_micropost, only: %i[ show edit update destroy like unlike]
 
   # GET /microposts or /microposts.json
   def index
@@ -71,6 +71,24 @@ class MicropostsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to microposts_url, notice: "Micropost was successfully destroyed." }
+      format.json { head :no_content }
+    end
+  end
+
+  def like
+    @micropost.points += 1
+    @micropost.save
+    respond_to do |format|
+      format.html { redirect_to root_path }
+      format.json { head :no_content }
+    end
+  end
+
+  def unlike
+    @micropost.points -= 1
+    @micropost.save
+    respond_to do |format|
+      format.html { redirect_to root_path }
       format.json { head :no_content }
     end
   end

@@ -14,14 +14,18 @@
   <table border="0">
     <tbody>
     <tr>
-      <td class=taula_submit>
-        <span class="about"><%= form.label :about %></span>
-        <span class="area_text"><%= form.text_area :title, :size => "50x4" %></span>
+      <td>
+        <span class="about_title" style="vertical-align: top;">about:</span>
+      <% if current_user && current_user.id==@user.id %>
+        <span class="about_txt"><textarea rows="5" cols="60" wrap="virtual" name="user[about]" ><%= current_user.about %></textarea></span>
+      <% else %>
+        <span class="about_txt"><%= @user.about %></span>
+      <% end %>
       </td>
     </tr>
     <tr>
       <td class="link_stories">
-        <a href="/contributions?user=<%= @user.id %>">
+        <a href="/microposts?user=<%= @user.id %>">
           <span class="link_stories">submissions</span>
         </a>
       </td>
@@ -31,6 +35,18 @@
         <a href="/users/<%= @user.id %>/comments">
           <span class="link_comments">comments</span>
         </a>
+      </td>
+    </tr>
+    <tr>
+      <td class="link_upvoted">
+        <a href="/users/upvoted_submissions/<%= @user.id %>">
+          <span class="link_upvoted_sub">upvoted submissions</span>
+        </a>
+        /
+        <a href="/users/upvoted_comments/<%= @user.id %>">
+          <span class="link_upvoted_com">comments</span>
+        </a>
+        <span class="private">(private)</span>
       </td>
     </tr>
     </tbody>
