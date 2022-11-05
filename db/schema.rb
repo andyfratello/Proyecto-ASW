@@ -20,6 +20,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_31_115754) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+  
+  create_table "likes", force: :cascade do |t|
+    t.integer "micropost_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["micropost_id"], name: "index_likes_on_micropost_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
+  end
 
   create_table "microposts", force: :cascade do |t|
     t.text "title"
@@ -28,6 +37,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_31_115754) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "points", default: 0
   end
 
   create_table "users", force: :cascade do |t|
@@ -49,4 +59,31 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_31_115754) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "votes", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "micropost_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["micropost_id"], name: "index_votes_on_micropost_id"
+    t.index ["user_id"], name: "index_votes_on_user_id"
+  end
+
+  create_table "votos", force: :cascade do |t|
+    t.string "votable_type"
+    t.integer "votable_id"
+    t.string "voter_type"
+    t.integer "voter_id"
+    t.boolean "vote_flag"
+    t.string "vote_scope"
+    t.integer "vote_weight"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["votable_id", "votable_type", "vote_scope"], name: "index_votos_on_votable_id_and_votable_type_and_vote_scope"
+    t.index ["votable_type", "votable_id"], name: "index_votos_on_votable"
+    t.index ["voter_id", "voter_type", "vote_scope"], name: "index_votos_on_voter_id_and_voter_type_and_vote_scope"
+    t.index ["voter_type", "voter_id"], name: "index_votos_on_voter"
+  end
+
+  add_foreign_key "likes", "microposts"
+  add_foreign_key "likes", "users"
 end

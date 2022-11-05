@@ -12,6 +12,15 @@ Rails.application.routes.draw do
 
   get 'microposts/new', to: 'microposts#new', as: 'microposts_new'
   get 'microposts/:id/edit', to: 'microposts#show', as: 'microposts_edit'
+
+  get 'microposts/:id', to: 'microposts#show'
+  get 'likes_new', to: 'likes#create'
+  delete 'microposts/:id/likes', to: 'likes#destroy'
+
+  resources :microposts do
+    resources :likes
+  end
+
   # Defines the root path route ("/")
   # root "articles#index"
 end
