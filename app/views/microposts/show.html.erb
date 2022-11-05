@@ -36,7 +36,7 @@
 <table border="0" cellpadding="0" align="center" cellspacing="0" width="85%" bgcolor="#f6f6ef">
   <tbody>
     <tr>
-      <td style = "background-color:#f6f6ef; width:85%; align-self: center">
+      <td style = "background-color:#f6f6ef; width:85%; align-self: center; padding-left: 25px">
       <span class="unable_unvote">*</span>
       <span class="title"><a href="<%= "/microposts/" %><%= @micropost.id %>"><%= @micropost.title %></a> </span>
       <span class="url_post">
@@ -46,7 +46,7 @@
     </tr>
 
     <tr>
-      <td class="post_info" style = "background-color:#f6f6ef; width:84%; align-content: center; ">
+      <td class="post_info" style = "background-color:#f6f6ef; width:84%; align-content: center; padding-left: 25px">
         <span><!--punts--> points by
           <a class="link_user" href="/users/<%= @micropost.user.id %>"><%= @micropost.user.email %></a>
         </span>
@@ -89,7 +89,7 @@
       </td>
     </tr>
 <tr>
-  <td class="post_text">
+  <td class="post_text" style="padding-left: 25px ">
   <br>
   <%= @micropost.text %>
   </td>
