@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Comment likes</h1>
+
+<div id="comment_likes">
+  <% @comment_likes.each do |comment_like| %>
+    <%= render comment_like %>
+    <p>
+      <%= link_to "Show this comment like", comment_like %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New comment like", new_comment_like_path %>

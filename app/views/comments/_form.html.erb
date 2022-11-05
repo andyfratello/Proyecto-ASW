@@ -11,39 +11,11 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.text_area(:content, size: '60x6') %>
-  </div>
-  <%= form.hidden_field :micropostId, :value => @micropost.id %>
-  <div class="actions">
-    <%= form.submit "add comment" %>
-  </div>
-
-
-  <div class="field">
-    <%= form.label :text, style: "display: block" %>
+  <div>
     <%= form.text_area :text %>
   </div>
 
-  <div class="actions">
-    <%= form.submit "add comment"%>
-  </div>
-
-  <!--
-   <div>
-    <%= form.label :userId, style: "display: block" %>
-  <%= form.number_field :userId %>
-  </div>
-
   <div>
-    <%= form.label :upVotes, style: "display: block" %>
-    <%= form.number_field :upVotes %>
+    <%= form.submit %>
   </div>
-
-  <div>
-    <%= form.label :time, style: "display: block" %>
-    <%= form.datetime_field :time %>
-  </div>
--->
-
 <% end %>

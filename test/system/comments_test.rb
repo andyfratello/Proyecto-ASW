@@ -14,10 +14,9 @@ class CommentsTest < ApplicationSystemTestCase
     visit comments_url
     click_on "New comment"
 
+    fill_in "Micropost", with: @comment.micropost_id
     fill_in "Text", with: @comment.text
-    fill_in "Time", with: @comment.time
-    fill_in "Upvotes", with: @comment.upVotes
-    fill_in "Userid", with: @comment.userId
+    fill_in "User", with: @comment.user_id
     click_on "Create Comment"
 
     assert_text "Comment was successfully created"
@@ -28,10 +27,9 @@ class CommentsTest < ApplicationSystemTestCase
     visit comment_url(@comment)
     click_on "Edit this comment", match: :first
 
+    fill_in "Micropost", with: @comment.micropost_id
     fill_in "Text", with: @comment.text
-    fill_in "Time", with: @comment.time
-    fill_in "Upvotes", with: @comment.upVotes
-    fill_in "Userid", with: @comment.userId
+    fill_in "User", with: @comment.user_id
     click_on "Update Comment"
 
     assert_text "Comment was successfully updated"
