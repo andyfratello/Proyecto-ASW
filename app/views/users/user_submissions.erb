@@ -22,7 +22,7 @@
             <% else %>
               | <span class="pagetop"><%= link_to 'submit', new_user_session_path, class: 'ruby_link' %></span>
             <% end %>
-            | <span class="pagetop"><%=current_user.email%> submissions</span>
+            | <span class="pagetop_upvoted"><%=current_user.email%> submissions</span>
           </td>
           <td style="text-align:right;padding-right:4px;">
             <% if current_user %>
