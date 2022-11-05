@@ -33,64 +33,70 @@
 </table>
 </thead>
 
-<tbody>
-<div style = "background-color:#f6f6ef; width:85%; align-self: center">
-  <span class="unable_unvote">*</span>
-  <span class="title"><a href="<%= "/microposts/" %><%= @micropost.id %>"><%= @micropost.title %></a> </span>
-  <span class="url_post">
-      <%= link_to @micropost.url, "http://#{@micropost.url}" %>
-  </span>
-</div>
+<table border="0" cellpadding="0" align="center" cellspacing="0" width="85%" bgcolor="#f6f6ef">
+  <tbody>
+    <tr>
+      <td style = "background-color:#f6f6ef; width:85%; align-self: center">
+      <span class="unable_unvote">*</span>
+      <span class="title"><a href="<%= "/microposts/" %><%= @micropost.id %>"><%= @micropost.title %></a> </span>
+      <span class="url_post">
+          <%= link_to @micropost.url, "http://#{@micropost.url}" %>
+      </span>
+      </td>
+    </tr>
 
-<div class="post_info" style = "background-color:#f6f6ef; width:84%; align-content: center; ">
-    <span><!--punts--> points by
-      <a class="link_user" href="/users/<%= @micropost.user.id %>"><%= @micropost.user.email %></a>
-    </span>
-  <span>
-      <% if ((Time.now - @micropost.created_at) / 1.year).round >= 1 %>
-        <%= ((Time.now - @micropost.created_at) / 1.year).round %>  years ago
-      <% else %>
-        <% if ((Time.now - @micropost.created_at) / 1.month).round >= 1 %>
-          <%= ((Time.now - @micropost.created_at) / 1.month).round %> months ago
-        <% else %>
-          <% if ((Time.now - @micropost.created_at) / 1.week).round >= 1 %>
-            <%= ((Time.now - @micropost.created_at) / 1.week).round %> weeks ago
+    <tr>
+      <td class="post_info" style = "background-color:#f6f6ef; width:84%; align-content: center; ">
+        <span><!--punts--> points by
+          <a class="link_user" href="/users/<%= @micropost.user.id %>"><%= @micropost.user.email %></a>
+        </span>
+      <span>
+          <% if ((Time.now - @micropost.created_at) / 1.year).round >= 1 %>
+            <%= ((Time.now - @micropost.created_at) / 1.year).round %>  years ago
           <% else %>
-            <% if ((Time.now - @micropost.created_at) / 1.day).round >= 1 %>
-              <%= ((Time.now - @micropost.created_at) / 1.day).round %>  days ago
+            <% if ((Time.now - @micropost.created_at) / 1.month).round >= 1 %>
+              <%= ((Time.now - @micropost.created_at) / 1.month).round %> months ago
             <% else %>
-              <% if ((Time.now - @micropost.created_at) / 1.hour).round >= 1 %>
-                  <%= ((Time.now - @micropost.created_at) / 1.hour).round %> hours ago
+              <% if ((Time.now - @micropost.created_at) / 1.week).round >= 1 %>
+                <%= ((Time.now - @micropost.created_at) / 1.week).round %> weeks ago
+              <% else %>
+                <% if ((Time.now - @micropost.created_at) / 1.day).round >= 1 %>
+                  <%= ((Time.now - @micropost.created_at) / 1.day).round %>  days ago
                 <% else %>
-                <% if ((Time.now - @micropost.created_at) / 1.minute).round >= 1 %>
-                <%= ((Time.now - @micropost.created_at) / 1.minute).round %> minutes ago
-                <% else %>
-                <%= ((Time.now - @micropost.created_at) / 1.second).round %> seconds ago
+                  <% if ((Time.now - @micropost.created_at) / 1.hour).round >= 1 %>
+                      <%= ((Time.now - @micropost.created_at) / 1.hour).round %> hours ago
+                    <% else %>
+                    <% if ((Time.now - @micropost.created_at) / 1.minute).round >= 1 %>
+                    <%= ((Time.now - @micropost.created_at) / 1.minute).round %> minutes ago
+                    <% else %>
+                    <%= ((Time.now - @micropost.created_at) / 1.second).round %> seconds ago
+                    <% end %>
                 <% end %>
+              <% end %>
             <% end %>
           <% end %>
         <% end %>
-      <% end %>
-    <% end %>
-    </span>
-  <span>| hide |
-    </span>
-  <span>
-      <%= link_to 'comments', "/comments", class: 'comments' %>
-    <!-- num comments -->
-    </span>
-  <span>
-      <a class="edit" href="<%= "/microposts/" %><%= @micropost.id %><%= "/edit" %>"><%= " | edit |" %></a>
-    </span>
-</div>
-<div class="post_text">
+        </span>
+      <span>| hide |
+        </span>
+      <span>
+          <%= link_to 'comments', "/comments", class: 'comments' %>
+        <!-- num comments -->
+        </span>
+      <span>
+          <a class="edit" href="<%= "/microposts/" %><%= @micropost.id %><%= "/edit" %>"><%= " | edit |" %></a>
+        </span>
+      </td>
+    </tr>
+<tr>
+  <td class="post_text">
   <br>
   <%= @micropost.text %>
-</div>
+  </td>
+</tr>
 </tbody>
 
 <tbody class="itemlist">
-<table border="0" cellpadding="0" align="center" cellspacing="0" width="85%" bgcolor="#f6f6ef">
   <tr>
     <td class="taula_sencera">
       <%= render "showForm", micropost: @micropost %>
