@@ -17,6 +17,8 @@ Rails.application.routes.draw do
   get 'likes_new', to: 'likes#create'
   delete 'microposts/:id/likes', to: 'likes#destroy'
 
+  get '/users/upvoted_submissions/:id', to: 'users#submissions'
+
   resources :microposts do
     resources :likes
   end

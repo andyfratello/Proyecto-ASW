@@ -62,6 +62,17 @@ class UsersController < ApplicationController
 =end
   end
 
+  def submissions
+    @likes = Like.where(user_id: current_user.id)
+    # @likes.each do |like|
+    # @microposts = Micropost.where(id: like.micropost_id)
+    #end
+    respond_to do |format|
+      format.html { render :user_submissions}
+      format.json { head :no_content }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
@@ -78,6 +89,7 @@ class UsersController < ApplicationController
         @current_user.save()
       end
     end
+
 
     # Only allow a list of trusted parameters through.
     def user_params

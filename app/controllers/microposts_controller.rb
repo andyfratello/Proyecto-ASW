@@ -7,14 +7,16 @@ class MicropostsController < ApplicationController
 
     sort = params[:sort]
     type = params[:type]
+    user = params[:user]
 
     if sort == 'date'
       @microposts = Micropost.order(created_at: :desc)
-    end
-    if type == 'ask'
+    elsif type == 'ask'
       @microposts = Micropost.where(url: [nil, ""])
-    end
 
+    elsif user != nil
+      @microposts = Micropost.where(user_id: user).order(created_at: :desc)
+    end
   end
 
   # GET /microposts/1 or /microposts/1.json
