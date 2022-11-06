@@ -125,13 +125,32 @@
 <tbody class="itemlist">
   <tr>
     <td class="taula_sencera">
+      <h2>Comments</h2>
+      <% @micropost.comments.each do |comment| %>
+        <p>
+          <strong>Commenter:</strong>
+          <%= comment.user_id %>
+        </p>
 
-      <%- @micropost.comments.each do |comment|%>
-        <%= comment.text%>
-        <br>
+        <p>
+          <strong>Comment:</strong>
+          <%= comment.text %>
+        </p>
       <% end %>
-
-      <%= render "comments/form", comment: @comment %>
+    </td>
+  </tr>
+  <tr>
+    <td class="taula_sencera">
+      <h2>Add a comment:</h2>
+      <%= form_for([@micropost, @micropost.comments.build]) do |f| %>
+        <p>
+          <%= f.label :text %><br>
+          <%= f.text_area :text %>
+        </p>
+        <p>
+          <%= f.submit %>
+        </p>
+        <%end%>
     </td>
   </tr>
 </tbody>

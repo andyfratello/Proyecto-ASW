@@ -22,7 +22,7 @@ class MicropostsController < ApplicationController
   # GET /microposts/1 or /microposts/1.json
   def show
     @micropost = Micropost.find(params[:id])
-    @comment = @micropost.comments.build
+    @comments = Comment.where(micropost_id: @micropost.id)
   end
 
   # GET /microposts/new
@@ -94,6 +94,8 @@ class MicropostsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
