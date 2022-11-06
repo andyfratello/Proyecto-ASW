@@ -43,7 +43,7 @@
 </thead>
 <tbody border="0" cellpadding="0" cellspacing="0" class="itemlist">
 
-<% i=0 %>
+<% i = 0 %>
 <% @microposts.each do |micropost| %>
   <% i = i + 1 %>
   <table border="0" cellpadding="0" align="center" cellspacing="0" width="85%" bgcolor="#f6f6ef">
@@ -53,5 +53,23 @@
         <%= render micropost %>
       </td>
     </tr>
+    <tr>
+      <td>
+        <br class="br_between_microposts">
+      </td>
+    </tr>
+    <% if i == @microposts.size %>
+      <tr>
+        <td>
+          <br class="br_peu">
+        </td>
+        <td>
+          <hr class="orange_line">
+          <br>
+        </td>
+      </tr>
+    <% end %>
   </table>
 <% end %>
+<br>
+

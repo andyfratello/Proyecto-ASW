@@ -21,11 +21,11 @@ class LikesController < ApplicationController
 
   private
   def already_liked?
-    Like.where(user_id: current_user.id, micropost_id:
-      params[:micropost_id]).exists?
+    Like.where(user_id: current_user.id, micropost_id: params[:micropost_id]).exists?
   end
 
   def find_micropost
-    @micropost = Micropost.find(params[:micropost_id])
+    # @micropost = Micropost.find(params[:micropost_id])
+    @micropost = Micropost.find_by(id: params[:micropost_id])
   end
 end

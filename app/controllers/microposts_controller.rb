@@ -22,16 +22,7 @@ class MicropostsController < ApplicationController
   # GET /microposts/1 or /microposts/1.json
   def show
     @micropost = Micropost.find(params[:id])
-    @comments = Comment.new
-    @comments = Comment.where(micropostId: @micropost.id)
-
-=begin
-    @like = Like.new
-    @likes = Like.new
-    if !current_user.nil?
-      @likes = Like.where(user_id: current_user.id)
-    end
-=end
+    @comment = @micropost.comments.build
   end
 
   # GET /microposts/new
@@ -89,7 +80,6 @@ class MicropostsController < ApplicationController
   end
 
   def like
-    @micropost.points += 1
     @micropost.save
     respond_to do |format|
       format.html { redirect_to root_path }
@@ -98,7 +88,6 @@ class MicropostsController < ApplicationController
   end
 
   def unlike
-    @micropost.points -= 1
     @micropost.save
     respond_to do |format|
       format.html { redirect_to root_path }
