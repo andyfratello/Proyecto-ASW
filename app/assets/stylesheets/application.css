@@ -14,6 +14,9 @@
  *= require_self
  */
 
+.delete_button {
+  display: inline;
+}
 
 .upvoted_button {
     display: inline;
