@@ -58,7 +58,7 @@ class CommentsController < ApplicationController
     end
   end
 
-  def like
+  def comment_like
     @comment.save
     respond_to do |format|
       format.html { redirect_to root_path }
@@ -66,7 +66,7 @@ class CommentsController < ApplicationController
     end
   end
 
-  def unlike
+  def comment_unlike
     @comment.save
     respond_to do |format|
       format.html { redirect_to root_path }
