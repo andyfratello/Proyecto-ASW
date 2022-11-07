@@ -22,12 +22,19 @@ Rails.application.routes.draw do
 
   get '/users/upvoted_submissions/:id', to: 'users#submissions'
 
+  get 'comment_likes_new', to: 'comment_likes#create'
+  delete 'comments/:id/comment_likes', to: 'comment_likes#destroy'
+
   resources :microposts do
     resources :likes
   end
 
   resources :microposts do
     resources :comments
+  end
+
+  resources :comments do
+    resources :comment_likes
   end
 
   # Defines the root path route ("/")

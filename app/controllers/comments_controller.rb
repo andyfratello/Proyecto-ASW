@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :set_comment, only: %i[ show edit update destroy ]
+  before_action :set_comment, only: %i[ show edit update destroy like unlike]
 
   # GET /comments or /comments.json
   def index
@@ -52,9 +52,24 @@ class CommentsController < ApplicationController
   # DELETE /comments/1 or /comments/1.json
   def destroy
     @comment.destroy
-
     respond_to do |format|
       format.html { redirect_to comments_url, notice: "Comment was successfully destroyed." }
+      format.json { head :no_content }
+    end
+  end
+
+  def like
+    @comment.save
+    respond_to do |format|
+      format.html { redirect_to root_path }
+      format.json { head :no_content }
+    end
+  end
+
+  def unlike
+    @comment.save
+    respond_to do |format|
+      format.html { redirect_to root_path }
       format.json { head :no_content }
     end
   end

@@ -1,5 +1,6 @@
 class CommentLikesController < ApplicationController
   before_action :set_comment_like, only: %i[ show edit update destroy ]
+  before_action :find_comment_like, only: [:destroy]
 
   # GET /comment_likes or /comment_likes.json
   def index
@@ -21,46 +22,39 @@ class CommentLikesController < ApplicationController
 
   # POST /comment_likes or /comment_likes.json
   def create
-    @comment_like = CommentLike.new(comment_like_params)
-
-    respond_to do |format|
-      if @comment_like.save
-        format.html { redirect_to comment_like_url(@comment_like), notice: "Comment like was successfully created." }
-        format.json { render :show, status: :created, location: @comment_like }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @comment_like.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /comment_likes/1 or /comment_likes/1.json
-  def update
-    respond_to do |format|
-      if @comment_like.update(comment_like_params)
-        format.html { redirect_to comment_like_url(@comment_like), notice: "Comment like was successfully updated." }
-        format.json { render :show, status: :ok, location: @comment_like }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @comment_like.errors, status: :unprocessable_entity }
-      end
-    end
+    @comment = Comment.find(params[:comment_id])
+    @comment_like.user_id = current_user.id
+    @comment_like.comment_id = @comment.id
+    @comment_like = @comment.comment_likes.create(comment_like_params)
+    @comment_like.save
+    redirect_back fallback_location: root_path # redirect_to microposts_path(@micropost)
   end
 
   # DELETE /comment_likes/1 or /comment_likes/1.json
   def destroy
-    @comment_like.destroy
-
-    respond_to do |format|
-      format.html { redirect_to comment_likes_url, notice: "Comment like was successfully destroyed." }
-      format.json { head :no_content }
+    if !(already_liked?)
+      flash[:notice] = "You can't like more than once"
+    else
+      @comment_like.destroy
     end
+    redirect_back fallback_location: root_path # redirect_to microposts_path(@micropost)
+  end
+
+  def find_comment_like
+    @comment_like = @comment.comment_likes.find(params[:id])
   end
 
   private
+    def already_liked?
+      CommentLike.where(user_id: current_user.id, comment_id: params[:comment_id]).exists?
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_comment_like
       @comment_like = CommentLike.find(params[:id])
+    end
+
+    def find_comment
+      @comment = Comment.find(params[:comment_id])
     end
 
     # Only allow a list of trusted parameters through.

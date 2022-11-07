@@ -372,3 +372,23 @@ input {
   position: absolute;
   left: 115px;
 }
+
+.comment_info {
+  font-size: 8pt;
+  color: #828282;
+  padding-left: 25px;
+  padding-bottom: 5px;
+}
+
+.comment_text {
+  color: black;
+  font-size: 9pt;
+  padding-left: 23px;
+}
+
+.br_comment_space {
+  display: block;
+  margin: 4px 0;
+  content: " ";
+  line-height: 15px;
+}

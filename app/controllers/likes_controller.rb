@@ -7,12 +7,16 @@ class LikesController < ApplicationController
     else
       @micropost.likes.create(user_id: current_user.id)
     end
-    redirect_to microposts_path(@micropost)
+    redirect_back fallback_location: root_path # redirect_to microposts_path(@micropost)
   end
 
   def destroy
+    if !(already_liked?)
+      flash[:notice] = "You can't like more than once"
+    else
       @like.destroy
-    redirect_to microposts_path(@micropost)
+    end
+    redirect_back fallback_location: root_path # redirect_to microposts_path(@micropost)
   end
 
   def find_like
