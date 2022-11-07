@@ -25,6 +25,8 @@ Rails.application.routes.draw do
   get 'comment_likes_new', to: 'comment_likes#create'
   delete 'comments/:id/comment_likes', to: 'comment_likes#destroy'
 
+  get '/threads', to: 'users#comments', as: 'user_comments'
+
   resources :microposts do
     resources :likes
   end

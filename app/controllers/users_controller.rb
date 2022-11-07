@@ -73,6 +73,14 @@ class UsersController < ApplicationController
     end
   end
 
+  def comments
+    @comments = Comment.where(user_id: current_user.id)
+    respond_to do |format|
+      format.html { render :user_comments}
+      format.json { head :no_content }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
