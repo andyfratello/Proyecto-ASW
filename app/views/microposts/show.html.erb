@@ -70,16 +70,16 @@
         <span class="author_post">
            <span> <%= @micropost.likes.count %> <%= (@micropost.likes.count) == 1 ? 'point' : 'points' %> by
              <% if current_user %>
-            <% if current_user.email == User.search_name(@micropost.user_id)%>
-              <a class="link_user" href="/users/edit"><%= @micropost.user.email %></a>
-            <% else %>
-              <a class="link_user" href="/users/<%= @micropost.user_id %>"><%= @micropost.user.email %></a>
-            <% end %>
-          <% else %>
-            <a class="link_user" href="/users/<%= @micropost.user.id %>"><%= @micropost.user.email %></a>
-          <% end %>
-        </span>
-        <span>
+               <% if current_user.email == User.search_name(@micropost.user_id)%>
+                 <a class="link_user" href="/users/edit"><%= @micropost.user.email %></a>
+               <% else %>
+                 <a class="link_user" href="/users/<%= @micropost.user_id %>"><%= @micropost.user.email %></a>
+               <% end %>
+             <% else %>
+               <a class="link_user" href="/users/<%= @micropost.user.id %>"><%= @micropost.user.email %></a>
+             <% end %>
+           </span>
+          <span>
             <% if ((Time.now - @micropost.created_at) / 1.year).round >= 1 %>
               <%= ((Time.now - @micropost.created_at) / 1.year).round %>  years ago
             <% else %>
@@ -94,17 +94,17 @@
                   <% else %>
                     <% if ((Time.now - @micropost.created_at) / 1.hour).round >= 1 %>
                         <%= ((Time.now - @micropost.created_at) / 1.hour).round %> hours ago
-                      <% else %>
+                    <% else %>
                       <% if ((Time.now - @micropost.created_at) / 1.minute).round >= 1 %>
-                      <%= ((Time.now - @micropost.created_at) / 1.minute).round %> minutes ago
+                        <%= ((Time.now - @micropost.created_at) / 1.minute).round %> minutes ago
                       <% else %>
-                      <%= ((Time.now - @micropost.created_at) / 1.second).round %> seconds ago
+                        <%= ((Time.now - @micropost.created_at) / 1.second).round %> seconds ago
                       <% end %>
+                    <% end %>
                   <% end %>
                 <% end %>
               <% end %>
             <% end %>
-          <% end %>
           </span>
           <span>
             <% if current_user %>
@@ -112,6 +112,12 @@
               <% if pre_like %>
                   | <%= button_to 'unvote', micropost_like_path(@micropost.id, pre_like), method: :delete, form_class:'downvoted_button', class: 'downvoted_button_c' %>
               <% end %>
+              <span>
+                <a class="edit" href="<%= "/microposts/" %><%= @micropost.id %><%= "/edit" %>"><%= " | edit |" %></a>
+              </span>
+              <span>
+                <a class="comments" href="<%= "/microposts/" %><%= @micropost.id %>"><%= " comments" %></a>
+              </span>
             <% end %>
           </span>
         </span>

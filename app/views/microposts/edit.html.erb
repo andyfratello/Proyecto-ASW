@@ -47,7 +47,8 @@
 
     <tr>
       <td class="post_info" style = "background-color:#f6f6ef; width:84%; align-content: center; padding-bottom: 20px">
-        <span><!--punts--> points by
+        <span> <%= @micropost.likes.count %> <%= (@micropost.likes.count) == 1 ? 'point' : 'points' %> by</span>
+        <span>
           <a class="link_user" href="/users/<%= @micropost.user.id %>"><%= @micropost.user.email %></a>
         </span>
         <span>
@@ -78,14 +79,13 @@
           <% end %>
           </span>
         <span>
-          | <%= link_to 'comments', "/comments", class: 'comments' %>
+          | <a class="comments" href="<%="/microposts/"%><%=@micropost.id%>"><%= " comments" %></a>
         <!-- num comments -->
         </span>
         <span>
           <a class="edit" href="<%= "/microposts/" %><%= @micropost.id %><%= "/edit" %>"><%= " | edit |" %></a>
         </span>
       </td>
-
     </tr>
 </tbody>
 
