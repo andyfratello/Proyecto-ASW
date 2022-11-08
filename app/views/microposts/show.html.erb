@@ -140,7 +140,11 @@
           <%= f.text_area :text, :size => "80x8" %>
         </p>
         <p style="padding-left: 25px">
-          <%= f.submit "add comment"%>
+          <% if current_user %>
+            <%= f.submit "add comment"%>
+          <% else %>
+            <button id="mybutton"><a href="<%= new_user_session_path %>">add comment</a></button>
+          <% end %>
         </p>
         <%end%>
     </td>
@@ -164,7 +168,17 @@
           </span>
           <span>
             <% if comment.user_id.to_i != 0 %>
-              <%= User.search_name(comment.user_id.to_i) %>
+              <% if comment.user_id.to_i != 0 %>
+                <% if current_user %>
+                  <% if current_user.email == User.search_name(comment.user_id.to_i)%>
+                    <a class="link_user" href="/users/edit"><span class="comment_author"><%= User.search_name(comment.user_id.to_i) %></span></a>
+                  <% else %>
+                    <a class="link_user" href="/users/<%= comment.user_id.to_i %>"><span class="comment_author"><%= User.search_name(comment.user_id.to_i)%></span></a>
+                  <% end %>
+                <% else %>
+                  <a class="link_user" href="/users/<%= comment.user_id.to_i %>"><span class="comment_author"><%= User.search_name(comment.user_id.to_i) %></span></a>
+                <% end %>
+              <% end %>
             <% end %>
           </span>
           <span>
