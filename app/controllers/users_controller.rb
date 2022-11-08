@@ -73,6 +73,17 @@ class UsersController < ApplicationController
     end
   end
 
+  def upvoted_comments
+    @comment_likes = CommentLike.where(user_id: current_user.id)
+    # @likes.each do |like|
+    # @microposts = Micropost.where(id: like.micropost_id)
+    #end
+    respond_to do |format|
+      format.html { render :user_upvoted_comments}
+      format.json { head :no_content }
+    end
+  end
+
   def comments
     @user = User.find(params[:id])
     @comments = Comment.where(user_id: @user.id)
