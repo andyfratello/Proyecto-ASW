@@ -10,8 +10,7 @@ class CommentLikesController < ApplicationController
     # @comment = Comment.find_by(params[:comment_id])
     # @comment.comment_likes.create(user_id: current_user.id)
     #end
-    @comment = Comment.find(params[:comment_id])
-    @comment_like = @comment.comment_likes.create(user_id: current_user.id)
+    @comment.comment_likes.create(user_id: current_user.id)
     redirect_back fallback_location: root_path # redirect_to microposts_path(@micropost)
   end
 
@@ -35,14 +34,11 @@ class CommentLikesController < ApplicationController
     end
     # Use callbacks to share common setup or constraints between actions.
     def set_comment_like
-      @comment_like = CommentLike.find(params[:id])
+      @comment_like = CommentLike.find_by(id: params[:id])
     end
 
     def find_comment
       @comment = Comment.find_by(id: params[:comment_id])
     end
 
-    def comment_likes_params
-      params.require(:comment_like).permit(:comment_id, :user_id)
-    end
 end
