@@ -14,9 +14,7 @@
             <span class="pagetop"><b class="=hname"><%= link_to 'Hacker News', microposts_url, class: 'ruby_link' %></b></span>
             <span class="pagetop_new"><%= link_to 'new', microposts_url(:sort => "date"), class: 'ruby_link' %></span>
             |
-            <span class="pagetop"><%= link_to 'threads', microposts_url, class: 'ruby_link' %></span> <!-- Cal fer un link de threads -->
-
-            | <span class="pagetop"><%= link_to 'ask', microposts_url(:type => "ask"), class: 'ruby_link' %></span>
+            <span class="pagetop_"><a href="/users/<%= current_user.id %>/comments"> threads </a> </span>
             | <span class="pagetop"><%= link_to 'submit', new_micropost_url, class: 'ruby_link' %></span>
           </td>
           <td style="text-align:right;padding-right:4px;">
