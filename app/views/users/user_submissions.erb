@@ -22,7 +22,7 @@
             <% else %>
               | <span class="pagetop"><%= link_to 'submit', new_user_session_path, class: 'ruby_link' %></span>
             <% end %>
-            | <span class="pagetop_upvoted">upvoted</span>
+            | <span class="pagetop_upvoted">upvoted submissions</span>
           </td>
           <td style="text-align:right;padding-right:4px;">
             <% if current_user %>
@@ -37,6 +37,7 @@
       </table>
     </td>
   </tr>
+  <tr style="height:10px"></tr>
 </table>
 
 <tbody border="0" cellpadding="0" cellspacing="0" class="itemlist">
