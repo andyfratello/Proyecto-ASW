@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   delete 'microposts/:id/likes', to: 'likes#destroy'
 
   get '/users/upvoted_submissions/:id', to: 'users#submissions'
+  get '/users/upvoted_comments/:id', to: 'users#upvoted_comments'
   get 'users/:id/comments', to:'users#comments'
 
   get 'comment_likes_new', to: 'comment_likes#create'

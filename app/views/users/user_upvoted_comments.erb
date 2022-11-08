@@ -1,0 +1,78 @@
+<thead>
+<table id="hnmain" border="0" cellpadding="0" align="center" cellspacing="0" width="85%" bgcolor="#f6f6ef">
+  <tr>
+    <td bgcolor="#ff6600">
+      <table border="0" cellpadding="0" cellspacing="0" width="100%" >
+        <tbody>
+        <tr>
+          <td style="width:18px;padding-right:4px">
+            <a href=<% microposts_url %>>
+              <img src="https://news.ycombinator.com/y18.gif" width="18" height="18" style="border:1px white solid;">
+            </a>
+          </td>
+          <td style="line-height:12pt; height:10px;">
+            <span class="pagetop"><b class="=hname"><%= link_to 'Hacker News', microposts_url, class: 'ruby_link' %></b></span>
+            <span class="pagetop_new"><%= link_to 'new', microposts_url(:sort =>"date"), class: 'ruby_link' %></span>
+            <% if current_user %>
+              | <span class="pagetop_"><a href="/users/<%= current_user.id %>/comments"> threads </a> </span>
+            <% end %>
+            | <span class="pagetop"><%= link_to 'ask', microposts_url(:type =>"ask"), class: 'ruby_link' %></span>
+            <% if current_user %>
+              | <span class="pagetop"><%= link_to 'submit', new_micropost_url, class: 'ruby_link' %></span>
+            <% else %>
+              | <span class="pagetop"><%= link_to 'submit', new_user_session_path, class: 'ruby_link' %></span>
+            <% end %>
+            | <span class="pagetop_upvoted">upvoted comments</span>
+          </td>
+          <td style="text-align:right;padding-right:4px;">
+            <% if current_user %>
+              <%= link_to current_user.email, edit_user_registration_path, class: 'ruby_link' %>
+              | <%= link_to 'logout', destroy_user_session_path, class: 'ruby_link', data: {turbo: "false"}, method: :delete %>
+            <% else %>
+              <%= link_to 'login', new_user_session_path, class: 'ruby_link' %>
+            <% end %>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+  </tr>
+  <tr style="height:10px"></tr>
+</table>
+
+<tbody border="0" cellpadding="0" cellspacing="0" class="itemlist">
+
+<% i = 0 %>
+<% @comment_likes.each do |comment_like| %>
+  <% comment = Comment.where(id: comment_like.comment_id ) %>
+  <% i = i + 1 %>
+  <table border="0" cellpadding="0" align="center" cellspacing="0" width="85%" bgcolor="#f6f6ef">
+    <% if i == 1 %>
+      <tr><td><br class="br_ini_upvoted_list"></td></tr>
+    <% end %>
+    <tr>
+      <td class="enum"><span><%= i %>.</span></td>
+      <td class="sub">
+        <%= render comment %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <br class="br_between_microposts">
+      </td>
+    </tr>
+    <% if i == @comment_likes.size %>
+      <tr>
+        <td>
+          <br class="br_peu">
+        </td>
+        <td>
+          <hr class="orange_line">
+          <br>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<%end%>
+
+
