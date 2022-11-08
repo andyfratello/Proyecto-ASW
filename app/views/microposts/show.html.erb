@@ -150,10 +150,14 @@
         <div class="comment_info">
           <span>
             <% if comment.user_id.to_i != 0 %>
-              <% if current_user.email == User.search_name(comment.user_id)%>
-                <span class="unable_unvote">*</span>
+              <% if current_user %>
+                <% if current_user.email == User.search_name(comment.user_id)%>
+                  <span class="unable_unvote">*</span>
+                <% else %>
+                  <%= button_to '▲', comment_likes_path(comment.id), method: :post, form_class:'upvoted_button', class: 'upvoted_button_c' %>
+                <% end %>
               <% else %>
-                <%= button_to '▲', comment_likes_path(comment.id), method: :post, form_class:'upvoted_button', class: 'upvoted_button_c' %>
+                <span class="upvote"><a href="<%= new_user_session_path %>">▲</a></span>
               <% end %>
             <% end %>
           </span>
