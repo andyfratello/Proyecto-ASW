@@ -25,6 +25,7 @@ html {
   text-decoration: none;
   color: black;
 }
+
 .pagetop_upvoted{
   text-decoration: none;
   color: white;
@@ -91,7 +92,8 @@ input {
 .post_info {
     font-size: 7pt;
     color: #828282;
-    padding-left: 15px;
+    padding-left: 25px;
+    padding-bottom: 5px;
 }
 
 .enum {
@@ -105,6 +107,8 @@ input {
 .upvote {
   font-size: 7pt;
   color: #9a9a9a;
+  padding-left: 7px;
+  padding-right: 3px;
 }
 
 .upvote a {
@@ -119,6 +123,8 @@ input {
 
 .sub {
   padding-bottom: 7px;
+  position: absolute;
+  left: 133px;
 }
 
 .label_user {
@@ -211,6 +217,8 @@ input {
 
 .unable_unvote {
   color: orangered;
+  padding-left: 8px;
+  padding-right: 3px;
 }
 
 .comments {
@@ -277,8 +285,8 @@ input {
 }
 
 .upvoted_button_c {
-  font-size: 9pt;
-  color: #828282;
+  font-size: 8pt;
+  color: #9a9a9a;
   outline: none;
   border: none;
   background: none;
@@ -287,6 +295,7 @@ input {
   text-align: left;
   cursor: pointer;
   line-height: 0;
+  padding-left: -3px;
 }
 
 .downvoted_button_c {
@@ -299,18 +308,115 @@ input {
   text-align: left;
   cursor: pointer;
   font-family: Verdana, Geneva, sans-serif;
-  padding-left: 5px;
 }
 
 .non-existent-vote {
-    font-size: 7pt;
-    color: #F6F6EF;
-    outline: none;
-    border: none;
-    background: none;
-    width: 40px;
-    text-align: left;
-    cursor: pointer;
-    font-family: Verdana, Geneva, sans-serif;
-    padding-left: 5px;
+  font-size: 7pt;
+  color: #F6F6EF;
+  outline: none;
+  border: none;
+  background: none;
+  width: 40px;
+  text-align: left;
+  font-family: Verdana, Geneva, sans-serif;
+  padding-left: 25px;
+}
+
+.area_text_comment {
+  padding-left: 25px;
+}
+
+.button_add_comment {
+  padding-left: 25px;
+  padding-top: 15px;
+}
+
+.info_detail_post {
+  position: absolute;
+  left: 115px;
+}
+
+.post_info_detail {
+  padding-top: 20px;
+  font-size: 7pt;
+  color: #828282;
+  padding-left: 20px;
+}
+
+.unable_unvote_detail {
+  color: orangered;
+  padding-left: 12px;
+}
+
+.br_between_microposts {
+  display: block;
+  margin: 5px 0;
+  content: " ";
+  line-height: 15px;
+}
+
+.br_peu {
+  display: block;
+  margin: 25px 0;
+  content: " ";
+  line-height: 15px;
+}
+
+.orange_line {
+  width: 84%;
+  text-align: left;
+  color: #ef6537;
+  background: #ef6537;
+  border: 0;
+  height: 2px;
+  position: absolute;
+  left: 115px;
+}
+
+.comment_info {
+  font-size: 8pt;
+  color: #828282;
+  padding-left: 25px;
+  padding-bottom: 5px;
+}
+
+.comment_info_list_comments {
+  font-size: 8pt;
+  color: #828282;
+}
+
+.comment_text {
+  color: black;
+  font-size: 9pt;
+  padding-left: 23px;
+}
+
+.br_comment_space {
+  display: block;
+  margin: 4px 0;
+  content: " ";
+  line-height: 15px;
+}
+
+.br_ini_upvoted_list {
+  display: block;
+  margin: 9px 0;
+  content: " ";
+  line-height: 15px;
+}
+
+.non_existent_point {
+  color: #F6F6EF;
+  width: 25px;
+  font-size: 10pt;
+  padding-bottom: 16px;
+  padding-left: 7px;
+}
+
+#mybutton a {
+  font-family: monospace;
+}
+
+.comment_author {
+  color: #828282;
 }

@@ -21,9 +21,23 @@ Rails.application.routes.draw do
   delete 'microposts/:id/likes', to: 'likes#destroy'
 
   get '/users/upvoted_submissions/:id', to: 'users#submissions'
+  get 'users/:id/comments', to:'users#comments'
+
+  get 'comment_likes_new', to: 'comment_likes#create'
+  delete 'comments/:id/comment_likes', to: 'comment_likes#destroy'
+
+  get '/threads', to: 'users#comments', as: 'user_comments'
 
   resources :microposts do
     resources :likes
+  end
+
+  resources :microposts do
+    resources :comments
+  end
+
+  resources :comments do
+    resources :comment_likes
   end
 
   # Defines the root path route ("/")
