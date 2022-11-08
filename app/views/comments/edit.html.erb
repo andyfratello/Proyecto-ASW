@@ -14,7 +14,15 @@
               <span class="pagetop"><b class="=hname"><%= link_to 'Hacker News', microposts_url, class: 'ruby_link' %></b></span>
               <span class="pagetop_new"><%= link_to 'new', microposts_url(:sort => "date"), class: 'ruby_link' %></span>
               |
-              <span class="pagetop"><%= link_to 'threads', microposts_url, class: 'ruby_link' %></span> <!-- Cal fer un link de threads -->
+              <% if current_user %>
+                | <span class="pagetop_"><a href="/users/<%= current_user.id %>/comments"> threads </a> </span>
+              <% end %>
+              | <span class="pagetop"><%= link_to 'ask', microposts_url(:type =>"ask"), class: 'ruby_link' %></span>
+              <% if current_user %>
+                | <span class="pagetop"><%= link_to 'submit', new_micropost_url, class: 'ruby_link' %></span>
+              <% else %>
+                | <span class="pagetop"><%= link_to 'submit', new_user_session_path, class: 'ruby_link' %></span>
+              <% end %>
 
               | <span class="pagetop"><%= link_to 'ask', microposts_url(:type => "ask"), class: 'ruby_link' %></span>
               | <span class="pagetop"><%= link_to 'submit', new_micropost_url, class: 'ruby_link' %></span>
@@ -25,7 +33,6 @@
             </td>
           </tr>
           </tbody>
-
         </table>
       </td>
     </tr>
@@ -42,7 +49,7 @@
       </span>
       <span> <%= @comment.comment_likes.count %> <%= (@comment.comment_likes.count) == 1 ? 'point' : 'points' %> by</span>
       <span>
-        <% if comment.user_id.to_i != 0 %>
+        <% if @comment.user_id.to_i != 0 %>
           <% if current_user %>
             <% if current_user.email == User.search_name(@comment.user_id.to_i)%>
               <a class="link_user" href="/users/edit"><%= User.search_name(@comment.user_id.to_i) %></a>
