@@ -117,7 +117,7 @@
                   |<%= button_to 'unvote', micropost_like_path(@micropost.id, pre_like), method: :delete, form_class:'downvoted_button', class: 'downvoted_button_c' %>
               <% end %>
               <span>
-                <% if current_user.id == User.search_name(@micropost.user_id)%>
+                <% if current_user.email == User.search_name(@micropost.user_id)%>
                  <a class="edit" href="<%= "/microposts/" %><%= @micropost.id %><%= "/edit" %>"><%= " | edit" %></a>
                 <% end %>
               </span>
