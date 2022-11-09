@@ -27,7 +27,7 @@ class RepliesController < ApplicationController
 
     respond_to do |format|
       if @reply.save
-        format.html { redirect_to comment_path(@comment), notice: "Reply was successfully created." }
+        format.html { redirect_to micropost_path(@comment.micropost.id), notice: "Reply was successfully created." }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @reply.errors, status: :unprocessable_entity }
