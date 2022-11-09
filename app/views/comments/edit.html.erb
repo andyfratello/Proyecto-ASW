@@ -1,0 +1,113 @@
+<thead>
+  <table id="hnmain" border="0" cellpadding="0" align="center" cellspacing="0" width="85%" bgcolor="#f6f6ef">
+    <tr>
+      <td bgcolor="#ff6600">
+        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+          <tbody>
+          <tr>
+            <td style="width:18px;padding-right:4px">
+              <a href=<% microposts_url %>>
+                <img src="https://news.ycombinator.com/y18.gif" width="18" height="18" style="border:1px white solid;">
+              </a>
+            </td>
+            <td style="line-height:12pt; height:10px;">
+              <span class="pagetop"><b class="=hname"><%= link_to 'Hacker News', microposts_url, class: 'ruby_link' %></b></span>
+              <span class="pagetop_new"><%= link_to 'new', microposts_url(:sort => "date"), class: 'ruby_link' %></span>
+              <% if current_user %>
+                | <span class="pagetop_"><a href="/users/<%= current_user.id %>/comments"> threads </a> </span>
+              <% end %>
+              | <span class="pagetop"><%= link_to 'ask', microposts_url(:type =>"ask"), class: 'ruby_link' %></span>
+              <% if current_user %>
+                | <span class="pagetop"><%= link_to 'submit', new_micropost_url, class: 'ruby_link' %></span>
+              <% else %>
+                | <span class="pagetop"><%= link_to 'submit', new_user_session_path, class: 'ruby_link' %></span>
+              <% end %>
+            </td>
+            <td style="text-align:right;padding-right:4px;">
+              <%= link_to current_user.email, edit_user_registration_path, class: 'ruby_link' %>
+              | <%= link_to 'logout', destroy_user_session_path, class: 'ruby_link', data: { turbo: "false" }, method: :delete %>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    <tr style="height:10px"></tr>
+  </table>
+</thead>
+
+<table border="0" cellpadding="0" align="center" cellspacing="0" width="85%" bgcolor="#f6f6ef">
+  <tbody>
+  <tr>
+    <td class="comment_info_list_comments">
+      <span>
+        <span class="unable_unvote">*</span>
+      </span>
+      <span> <%= @comment.comment_likes.count %> <%= (@comment.comment_likes.count) == 1 ? 'point' : 'points' %> by</span>
+      <span>
+        <% if @comment.user_id.to_i != 0 %>
+          <% if current_user %>
+            <% if current_user.email == User.search_name(@comment.user_id.to_i)%>
+              <a class="link_user" href="/users/edit"><%= User.search_name(@comment.user_id.to_i) %></a>
+            <% else %>
+              <a class="link_user" href="/users/<%= User.search_name(@comment.user_id.to_i) %>"><%= User.search_name(@comment.user_id.to_i) %></a>
+            <% end %>
+          <% else %>
+              <a class="link_user" href="/users/<%= User.search_name(@comment.user_id.to_i) %>"><%= User.search_name(@comment.user_id.to_i) %></a>
+          <% end %>
+        <% end %>
+      </span>
+      <span>
+        <% if @comment.created_at.to_i != 0 %>
+          <% if ((Time.now - @comment.created_at) / 1.year).round >= 1 %>
+            <%= ((Time.now - @comment.created_at) / 1.year).round %>  years ago
+          <% else %>
+            <% if ((Time.now - @comment.created_at) / 1.month).round >= 1 %>
+              <%= ((Time.now - @comment.created_at) / 1.month).round %> months ago
+            <% else %>
+              <% if ((Time.now - @comment.created_at) / 1.week).round >= 1 %>
+                <%= ((Time.now - @comment.created_at) / 1.week).round %> weeks ago
+              <% else %>
+                <% if ((Time.now - @comment.created_at) / 1.day).round >= 1 %>
+                  <%= ((Time.now - @comment.created_at) / 1.day).round %>  days ago
+                <% else %>
+                  <% if ((Time.now - @comment.created_at) / 1.hour).round >= 1 %>
+                    <%= ((Time.now - @comment.created_at) / 1.hour).round %> hours ago
+                  <% else %>
+                    <% if ((Time.now - @comment.created_at) / 1.minute).round >= 1 %>
+                      <%= ((Time.now - @comment.created_at) / 1.minute).round %> minutes ago
+                    <% else %>
+                      <%= ((Time.now - @comment.created_at) / 1.second).round %> seconds ago
+                    <% end %>
+                  <% end %>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </span>
+      <span>
+        <a href="<%= micropost_path(@comment.micropost_id) %>">
+          <span class="comments"> | parent</span>
+        </a>
+      </span>
+      <span>
+        <a class="edit" href="<%="/comments/"%><%=@comment.id%><%="/edit"%>"><%= " | edit" %></a>
+      </span>
+      <p class="comment_text" style="margin-top:2px;margin-right: 10px">
+        <%= @comment.text %>
+      </p>
+    </td>
+  </tr>
+  </tbody>
+
+  <tbody class="itemlist">
+    <tr height="20px">
+      <td class="taula_sencera">
+        <%= render "editForm", comment: @comment %>
+      </td>
+    </tr>
+    <tr><td><br></td></tr>
+  </tbody>
+</table>
+<br>

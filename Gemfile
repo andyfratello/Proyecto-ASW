@@ -12,10 +12,14 @@ gem "stimulus-rails",  "1.0.4"
 gem "jbuilder",        "2.11.5"
 gem "puma",            "5.6.4"
 gem "bootsnap",        "1.12.0", require: false
+gem "omniauth-rails_csrf_protection"
+
+gem 'devise'
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
 
 group :development, :test do
   gem "sqlite3", "1.4.2"
-  gem "debug",   "1.5.0", platforms: %i[ mri mingw x64_mingw ]
 end
 
 group :development do
@@ -35,4 +39,4 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem.
 # Uncomment the following line if you're running Rails
 # on a native Windows system:
-# gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', '1.2022.4'

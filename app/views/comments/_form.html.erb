@@ -1,0 +1,14 @@
+<%= form_with(model: comment) do |form| %>
+
+  <%= form.hidden_field :micropost_id %>
+
+  <span class="area_text_comment">
+    <%= form.text_area "", :size => "80x8" %>
+  </span>
+
+  <div class="button_add_comment">
+    <%= form.submit "add comment" %>
+  </div>
+  <br><br><br><br>
+
+<% end %>

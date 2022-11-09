@@ -1,0 +1,32 @@
+<%= form_with(model: comment) do |editForm| %>
+  <% if comment.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(comment.errors.count, "error") %> prohibited this micropost from being saved:</h2>
+
+      <ul>
+        <% comment.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table class="taula_edit_comment">
+    <tbody>
+    <tr>
+      <td class=taula_submit valign = "top">
+        <%= editForm.label :text %>:
+      </td>
+      <td><%= editForm.text_area :text, :size => "60x5"%></td>
+    </tr>
+    <br>
+    <tr>
+      <td>
+        <br>
+        <%= editForm.submit "update" %>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+<% end %>

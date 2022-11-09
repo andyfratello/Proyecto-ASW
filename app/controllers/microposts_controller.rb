@@ -1,20 +1,28 @@
 class MicropostsController < ApplicationController
-  before_action :set_micropost, only: %i[ show edit update destroy ]
+  before_action :set_micropost, only: %i[ show edit update destroy like unlike]
 
   # GET /microposts or /microposts.json
   def index
     @microposts = Micropost.all
 
     sort = params[:sort]
+    type = params[:type]
+    user = params[:user]
 
     if sort == 'date'
       @microposts = Micropost.order(created_at: :desc)
-    end
+    elsif type == 'ask'
+      @microposts = Micropost.where(url: [nil, ""])
 
+    elsif user != nil
+      @microposts = Micropost.where(user_id: user).order(created_at: :desc)
+    end
   end
 
   # GET /microposts/1 or /microposts/1.json
   def show
+    @micropost = Micropost.find(params[:id])
+    @comments = Comment.where(micropost_id: @micropost.id)
   end
 
   # GET /microposts/new
@@ -29,8 +37,15 @@ class MicropostsController < ApplicationController
   # POST /microposts or /microposts.json
   def create
     @micropost = Micropost.new(micropost_params)
+    @micropost.user_id = current_user.id
 
     respond_to do |format|
+      if micropost_params[:url] != "" && Micropost.exists?(url: micropost_params[:url])
+        @micropost = Micropost.find_by(url: micropost_params[:url])
+        format.html { redirect_to  @micropost, notice: "The url provided is already used on another micropost." }
+        # CAMBIAR ^ para que redireccione a la vista
+        format.json { render json: @micropost.errors, status: :unprocessable_entity }
+      end
       if @micropost.save
         format.html { redirect_to  microposts_url(:sort => "date"), notice: "Micropost was successfully created." }
         format.json { render :show, status: :created, location: @micropost }
@@ -63,6 +78,24 @@ class MicropostsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def like
+    @micropost.save
+    respond_to do |format|
+      format.html { redirect_to root_path }
+      format.json { head :no_content }
+    end
+  end
+
+  def unlike
+    @micropost.save
+    respond_to do |format|
+      format.html { redirect_to root_path }
+      format.json { head :no_content }
+    end
+  end
+
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

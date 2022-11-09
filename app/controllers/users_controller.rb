@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
+  before_action :create_local_user
 
   # GET /users or /users.json
   def index
@@ -49,10 +50,45 @@ class UsersController < ApplicationController
 
   # DELETE /users/1 or /users/1.json
   def destroy
+    params[:id] = nil
+    redirect_to root_path
+=begin
     @user.destroy
 
     respond_to do |format|
       format.html { redirect_to users_url, notice: "User was successfully destroyed." }
+      format.json { head :no_content }
+    end
+=end
+  end
+
+  def submissions
+    @likes = Like.where(user_id: current_user.id)
+    # @likes.each do |like|
+    # @microposts = Micropost.where(id: like.micropost_id)
+    #end
+    respond_to do |format|
+      format.html { render :user_submissions}
+      format.json { head :no_content }
+    end
+  end
+
+  def upvoted_comments
+    @comment_likes = CommentLike.where(user_id: current_user.id)
+    # @likes.each do |like|
+    # @microposts = Micropost.where(id: like.micropost_id)
+    #end
+    respond_to do |format|
+      format.html { render :user_upvoted_comments}
+      format.json { head :no_content }
+    end
+  end
+
+  def comments
+    @user = User.find(params[:id])
+    @comments = Comment.where(user_id: @user.id)
+    respond_to do |format|
+      format.html { render :user_comments}
       format.json { head :no_content }
     end
   end
@@ -60,11 +96,23 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.find(params[:id])
+      if params[:id] == "sign_out"
+        sign_out current_user
+      else
+        @user = User.find(params[:id])
+      end
     end
+
+    def create_local_user
+      if (!User.any?)
+        @current_user = User.create(:id => 0, :name => "hardcoded_user", :email => "current@user.com")
+        @current_user.save()
+      end
+    end
+
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:name, :email)
+      params.require(:user).permit(:name, :email, :about)
     end
 end

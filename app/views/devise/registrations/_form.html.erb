@@ -1,0 +1,60 @@
+<%= form_with(model: user) do |form| %>
+  <% if user.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+        <% user.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table border="0">
+    <tbody>
+    <tr>
+      <td>
+        <span class="about_title" style="vertical-align: top;">about:</span>
+      <% if current_user && current_user.id==@user.id %>
+        <span class="about_txt"><textarea rows="5" cols="60" wrap="virtual" name="user[about]" ><%= current_user.about %></textarea></span>
+      <% else %>
+        <span class="about_txt"><%= @user.about %></span>
+      <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td class="link_stories">
+        <a href="/microposts?user=<%= @user.id %>">
+          <span class="link_stories">submissions</span>
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td class="link_comments">
+        <a href="/users/<%= @user.id %>/comments">
+          <span class="link_comments">comments</span>
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td class="link_upvoted">
+        <a href="/users/upvoted_submissions/<%= @user.id %>">
+          <span class="link_upvoted_sub">upvoted submissions</span>
+        </a>
+        /
+        <a href="/users/upvoted_comments/<%= @user.id %>">
+          <span class="link_upvoted_com">comments</span>
+        </a>
+        <span class="private">(private)</span>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="update_user">
+    <%= form.submit "update" %>
+  </div>
+
+  <br><br><br>
+<% end %>
