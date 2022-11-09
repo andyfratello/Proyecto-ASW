@@ -6,7 +6,7 @@
         <tbody>
         <tr>
           <td style="width:18px;padding-right:4px">
-            <a href=http://www.ycombinator.com/>
+            <a href=<% microposts_url %>>
               <img src="https://news.ycombinator.com/y18.gif" width="18" height="18" style="border:1px white solid;">
             </a>
           </td>
@@ -117,7 +117,13 @@
                 <a class="edit" href="<%= "/microposts/" %><%= @micropost.id %><%= "/edit" %>"><%= " | edit |" %></a>
               </span>
               <span>
-                <a class="comments" href="<%= "/microposts/" %><%= @micropost.id %>"><%= " comments" %></a>
+                <a class="comments" href="<%="/microposts/"%><%=@micropost.id%>">
+                  <% if @micropost.comments.count == 0 %>
+                    <%= 'discuss' %>
+                  <% else %>
+                    <%= @micropost.comments.count %> <%= (@micropost.comments.count) == 1 ? 'comment' : 'comments'%>
+                  <% end %>
+                </a>
               </span>
             <% end %>
           </span>
@@ -171,16 +177,14 @@
           </span>
           <span>
             <% if comment.user_id.to_i != 0 %>
-              <% if comment.user_id.to_i != 0 %>
-                <% if current_user %>
-                  <% if current_user.email == User.search_name(comment.user_id.to_i)%>
-                    <a class="link_user" href="/users/edit"><span class="comment_author"><%= User.search_name(comment.user_id.to_i) %></span></a>
-                  <% else %>
-                    <a class="link_user" href="/users/<%= comment.user_id.to_i %>"><span class="comment_author"><%= User.search_name(comment.user_id.to_i)%></span></a>
-                  <% end %>
+              <% if current_user %>
+                <% if current_user.email == User.search_name(comment.user_id.to_i)%>
+                  <a class="link_user" href="/users/edit"><span class="comment_author"><%= User.search_name(comment.user_id.to_i) %></span></a>
                 <% else %>
-                  <a class="link_user" href="/users/<%= comment.user_id.to_i %>"><span class="comment_author"><%= User.search_name(comment.user_id.to_i) %></span></a>
+                  <a class="link_user" href="/users/<%= comment.user_id.to_i %>"><span class="comment_author"><%= User.search_name(comment.user_id.to_i)%></span></a>
                 <% end %>
+              <% else %>
+                <a class="link_user" href="/users/<%= comment.user_id.to_i %>"><span class="comment_author"><%= User.search_name(comment.user_id.to_i) %></span></a>
               <% end %>
             <% end %>
           </span>
@@ -223,9 +227,26 @@
               <% end %>
             <% end %>
           </span>
-          <p class="comment_text" style="margin-top:2px;margin-right: 10px">
+          <span>
+            <% if current_user %>
+              <% if current_user.id == comment.user_id %>
+                <a class="edit" href="<%="/comments/"%><%=comment.id%><%="/edit"%>"><%= " | edit" %></a>
+              <% end %>
+            <% end %>
+          </span>
+          <p class="comment_text" style="margin-top:2px;margin-right:10px;margin-bottom:3px">
             <%= comment.text %>
           </p>
+          <span>
+            <% if comment.user_id.to_i != 0 %>
+              <% if current_user %>
+                <!-- cal fer link per fer reply --><%= link_to 'reply', comment_likes_path, params:{comment_id: comment.id}, method: :post, form_class:'reply', class: 'reply' %>
+              <% else %>
+                <span class="reply"><a href="<%= new_user_session_path %>">reply</a></span>
+              <% end %>
+            <% end %>
+          </span>
+          <span><br><br></span>
         </div>
       <% end %>
     </td>

@@ -419,4 +419,27 @@ input {
 
 .comment_author {
   color: #828282;
+  padding-top: 5px;
+}
+
+.comment_author:hover {
+  color: #828282;
+  text-decoration: underline;
+}
+
+table.taula_edit_comment td {
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+}
+
+table.taula_edit_comment {
+  border-collapse: separate;
+  border-spacing: 5px;
+}
+
+.reply {
+  color: black;
+  font-size: 7pt;
+  padding-left: 23px;
+  text-decoration: underline;
 }

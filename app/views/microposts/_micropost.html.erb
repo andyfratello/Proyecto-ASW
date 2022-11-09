@@ -58,8 +58,13 @@
     <% end %>
   </span>
   <span>
-    <a class="comments" href="<%="/microposts/"%><%=micropost.id%>"><%= " | comments" %></a>
-  <!-- num comments -->
+    | <a class="comments" href="<%="/microposts/"%><%=micropost.id%>">
+      <% if micropost.comments.count == 0 %>
+        <%= 'discuss' %>
+      <% else %>
+        <%= micropost.comments.count %> <%= (micropost.comments.count) == 1 ? 'comment' : 'comments'%>
+      <% end %>
+    </a>
   </span>
     <span>
       <% if current_user %>
