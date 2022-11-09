@@ -28,7 +28,7 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to  micropost_path(@micropost), notice: "comment was successfully created." }
+        format.html { redirect_to  micropost_path(@micropost)}
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @micropost.errors, status: :unprocessable_entity }
@@ -54,7 +54,7 @@ class CommentsController < ApplicationController
   def destroy
     if @comment.destroy
     respond_to do |format|
-      format.html { redirect_to user_comments_url, notice: "Comment was successfully destroyed." }
+      format.html { redirect_to user_comments_url }
       format.json { head :no_content }
     end
     end
