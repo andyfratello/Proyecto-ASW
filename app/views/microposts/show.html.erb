@@ -240,9 +240,9 @@
           <span>
             <% if comment.user_id.to_i != 0 %>
               <% if current_user %>
-                <!-- cal fer link per fer reply --><%= link_to 'reply', comment_likes_path, params:{comment_id: comment.id}, method: :post, form_class:'reply', class: 'reply' %>
+                <a class="reply" href="<%="/comments/"%><%=comment.id%>">reply</a>
               <% else %>
-                <span class="reply"><a href="<%= new_user_session_path %>">reply</a></span>
+                <a class="reply" href="<%= new_user_session_path %>">reply</a>
               <% end %>
             <% end %>
           </span>

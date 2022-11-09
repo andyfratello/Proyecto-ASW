@@ -1,0 +1,14 @@
+<%= form_with(model: reply) do |form| %>
+
+  <%= form.hidden_field :comment_id %>
+
+  <span class="area_text_comment">
+    <%= form.text_area "", :size => "80x8" %>
+  </span>
+
+  <div class="button_add_comment">
+    <%= form.submit "reply" %>
+  </div>
+  <br><br><br><br>
+
+<% end %>

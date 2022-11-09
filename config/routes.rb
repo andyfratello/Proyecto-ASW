@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :replies
   resources :comment_likes
   get 'comments/new'
   get 'comments/create'
@@ -29,6 +30,8 @@ Rails.application.routes.draw do
 
   get '/threads', to: 'users#comments', as: 'user_comments'
 
+  get '/comments/:id/replies', to: 'comments#replies'
+
   resources :microposts do
     resources :likes
   end
@@ -39,6 +42,10 @@ Rails.application.routes.draw do
 
   resources :comments do
     resources :comment_likes
+  end
+
+  resources :comments do
+    resources :replies
   end
 
   # Defines the root path route ("/")

@@ -75,6 +75,11 @@ class CommentsController < ApplicationController
     end
   end
 
+  def reply
+    @comment = Comment.find(params[:id])
+    @reply = @comment.replies.build
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_comment
