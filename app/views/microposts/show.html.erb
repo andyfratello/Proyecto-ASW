@@ -14,8 +14,9 @@
             <span class="pagetop"><b class="=hname"><%= link_to 'Hacker News', microposts_url, class: 'ruby_link' %></b></span>
             <span class="pagetop_new"><%= link_to 'new', microposts_url(:sort => "date"), class: 'ruby_link' %></span>
             |
-            <span class="pagetop"><%= link_to 'threads', microposts_url, class: 'ruby_link' %></span> <!-- Cal fer un link de threads -->
-
+            <% if current_user %>
+              <span class="pagetop_"><a href="/users/<%= current_user.id %>/comments"> threads </a> </span>
+            <% end %>
             | <span class="pagetop"><%= link_to 'ask', microposts_url(:type => "ask"), class: 'ruby_link' %></span>
             | <span class="pagetop"><%= link_to 'submit', new_micropost_url, class: 'ruby_link' %></span>
           </td>
@@ -70,16 +71,16 @@
         <span class="author_post">
            <span> <%= @micropost.likes.count %> <%= (@micropost.likes.count) == 1 ? 'point' : 'points' %> by
              <% if current_user %>
-            <% if current_user.email == User.search_name(@micropost.user_id)%>
-              <a class="link_user" href="/users/edit"><%= @micropost.user.email %></a>
-            <% else %>
-              <a class="link_user" href="/users/<%= @micropost.user_id %>"><%= @micropost.user.email %></a>
-            <% end %>
-          <% else %>
-            <a class="link_user" href="/users/<%= @micropost.user.id %>"><%= @micropost.user.email %></a>
-          <% end %>
-        </span>
-        <span>
+               <% if current_user.email == User.search_name(@micropost.user_id)%>
+                 <a class="link_user" href="/users/edit"><%= @micropost.user.email %></a>
+               <% else %>
+                 <a class="link_user" href="/users/<%= @micropost.user_id %>"><%= @micropost.user.email %></a>
+               <% end %>
+             <% else %>
+               <a class="link_user" href="/users/<%= @micropost.user.id %>"><%= @micropost.user.email %></a>
+             <% end %>
+           </span>
+          <span>
             <% if ((Time.now - @micropost.created_at) / 1.year).round >= 1 %>
               <%= ((Time.now - @micropost.created_at) / 1.year).round %>  years ago
             <% else %>
@@ -94,17 +95,17 @@
                   <% else %>
                     <% if ((Time.now - @micropost.created_at) / 1.hour).round >= 1 %>
                         <%= ((Time.now - @micropost.created_at) / 1.hour).round %> hours ago
-                      <% else %>
+                    <% else %>
                       <% if ((Time.now - @micropost.created_at) / 1.minute).round >= 1 %>
-                      <%= ((Time.now - @micropost.created_at) / 1.minute).round %> minutes ago
+                        <%= ((Time.now - @micropost.created_at) / 1.minute).round %> minutes ago
                       <% else %>
-                      <%= ((Time.now - @micropost.created_at) / 1.second).round %> seconds ago
+                        <%= ((Time.now - @micropost.created_at) / 1.second).round %> seconds ago
                       <% end %>
+                    <% end %>
                   <% end %>
                 <% end %>
               <% end %>
             <% end %>
-          <% end %>
           </span>
           <span>
             <% if current_user %>
@@ -112,6 +113,12 @@
               <% if pre_like %>
                   | <%= button_to 'unvote', micropost_like_path(@micropost.id, pre_like), method: :delete, form_class:'downvoted_button', class: 'downvoted_button_c' %>
               <% end %>
+              <span>
+                <a class="edit" href="<%= "/microposts/" %><%= @micropost.id %><%= "/edit" %>"><%= " | edit |" %></a>
+              </span>
+              <span>
+                <a class="comments" href="<%= "/microposts/" %><%= @micropost.id %>"><%= " comments" %></a>
+              </span>
             <% end %>
           </span>
         </span>
@@ -133,7 +140,11 @@
           <%= f.text_area :text, :size => "80x8" %>
         </p>
         <p style="padding-left: 25px">
-          <%= f.submit "add comment"%>
+          <% if current_user %>
+            <%= f.submit "add comment"%>
+          <% else %>
+            <button id="mybutton"><a href="<%= new_user_session_path %>">add comment</a></button>
+          <% end %>
         </p>
         <%end%>
     </td>
@@ -144,16 +155,33 @@
         <div class="comment_info">
           <span>
             <% if comment.user_id.to_i != 0 %>
-              <% if current_user.email == User.search_name(comment.user_id)%>
-                <span class="unable_unvote">*</span>
+              <% if current_user %>
+                <% pre_like = comment.comment_likes.find { |comment_like| comment_like.user_id == current_user.id} %>
+                <% if current_user.email == User.search_name(comment.user_id)%>
+                  <span class="unable_unvote">*</span>
+                <% elsif !pre_like %>
+                  <%= button_to '▲', comment_likes_path, params:{comment_id: comment.id}, method: :post, form_class:'upvoted_button', class: 'upvoted_button_c' %>
+                  <%else%>
+                    <span class="non-existent-vote"></span>
+                <% end %>
               <% else %>
-                <%= button_to '▲', comment_likes_path(comment), method: :post, form_class:'upvoted_button', class: 'upvoted_button_c' %>
+                <span class="upvote"><a href="<%= new_user_session_path %>">▲</a></span>
               <% end %>
             <% end %>
           </span>
           <span>
             <% if comment.user_id.to_i != 0 %>
-              <%= User.search_name(comment.user_id.to_i) %>
+              <% if comment.user_id.to_i != 0 %>
+                <% if current_user %>
+                  <% if current_user.email == User.search_name(comment.user_id.to_i)%>
+                    <a class="link_user" href="/users/edit"><span class="comment_author"><%= User.search_name(comment.user_id.to_i) %></span></a>
+                  <% else %>
+                    <a class="link_user" href="/users/<%= comment.user_id.to_i %>"><span class="comment_author"><%= User.search_name(comment.user_id.to_i)%></span></a>
+                  <% end %>
+                <% else %>
+                  <a class="link_user" href="/users/<%= comment.user_id.to_i %>"><span class="comment_author"><%= User.search_name(comment.user_id.to_i) %></span></a>
+                <% end %>
+              <% end %>
             <% end %>
           </span>
           <span>
@@ -190,7 +218,7 @@
               <% if current_user %>
                 <% pre_like = comment.comment_likes.find { |comment_like| comment_like.user_id == current_user.id} %>
                 <% if pre_like %>
-                    | <%= button_to 'unvote', comment_like_path(comment, pre_like), method: :delete, form_class:'downvoted_button', class: 'downvoted_button_c' %>
+                    | <%= button_to 'unvote', comment_like_path(pre_like), params:{comment_id: comment.id} ,method: :delete, form_class:'downvoted_button', class: 'downvoted_button_c' %>
                 <% end %>
               <% end %>
             <% end %>

@@ -12,7 +12,7 @@ class LikesController < ApplicationController
 
   def destroy
     if !(already_liked?)
-      flash[:notice] = "You can't like more than once"
+      flash[:notice] = "You can't unlike more than once"
     else
       @like.destroy
     end

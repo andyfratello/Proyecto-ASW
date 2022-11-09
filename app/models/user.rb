@@ -6,6 +6,7 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: [:google_oauth2]
 
   has_many :microposts
+  has_many :comments
   has_many :likes, dependent: :destroy
   has_many :comment_likes, dependent: :destroy
 

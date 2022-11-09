@@ -8,6 +8,7 @@ class CommentsController < ApplicationController
 
   # GET /comments/1 or /comments/1.json
   def show
+    @comment = Comment.find(params[:id])
   end
 
   # GET /comments/new
@@ -40,11 +41,11 @@ class CommentsController < ApplicationController
   def update
     respond_to do |format|
       if @comment.update(comment_params)
-        format.html { redirect_to comment_url(@comment), notice: "Comment was successfully updated." }
-        format.json { render :show, status: :ok, location: @comment }
+        format.html { redirect_to micropost_path(@comment.micropost_id), notice: "Comment was successfully updated." }
+        format.json { render :show, status: :ok, location: micropost_path(@comment.micropost_id) }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
+        format.json { render json: comment.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -58,7 +59,7 @@ class CommentsController < ApplicationController
     end
   end
 
-  def like
+  def comment_like
     @comment.save
     respond_to do |format|
       format.html { redirect_to root_path }
@@ -66,7 +67,7 @@ class CommentsController < ApplicationController
     end
   end
 
-  def unlike
+  def comment_unlike
     @comment.save
     respond_to do |format|
       format.html { redirect_to root_path }

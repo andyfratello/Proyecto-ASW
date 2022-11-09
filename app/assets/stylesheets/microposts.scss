@@ -380,6 +380,11 @@ input {
   padding-bottom: 5px;
 }
 
+.comment_info_list_comments {
+  font-size: 8pt;
+  color: #828282;
+}
+
 .comment_text {
   color: black;
   font-size: 9pt;
@@ -391,4 +396,27 @@ input {
   margin: 4px 0;
   content: " ";
   line-height: 15px;
+}
+
+.br_ini_upvoted_list {
+  display: block;
+  margin: 9px 0;
+  content: " ";
+  line-height: 15px;
+}
+
+.non_existent_point {
+  color: #F6F6EF;
+  width: 25px;
+  font-size: 10pt;
+  padding-bottom: 16px;
+  padding-left: 7px;
+}
+
+#mybutton a {
+  font-family: monospace;
+}
+
+.comment_author {
+  color: #828282;
 }
