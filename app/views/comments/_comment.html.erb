@@ -72,6 +72,13 @@
           <% end %>
         <% end %>
       </span>
+      <span>
+        <% if current_user %>
+        <% if current_user.id == comment.user_id%>
+          | <%= button_to 'delete', comment, method: :delete, form_class: 'delete_button', class: 'delete'%>
+        <% end %>
+      <% end %>
+      </span>
       <p class="comment_text" style="margin-top:2px;margin-right: 10px">
         <%= comment.text %>
       </p>
