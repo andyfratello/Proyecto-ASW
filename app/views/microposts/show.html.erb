@@ -17,7 +17,11 @@
               <span class="pagetop_"><a href="/users/<%= current_user.id %>/comments"> | threads </a> </span>
             <% end %>
             | <span class="pagetop"><%= link_to 'ask', microposts_url(:type => "ask"), class: 'ruby_link' %></span>
-            | <span class="pagetop"><%= link_to 'submit', new_micropost_url, class: 'ruby_link' %></span>
+            <% if current_user %>
+              | <span class="pagetop"><%= link_to 'submit', new_micropost_url, class: 'ruby_link' %></span>
+            <% else %>
+              | <span class="pagetop"><%= link_to 'submit', new_user_session_path, class: 'ruby_link' %></span>
+            <% end %>
           </td>
           <td style="text-align:right;padding-right:4px;">
             <% if current_user %>
@@ -110,17 +114,19 @@
             <% if current_user %>
               <% pre_like = @micropost.likes.find { |like| like.user_id == current_user.id} %>
               <% if pre_like %>
-                  | <%= button_to 'unvote', micropost_like_path(@micropost.id, pre_like), method: :delete, form_class:'downvoted_button', class: 'downvoted_button_c' %>
+                  |<%= button_to 'unvote', micropost_like_path(@micropost.id, pre_like), method: :delete, form_class:'downvoted_button', class: 'downvoted_button_c' %>
               <% end %>
               <span>
-                <a class="edit" href="<%= "/microposts/" %><%= @micropost.id %><%= "/edit" %>"><%= " | edit |" %></a>
+                <% if current_user.id == User.search_name(@micropost.user_id)%>
+                 <a class="edit" href="<%= "/microposts/" %><%= @micropost.id %><%= "/edit" %>"><%= " | edit" %></a>
+                <% end %>
               </span>
               <span>
                 <a class="comments" href="<%="/microposts/"%><%=@micropost.id%>">
                   <% if @micropost.comments.count == 0 %>
-                    <%= 'discuss' %>
+                    <%= ' | discuss' %>
                   <% else %>
-                    <%= @micropost.comments.count %> <%= (@micropost.comments.count) == 1 ? 'comment' : 'comments'%>
+                     | <%= @micropost.comments.count %> <%= (@micropost.comments.count) == 1 ? 'comment' : 'comments'%>
                   <% end %>
                 </a>
               </span>
