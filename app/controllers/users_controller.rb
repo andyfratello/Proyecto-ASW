@@ -26,7 +26,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to user_url(@user), notice: "User was successfully created." }
+        format.html { redirect_to user_url(@user) }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -39,7 +39,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to user_url(@user), notice: "User was successfully updated." }
+        format.html { redirect_to user_url(@user) }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -69,6 +69,17 @@ class UsersController < ApplicationController
     #end
     respond_to do |format|
       format.html { render :user_submissions}
+      format.json { head :no_content }
+    end
+  end
+
+  def upvoted_comments
+    @comment_likes = CommentLike.where(user_id: current_user.id)
+    # @likes.each do |like|
+    # @microposts = Micropost.where(id: like.micropost_id)
+    #end
+    respond_to do |format|
+      format.html { render :user_upvoted_comments}
       format.json { head :no_content }
     end
   end
