@@ -79,6 +79,13 @@
         <% end %>
       <% end %>
       </span>
+      <span>
+        <% if current_user %>
+        <% if pre_like%>
+          | <%= button_to 'unvote', comment_like_path(pre_like), params:{comment_id: comment.id} ,method: :delete, form_class:'downvoted_button', class: 'downvoted_button_c' %>
+        <% end %>
+      <% end %>
+      </span>
       <p class="comment_text" style="margin-top:2px;margin-right: 10px">
         <%= comment.text %>
       </p>
