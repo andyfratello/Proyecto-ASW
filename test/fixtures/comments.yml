@@ -2,10 +2,10 @@
 
 one:
   micropost: one
-  user: one
+  user_id: 1
   text: MyText
 
 two:
   micropost: two
-  user: two
+  user_id: 1
   text: MyText

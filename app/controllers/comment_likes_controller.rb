@@ -16,9 +16,7 @@ class CommentLikesController < ApplicationController
 
   # DELETE /comment_likes/1 or /comment_likes/1.json
   def destroy
-    if !(already_liked?)
-      flash[:notice] = "You can't unlike more than once"
-    else
+    if already_liked?
       @comment_like.destroy
     end
     redirect_back fallback_location: root_path # redirect_to microposts_path(@micropost)

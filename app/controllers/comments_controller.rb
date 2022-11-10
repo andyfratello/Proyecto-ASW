@@ -40,7 +40,7 @@ class CommentsController < ApplicationController
   def update
     respond_to do |format|
       if @comment.update(comment_params)
-        format.html { redirect_to micropost_path(@comment.micropost_id), notice: "Comment was successfully updated." }
+        format.html { redirect_to micropost_path(@comment.micropost_id)}
         format.json { render :show, status: :ok, location: micropost_path(@comment.micropost_id) }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -75,6 +75,15 @@ class CommentsController < ApplicationController
     end
   end
 
+  def reply
+    @comment = Comment.find(params[:id])
+    @micropost = @comment.micropost_id
+    respond_to do |format|
+      format.html { render :showForm}
+      format.json { head :no_content }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_comment
@@ -83,6 +92,6 @@ class CommentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def comment_params
-      params.require(:comment).permit(:text, :user_id)
+      params.require(:comment).permit(:text, :user_id, :micropost_id, :parent_id)
     end
 end
