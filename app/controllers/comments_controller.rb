@@ -77,7 +77,11 @@ class CommentsController < ApplicationController
 
   def reply
     @comment = Comment.find(params[:id])
-    @reply = @comment.replies.build
+    @micropost = @comment.micropost_id
+    respond_to do |format|
+      format.html { render :showForm}
+      format.json { head :no_content }
+    end
   end
 
   private
@@ -88,6 +92,6 @@ class CommentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def comment_params
-      params.require(:comment).permit(:text, :user_id, :parent_id)
+      params.require(:comment).permit(:text, :user_id, :micropost_id, :parent_id)
     end
 end

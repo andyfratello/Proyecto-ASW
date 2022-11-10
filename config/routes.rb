@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :replies
   resources :comment_likes
   get 'comments/new'
   get 'comments/create'
@@ -30,7 +29,7 @@ Rails.application.routes.draw do
 
   get '/threads', to: 'users#comments', as: 'user_comments'
 
-  get '/comments/:id/replies', to: 'comments#replies'
+  get '/comments/:id/replies', to: 'comments#reply'
 
   resources :microposts do
     resources :likes

@@ -1,4 +1,4 @@
- <div class="comment_info_list_comments">
+<div class="comment_info_list_comments">
       <span>
         <% if comment.user_id.to_i != 0 %>
           <% if current_user %>
@@ -70,15 +70,11 @@
           <% end %>
         <% end %>
       </span>
-      <p class="comment_text" style="margin-top:2px;margin-right: 10px">
-        <%= comment.text %>
-      </p>
-      <a href="#" class="comment-form-display">reply</a>
-      <div class="comment-form">
-        <%= render partial: 'comments/form', locals: {micropost: comment.micropost_id, parent: comment.id} %>
-      </div>
-      <div class="sub-comment">
-        <%= render comment.comments.order(id: :desc) %>
-      </div>
-    </div>
-
+  <p class="comment_text" style="margin-top:2px;margin-right: 10px">
+    <%= comment.text %>
+  </p>
+  <a href="/comments/<%=comment.id%>/replies" class="comment-form-display">reply</a>
+  <div class="sub-comment">
+    <%= render comment.comments.order(id: :desc) %>
+  </div>
+</div>

@@ -1,8 +1,7 @@
-<%= form_for([@micropost, @micropost.comments.build]) do |f| %>
-  <% if !parent.nil? %>
-    <input type="hidden" name="comment[parent_id]" value="<%= parent %>">
-  <% end %>
-
+<%= form_for(micropost.comments.build, url: "/microposts/#{micropost.id}/comments") do |f| %>
+  <% unless parent.nil? %>
+<input type="hidden" name="comment[parent_id]" value="<%=  parent  %>">
+<%  end %>
   <%= f.hidden_field :micropost_id %>
 
   <p style="padding-left: 25px">
