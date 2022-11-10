@@ -8,3 +8,7 @@
 
   <%= button_to "Destroy this reply", @reply, method: :delete %>
 </div>
+
+<ul>
+  <%= render partial: 'replies/reply', collection: @comment.replies %>
+</ul>

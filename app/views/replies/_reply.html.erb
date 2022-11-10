@@ -15,3 +15,17 @@
   </p>
 
 </div>
+
+<li>
+  <%= reply.text %> -
+
+  <%= form_for [reply, Reply.new] do |f| %>
+    <%= f.text_area :text, placeholder: "Add a Reply" %><br/>
+    <%= f.submit "reply"  %>
+  <% end %>
+
+  <ul>
+    <%= render partial: 'replies/reply', collection: reply.replies %>
+  </ul>
+
+</li>

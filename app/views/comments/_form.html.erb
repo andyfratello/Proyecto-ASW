@@ -1,5 +1,7 @@
-<%= form_with(model: comment) do |form| %>
-
+<%= form_with(model: @comment) do |form| %>
+  <% if !parent.nil? %>
+    <input type="hidden" name="comment[parent_id]" value="<%= parent %>">
+  <% end %>
   <%= form.hidden_field :micropost_id %>
 
   <span class="area_text_comment">
