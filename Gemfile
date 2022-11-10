@@ -21,7 +21,6 @@ gem 'omniauth-google-oauth2'
 group :development, :test do
   gem "debug",   "1.5.0", platforms: %i[ mri mingw x64_mingw ]
 end
-
 group :development do
   gem "sqlite3", "1.4.2"
   gem "web-console", "4.2.0"
@@ -40,6 +39,5 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem.
 # Uncomment the following line if you're running Rails
-# on a native Windows system
+# on a native Windows system:
 gem 'tzinfo-data'
-
