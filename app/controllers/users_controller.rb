@@ -103,14 +103,6 @@ class UsersController < ApplicationController
       end
     end
 
-    def create_local_user
-      if (!User.any?)
-        @current_user = User.create(:id => 0, :name => "hardcoded_user", :email => "current@user.com")
-        @current_user.save()
-      end
-    end
-
-
     # Only allow a list of trusted parameters through.
     def user_params
       params.require(:user).permit(:name, :email, :about)
