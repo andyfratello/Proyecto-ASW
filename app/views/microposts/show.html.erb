@@ -61,7 +61,7 @@
           <% end %>
             <span class="title"><a href="<%= "/microposts/" %><%= @micropost.id %>"><%= @micropost.title %></a> </span>
             <span class="url_post">
-                <%= link_to @micropost.url, "http://#{@micropost.url}" %>
+                <%= link_to @micropost.url, "#{@micropost.url}" %>
             </span>
         </span>
       </td>
