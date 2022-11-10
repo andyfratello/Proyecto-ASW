@@ -6,7 +6,7 @@
             <% if current_user.email == User.search_name(comment.user_id)%>
               <span class="unable_unvote">*</span>
             <% elsif !pre_like%>
-              <%= button_to '▲', comment_likes_path(comment.id), method: :post, form_class:'upvoted_button', class: 'upvoted_button_c' %>
+              <%= button_to '▲', comment_likes_path, params:{comment_id: comment.id}, method: :post, form_class:'upvoted_button', class: 'upvoted_button_c' %>
               <% else %>
               <span class="non-existent-vote"></span>
             <% end %>
