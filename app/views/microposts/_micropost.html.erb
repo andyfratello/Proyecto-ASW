@@ -84,7 +84,7 @@
     <% if current_user %>
       <% pre_like = micropost.likes.find { |like| like.user_id == current_user.id} %>
         <% if pre_like %>
-          | <%= button_to 'unvote', micropost_like_path(micropost.id, pre_like), method: :delete, form_class:'downvoted_button', class: 'downvoted_button_c' %>
+          |<%= button_to 'unvote', micropost_like_path(micropost.id, pre_like), method: :delete, form_class:'downvoted_button', class: 'downvoted_button_c' %>
       <% end %>
     <% end %>
   </span>
