@@ -155,7 +155,7 @@
         <%end%>
     </td>
   </tr>
-  <tr>
+  <tr style="padding-top: 8px">
     <td>
       <%= render @micropost.comments.where(parent_id: nil).includes(:user).order(id: :desc) %>
     </td>
