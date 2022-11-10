@@ -33,9 +33,6 @@ class CommentLikesController < ApplicationController
       CommentLike.where(user_id: current_user.id, comment_id: params[:comment_id]).exists?
     end
     # Use callbacks to share common setup or constraints between actions.
-    def set_comment_like
-      @comment_like = CommentLike.find_by(id: params[:id])
-    end
 
     def find_comment
       @comment = Comment.find_by(id: params[:comment_id])

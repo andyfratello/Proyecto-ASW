@@ -1,4 +1,4 @@
-<div class="comment_info_list_comments">
+ <div class="comment_info_list_comments">
       <span>
         <% if comment.user_id.to_i != 0 %>
           <% if current_user %>
@@ -70,6 +70,23 @@
           <% end %>
         <% end %>
       </span>
+       <span>
+        <% if current_user %>
+        <% if current_user.id == comment.user_id%>
+          | <%= button_to 'delete', comment, method: :delete, form_class: 'delete_button', class: 'delete'%>
+        <% end %>
+      <% end %>
+      </span>
+      <span>
+        <% if comment.user_id.to_i != 0 %>
+          <% if current_user %>
+            <% pre_like = comment.comment_likes.find { |comment_like| comment_like.user_id == current_user.id} %>
+              <% if pre_like %>
+                |<%= button_to 'unvote', comment_like_path(pre_like), params:{comment_id: comment.id} ,method: :delete, form_class:'downvoted_button', class: 'downvoted_button_c' %>
+              <% end %>
+          <% end %>
+       <%end%>
+      </span>
   <p class="comment_text" style="margin-top:2px;margin-right: 10px;margin-bottom:1px">
     <%= comment.text %>
   </p>
@@ -77,5 +94,5 @@
   <br><br>
   <div class="sub-comment">
     <%= render comment.comments.order(id: :desc) %>
-  </div>
-</div>
+  </div> 
+ </div>
