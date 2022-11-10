@@ -11,7 +11,7 @@
               <span class="non-existent-vote"></span>
             <% end %>
           <% else %>
-            <span class="upvote"><a href="<%= new_user_session_path %>">▲</a></span>
+            <span class="upvote_comments"><a href="<%= new_user_session_path %>">▲</a></span>
           <% end %>
         <% end %>
       </span>
@@ -22,7 +22,7 @@
             <% if current_user.email == User.search_name(comment.user_id.to_i)%>
               <a class="link_user" href="/users/edit"><%= User.search_name(comment.user_id.to_i) %></a>
             <% else %>
-              <a class="link_user" href="/users/<%= comment.user_id.to_i %>"><%= User.search_name(comment.user_id.to_i) %></a>
+              <a class="user" href="/users/<%= comment.user_id.to_i %>"><%= User.search_name(comment.user_id.to_i) %></a>
             <% end %>
           <% else %>
               <a class="link_user" href="/users/<%= comment.user_id.to_i %>"><%= User.search_name(comment.user_id.to_i) %></a>

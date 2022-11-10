@@ -104,10 +104,27 @@ input {
   padding-left: 7px;
 }
 
-.upvote {
+.upvote_comments {
   font-size: 7pt;
   color: #9a9a9a;
   padding-left: 7px;
+  padding-right: 3px;
+}
+
+.upvote_comments a {
+  font-size: 7pt;
+  color: #9a9a9a;
+}
+
+.upvote_comments a:visited {
+  font-size: 7pt;
+  color: #9a9a9a;
+}
+
+.upvote {
+  font-size: 7pt;
+  color: #9a9a9a;
+  padding-left: 40px;
   padding-right: 3px;
 }
 
@@ -264,6 +281,7 @@ input {
 .link_upvoted_com {
   color: black;
   text-decoration: underline;
+  font-size: 10pt;
 }
 
 .link_upvoted_com:visited {
@@ -298,6 +316,21 @@ input {
   padding-left: -3px;
 }
 
+.upvoted_button_detail_c {
+  font-size: 8pt;
+  color: #9a9a9a;
+  outline: none;
+  border: none;
+  background: none;
+  width: 20px;
+  height: 20px;
+  text-align: left;
+  cursor: pointer;
+  line-height: 0;
+  padding-left: 40px;
+  padding-right: 10px;
+}
+
 .downvoted_button_c {
   font-size: 7pt;
   color: #828282;
@@ -320,6 +353,18 @@ input {
   text-align: left;
   font-family: Verdana, Geneva, sans-serif;
   padding-left: 25px;
+}
+
+.non-existent-vote-detail {
+  font-size: 7pt;
+  color: #F6F6EF;
+  outline: none;
+  border: none;
+  background: none;
+  width: 40px;
+  text-align: left;
+  font-family: Verdana, Geneva, sans-serif;
+  padding-left: 55px;
 }
 
 .area_text_comment {
@@ -345,7 +390,7 @@ input {
 
 .unable_unvote_detail {
   color: orangered;
-  padding-left: 12px;
+  padding-left: 42px;
 }
 
 .br_between_microposts {
@@ -362,6 +407,13 @@ input {
   line-height: 15px;
 }
 
+.br_between_comments {
+  display: block;
+  margin: 25px 0;
+  content: " ";
+  line-height: 15px;
+}
+
 .br_peu {
   display: block;
   margin: 25px 0;
@@ -370,7 +422,7 @@ input {
 }
 
 .orange_line {
-  width: 84%;
+  width: 100%;
   text-align: left;
   color: #ef6537;
   background: #ef6537;
@@ -491,5 +543,6 @@ table.taula_edit_comment {
 .comment-form-display {
   padding-left: 23px;
   color: black;
+  padding-bottom: 10px;
   text-decoration: underline;
 }

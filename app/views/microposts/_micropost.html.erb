@@ -11,7 +11,7 @@
       <% end %>
     <% end %>
   <% else %>
-    <span class="upvote"><a href="<%= new_user_session_path %>">▲</a></span>
+    <span class="upvote_comments"><a href="<%= new_user_session_path %>">▲</a></span>
   <% end %>
   <span class="title"><a href="<%="/microposts/"%><%=micropost.id%>"><%= micropost.title %></a> </span>
   <span class="url_post">
@@ -57,8 +57,9 @@
       <% end %>
     <% end %>
   </span>
-  <span>
-    | <a class="comments" href="<%="/microposts/"%><%=micropost.id%>">
+    <span class="barres">|</span>
+    <span>
+    <a href="<%= "/microposts/" %><%= micropost.id %>">
       <% if micropost.comments.count == 0 %>
         <%= 'discuss' %>
       <% else %>
@@ -68,15 +69,17 @@
   </span>
     <span>
       <% if current_user %>
-        <% if current_user.email == User.search_name(micropost.user_id)%>
-          <a class="edit" href="<%="/microposts/"%><%=micropost.id%><%="/edit"%>"><%= " | edit" %></a>
+        <% if current_user.email == User.search_name(micropost.user_id) %>
+          <span class="barres">|</span>
+          <a class="edit_portada" href="<%= "/microposts/" %><%= micropost.id %><%= "/edit" %>"><%= "edit" %></a>
         <% end %>
       <% end %>
     </span>
     <span>
       <% if current_user %>
-        <% if current_user.email == User.search_name(micropost.user_id)%>
-          | <%= button_to 'delete', micropost, method: :delete, form_class: 'delete_button', class: 'delete'%>
+        <% if current_user.email == User.search_name(micropost.user_id) %>
+          <span class="barres">|</span>
+          <%= button_to 'delete', micropost, method: :delete, form_class: 'delete_button', class: 'delete_portada' %>
         <% end %>
       <% end %>
     </span>
