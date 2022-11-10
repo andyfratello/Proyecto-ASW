@@ -1,6 +1,4 @@
-<table border="0" cellpadding="0" align="center" cellspacing="0" width="85%" bgcolor="#f6f6ef">
-  <tr>
-    <div class="comment_info_list_comments">
+ <div class="comment_info_list_comments">
       <span>
         <% if comment.user_id.to_i != 0 %>
           <% if current_user %>
@@ -83,5 +81,4 @@
         <%= render comment.comments.order(id: :desc) %>
       </div>
     </div>
-  </tr>
-</table>
+
