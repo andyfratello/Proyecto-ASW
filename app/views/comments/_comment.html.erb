@@ -70,7 +70,7 @@
           <% end %>
         <% end %>
       </span>
-      <span>
+       <span>
         <% if current_user %>
         <% if current_user.id == comment.user_id%>
           | <%= button_to 'delete', comment, method: :delete, form_class: 'delete_button', class: 'delete'%>
@@ -87,9 +87,12 @@
           <% end %>
        <%end%>
       </span>
-
-      <p class="comment_text" style="margin-top:2px;margin-right: 10px">
-        <%= comment.text %>
-      </p>
+  <p class="comment_text" style="margin-top:2px;margin-right: 10px;margin-bottom:1px">
+    <%= comment.text %>
+  </p>
+  <a href="/comments/<%=comment.id%>/replies" class="comment-form-display">reply</a>
+  <br><br>
+  <div class="sub-comment">
+    <%= render comment.comments.order(id: :desc) %>
+  </div> 
  </div>
-

@@ -10,24 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_05_184920) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_10_084348) do
   create_table "comment_likes", force: :cascade do |t|
-    t.integer "comment_id", null: false
+    t.integer "comment_id"
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["comment_id"], name: "index_comment_likes_on_comment_id"
     t.index ["user_id"], name: "index_comment_likes_on_user_id"
   end
 
   create_table "comments", force: :cascade do |t|
     t.integer "micropost_id", null: false
-    t.integer "user_id", null: false
+    t.integer "user_id"
     t.text "text"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "parent_id"
     t.index ["micropost_id"], name: "index_comments_on_micropost_id"
-    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "likes", force: :cascade do |t|
@@ -67,10 +66,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_05_184920) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "comment_likes", "comments"
   add_foreign_key "comment_likes", "users"
   add_foreign_key "comments", "microposts"
-  add_foreign_key "comments", "users"
   add_foreign_key "likes", "microposts"
   add_foreign_key "likes", "users"
 end

@@ -441,5 +441,48 @@ table.taula_edit_comment {
   color: black;
   font-size: 7pt;
   padding-left: 23px;
+  padding-bottom: 5px;
+  text-decoration: underline;
+}
+
+.reply_author {
+  color: #828282;
+  font-size: 8pt;
+}
+
+.reply_author:hover {
+  color: #828282;
+  text-decoration: underline;
+}
+
+.reply_text {
+  color: black;
+  font-size: 9pt;
+  padding-left: 60px;
+}
+
+.reply_reply {
+    color: black;
+    font-size: 7pt;
+    padding-left: 60px;
+    padding-bottom: 5px;
+    text-decoration: underline;
+}
+
+.reply_reply_button {
+    padding-left: 0px;
+}
+
+.vote_reply {
+  padding-left: 38px;
+}
+
+.sub-comment {
+  padding-left: 60px;
+}
+
+.comment-form-display {
+  padding-left: 23px;
+  color: black;
   text-decoration: underline;
 }
