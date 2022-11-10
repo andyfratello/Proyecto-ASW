@@ -16,6 +16,7 @@
 
 .delete_button {
   display: inline;
+  font-size: 8pt;
 }
 
 .upvoted_button {

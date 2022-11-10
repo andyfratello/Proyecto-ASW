@@ -1,10 +1,56 @@
-<p style="color: green"><%= notice %></p>
+<thead>
+<table id="hnmain" border="0" cellpadding="0" align="center" cellspacing="0" width="85%" bgcolor="#f6f6ef">
+  <tr>
+    <td bgcolor="#ff6600">
+      <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+        <tr>
+          <td style="width:18px;padding-right:4px">
+            <a href=<% microposts_url %>>
+              <img src="https://news.ycombinator.com/y18.gif" width="18" height="18" style="border:1px white solid;">
+            </a>
+          </td>
+          <td style="line-height:12pt; height:10px;">
+            <span class="pagetop"><b class="=hname"><%= link_to 'Add Comment', microposts_url, class: 'ruby_link' %></b></span>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+  </tr>
+  <tr style="height:10px"></tr>
+</table>
+</thead>
 
-<%= render @comment %>
+<table border="0" cellpadding="0" align="center" cellspacing="0" width="85%" bgcolor="#f6f6ef">
 
-<div>
-  <%= link_to "Edit this comment", edit_comment_path(@comment) %> |
-  <%= link_to "Back to comments", comments_path %>
+  <tbody class="itemlist">
+    <tr>
+      <td>
+        <%= render @comment %>
+      </td>
+    </tr>
+    <tr>
+      <td class="taula_sencera">
+        <%= form_for([@comment, @comment.replies.build]) do |f| %>
+          <p style="padding-left: 25px">
+            <%= f.text_area :text, :size => "80x8" %>
+          </p>
+          <p style="padding-left: 25px">
+            <% if current_user %>
+              <%= f.submit "reply"%>
+            <% else %>
+              <button id="mybutton"><a href="<%= new_user_session_path %>">reply</a></button>
+            <% end %>
+          </p>
+        <%end%>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-  <%= button_to "Destroy this comment", @comment, method: :delete %>
-</div>
+
+
+
+
+
