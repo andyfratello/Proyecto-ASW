@@ -278,6 +278,7 @@ GEM
     zeitwerk (2.6.1)
 
 PLATFORMS
+  ruby
   arm64-darwin-21
   x64-mingw-ucrt
   x86_64-darwin-20
