@@ -46,6 +46,18 @@ class MicropostsController < ApplicationController
         # CAMBIAR ^ para que redireccione a la vista
         format.json { render json: @micropost.errors, status: :unprocessable_entity }
       end
+
+      if micropost_params[:url] != "" && micropost_params[:text] != ""
+        @comment = Comment.new
+        @comment.text = @micropost.text
+        @comment.micropost = @micropost
+        @comment.user = current_user
+        @micropost.text = ""
+        if @micropost.save && @comment.save
+          format.html { redirect_to  microposts_url(:sort => "date")}
+          format.json { render :show, status: :created, location: @micropost }
+        end
+      end
       if @micropost.save
         format.html { redirect_to  microposts_url(:sort => "date")}
         format.json { render :show, status: :created, location: @micropost }
@@ -54,6 +66,7 @@ class MicropostsController < ApplicationController
         format.json { render json: @micropost.errors, status: :unprocessable_entity }
       end
     end
+
   end
 
   # PATCH/PUT /microposts/1 or /microposts/1.json
