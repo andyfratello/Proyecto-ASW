@@ -39,5 +39,6 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem.
 # Uncomment the following line if you're running Rails
-# on a native Windows system:
+# on a native Windows system
+gem 'tzinfo-data'
 
