@@ -1,11 +1,11 @@
 <div id="<%= dom_id micropost %>">
   <% if current_user %>
-    <% pre_like = micropost.likes.find { |like| like.user_id == current_user.id} %>
-    <% if current_user.email == User.search_name(micropost.user_id)%>
+    <% pre_like = micropost.likes.find { |like| like.user_id == current_user.id } %>
+    <% if current_user.email == User.search_name(micropost.user_id) %>
       <span class="unable_unvote">*</span>
     <% else %>
       <% if !pre_like %>
-        <%= button_to '▲', micropost_likes_path(micropost.id), method: :post, form_class:'upvoted_button', class: 'upvoted_button_c' %>
+        <%= button_to '▲', micropost_likes_path(micropost.id), method: :post, form_class: 'upvoted_button', class: 'upvoted_button_c' %>
       <% else %>
         <span class="non-existent-vote"></span>
       <% end %>
@@ -13,15 +13,15 @@
   <% else %>
     <span class="upvote_comments"><a href="<%= new_user_session_path %>">▲</a></span>
   <% end %>
-  <span class="title"><a href="<%="/microposts/"%><%=micropost.id%>"><%= micropost.title %></a> </span>
+  <span class="title"><a href="<%= "/microposts/" %><%= micropost.id %>"><%= micropost.title %></a> </span>
   <span class="url_post">
     <%= link_to micropost.url, "http://#{micropost.url}" %>
   </span>
   <br>
   <div class="post_info">
-    <span><%= micropost.likes.count %> <%= (micropost.likes.count) == 1 ? 'point' : 'points'%> by
+    <span><%= micropost.likes.count %> <%= (micropost.likes.count) == 1 ? 'point' : 'points' %> by
       <% if current_user %>
-        <% if current_user.email == User.search_name(micropost.user_id)%>
+        <% if current_user.email == User.search_name(micropost.user_id) %>
           <a class="link_user" href="/users/edit"><%= micropost.user.email %></a>
         <% else %>
           <a class="link_user" href="/users/<%= micropost.user_id %>"><%= micropost.user.email %></a>
@@ -32,7 +32,7 @@
     </span>
     <span>
     <% if ((Time.now - micropost.created_at) / 1.year).round >= 1 %>
-      <%= ((Time.now - micropost.created_at) / 1.year).round  %>  years ago
+      <%= ((Time.now - micropost.created_at) / 1.year).round %>  years ago
     <% else %>
       <% if ((Time.now - micropost.created_at) / 1.month).round >= 1 %>
         <%= ((Time.now - micropost.created_at) / 1.month).round %> months ago
@@ -61,9 +61,9 @@
     <span>
     <a href="<%= "/microposts/" %><%= micropost.id %>">
       <% if micropost.comments.count == 0 %>
-        <%= 'discuss' %>
+        <span class=edit_portada> <%= 'discuss' %></span>
       <% else %>
-        <%= micropost.comments.count %> <%= (micropost.comments.count) == 1 ? 'comment' : 'comments'%>
+        <span class="edit_portada"> <%= micropost.comments.count %> <%= (micropost.comments.count) == 1 ? 'comment' : 'comments' %></span>
       <% end %>
     </a>
   </span>
@@ -85,9 +85,9 @@
     </span>
     <span>
     <% if current_user %>
-      <% pre_like = micropost.likes.find { |like| like.user_id == current_user.id} %>
+      <% pre_like = micropost.likes.find { |like| like.user_id == current_user.id } %>
         <% if pre_like %>
-          |<%= button_to 'unvote', micropost_like_path(micropost.id, pre_like), method: :delete, form_class:'downvoted_button', class: 'downvoted_button_c' %>
+          |<%= button_to 'unvote', micropost_like_path(micropost.id, pre_like), method: :delete, form_class: 'downvoted_button', class: 'downvoted_button_c' %>
       <% end %>
     <% end %>
   </span>

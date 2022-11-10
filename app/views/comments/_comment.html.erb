@@ -20,12 +20,12 @@
         <% if comment.user_id.to_i != 0 %>
           <% if current_user %>
             <% if current_user.email == User.search_name(comment.user_id.to_i)%>
-              <a class="link_user" href="/users/edit"><%= User.search_name(comment.user_id.to_i) %></a>
+              <a class="user" href="/users/edit"><%= User.search_name(comment.user_id.to_i) %></a>
             <% else %>
               <a class="user" href="/users/<%= comment.user_id.to_i %>"><%= User.search_name(comment.user_id.to_i) %></a>
             <% end %>
           <% else %>
-              <a class="link_user" href="/users/<%= comment.user_id.to_i %>"><%= User.search_name(comment.user_id.to_i) %></a>
+              <a class="user" href="/users/<%= comment.user_id.to_i %>"><%= User.search_name(comment.user_id.to_i) %></a>
           <% end %>
         <% end %>
       </span>
@@ -58,22 +58,31 @@
           <% end %>
         <% end %>
       </span>
+   <span class = "barres">
+      |
+   </span>
       <span>
         <a href="<%= micropost_path(comment.micropost_id) %>">
-          <span class="comments"> | parent</span>
+          <span class="edit">parent</span>
         </a>
       </span>
       <span>
         <% if current_user %>
           <% if current_user.id == comment.user_id %>
-            <a class="edit" href="<%="/comments/"%><%=comment.id%><%="/edit"%>"><%= " | edit" %></a>
+            <span class = "barres">
+              |
+            </span>
+            <a class="edit" href="<%="/comments/"%><%=comment.id%><%="/edit"%>"><%= "edit" %></a>
           <% end %>
         <% end %>
       </span>
        <span>
         <% if current_user %>
         <% if current_user.id == comment.user_id%>
-          | <%= button_to 'delete', comment, method: :delete, form_class: 'delete_button', class: 'delete'%>
+             <span class = "barres">
+               |
+             </span>
+           <%= button_to 'delete', comment, method: :delete, form_class: 'delete_button', class: 'delete'%>
         <% end %>
       <% end %>
       </span>
@@ -82,7 +91,8 @@
           <% if current_user %>
             <% pre_like = comment.comment_likes.find { |comment_like| comment_like.user_id == current_user.id} %>
               <% if pre_like %>
-                |<%= button_to 'unvote', comment_like_path(pre_like), params:{comment_id: comment.id} ,method: :delete, form_class:'downvoted_button', class: 'downvoted_button_c' %>
+                <span class = "barres">|</span>
+              <%= button_to 'unvote', comment_like_path(pre_like), params:{comment_id: comment.id} ,method: :delete, form_class:'downvoted_button', class: 'delete' %>
               <% end %>
           <% end %>
        <%end%>

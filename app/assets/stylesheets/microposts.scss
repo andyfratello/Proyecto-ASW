@@ -140,7 +140,7 @@ input {
 
 .sub {
   padding-bottom: 7px;
-  position: absolute;
+ // position: absolute;
   left: 133px;
 }
 
@@ -242,11 +242,71 @@ input {
   color: #828282 !important;
 }
 
-.edit {
+.hora {
+  font-size: 8pt;
   color: #828282 !important;
 }
 
+.barres {
+  font-size: 8pt;
+  color: #828282 !important;
+}
+
+.edit {
+  font-size: 8pt;
+  color: #828282 !important;
+}
+
+.edit:hover {
+  font-size: 8pt;
+  color: #828282 !important;
+  text-decoration: underline;
+}
+
+.edit_portada {
+  font-size: 7pt;
+  color: #828282 !important;
+}
+
+.edit_portada:hover {
+  font-size: 7pt;
+  color: #828282 !important;
+  text-decoration: underline;
+}
+
+.user {
+  font-size: 8pt;
+}
+
+.user:hover {
+  font-size: 8pt;
+  text-decoration: underline;
+}
+
 .delete {
+  background: none;
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 8pt;
+  border: none;
+  padding-left: 1px;
+  line-break: anywhere;
+  cursor: pointer;
+  color: #828282;
+}
+
+.delete:hover {
+  background: none;
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 8pt;
+  border: none;
+  padding-left: 1px;
+  line-break: anywhere;
+  cursor: pointer;
+  color: #828282;
+  text-decoration: underline;
+}
+
+.delete_portada {
   background: none;
   font-family: Verdana, Geneva, sans-serif;
   font-size: 7pt;
@@ -255,6 +315,18 @@ input {
   line-break: anywhere;
   cursor: pointer;
   color: #828282;
+}
+
+.delete_portada:hover {
+  background: none;
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 7pt;
+  border: none;
+  padding-left: 1px;
+  line-break: anywhere;
+  cursor: pointer;
+  color: #828282;
+  text-decoration: underline;
 }
 
 .post_text {
@@ -343,6 +415,19 @@ input {
   font-family: Verdana, Geneva, sans-serif;
 }
 
+.downvoted_button_c:hover {
+  font-size: 7pt;
+  color: #828282;
+  outline: none;
+  border: none;
+  background: none;
+  width: 40px;
+  text-align: left;
+  cursor: pointer;
+  font-family: Verdana, Geneva, sans-serif;
+  text-decoration: underline;
+}
+
 .non-existent-vote {
   font-size: 7pt;
   color: #F6F6EF;
@@ -385,7 +470,7 @@ input {
   padding-top: 20px;
   font-size: 7pt;
   color: #828282;
-  padding-left: 20px;
+  padding-left: 25px;
 }
 
 .unable_unvote_detail {
@@ -428,7 +513,7 @@ input {
   background: #ef6537;
   border: 0;
   height: 2px;
-  position: absolute;
+  //position: absolute;
   left: 115px;
 }
 

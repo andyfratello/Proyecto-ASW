@@ -48,16 +48,16 @@
         <% if @comment.user_id.to_i != 0 %>
           <% if current_user %>
             <% if current_user.email == User.search_name(@comment.user_id.to_i)%>
-              <a class="link_user" href="/users/edit"><%= User.search_name(@comment.user_id.to_i) %></a>
+              <a class="user" href="/users/edit"><%= User.search_name(@comment.user_id.to_i) %></a>
             <% else %>
-              <a class="link_user" href="/users/<%= @comment.user_id.to_i %>"><%= User.search_name(@comment.user_id.to_i) %></a>
+              <a class="user" href="/users/<%= @comment.user_id.to_i %>"><%= User.search_name(@comment.user_id.to_i) %></a>
             <% end %>
           <% else %>
-              <a class="link_user" href="/users/<%= @comment.user_id.to_i %>"><%= User.search_name(@comment.user_id.to_i) %></a>
+              <a class="user" href="/users/<%= @comment.user_id.to_i %>"><%= User.search_name(@comment.user_id.to_i) %></a>
           <% end %>
         <% end %>
       </span>
-      <span>
+      <span class = "comment_info_list_comments">
         <% if @comment.created_at.to_i != 0 %>
           <% if ((Time.now - @comment.created_at) / 1.year).round >= 1 %>
             <%= ((Time.now - @comment.created_at) / 1.year).round %>  years ago
