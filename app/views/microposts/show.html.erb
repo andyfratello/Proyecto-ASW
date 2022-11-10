@@ -156,7 +156,6 @@
     </td>
   </tr>
   <%= render @micropost.comments.where(parent_id: nil).includes(:user).order(id: :desc) %>
-  <%= render partial: 'comments/form', locals: { micropost: @micropost, parent: nil } %>
 </tbody>
 </table>
 <br>
