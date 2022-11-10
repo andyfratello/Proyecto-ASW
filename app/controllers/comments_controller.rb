@@ -40,7 +40,7 @@ class CommentsController < ApplicationController
   def update
     respond_to do |format|
       if @comment.update(comment_params)
-        format.html { redirect_to micropost_path(@comment.micropost_id), notice: "Comment was successfully updated." }
+        format.html { redirect_to micropost_path(@comment.micropost_id)}
         format.json { render :show, status: :ok, location: micropost_path(@comment.micropost_id) }
       else
         format.html { render :edit, status: :unprocessable_entity }
