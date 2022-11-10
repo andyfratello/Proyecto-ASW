@@ -11,4 +11,4 @@ https://tree.taiga.io/project/herrero-ruby-on-rails/timeline
 | David Pérez             | davidpb0              | davidpb              |
 | David Herrero           | davidherrero1         | Herrero              |
 
-Our webapp: https://boiling-woodland-07697.herokuapp.com/
+Our webapp: http://nameless-hollows-52792.herokuapp.com/
