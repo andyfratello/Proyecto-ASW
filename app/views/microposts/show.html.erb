@@ -14,7 +14,7 @@
             <span class="pagetop"><b class="=hname"><%= link_to 'Hacker News', microposts_url, class: 'ruby_link' %></b></span>
             <span class="pagetop_new"><%= link_to 'new', microposts_url(:sort => "date"), class: 'ruby_link' %></span>
             <% if current_user %>
-              <span class="pagetop_"><a href="/users/<%= current_user.id %>/comments"> | threads </a> </span>
+              <span class="pagetop"><a href="/users/<%= current_user.id %>/comments"> | threads </a> </span>
             <% end %>
             | <span class="pagetop"><%= link_to 'ask', microposts_url(:type => "ask"), class: 'ruby_link' %></span>
             <% if current_user %>
@@ -61,7 +61,7 @@
           <% end %>
             <span class="title"><a href="<%= "/microposts/" %><%= @micropost.id %>"><%= @micropost.title %></a> </span>
             <span class="url_post">
-                <%= link_to @micropost.url, "http://#{@micropost.url}" %>
+                <%= link_to @micropost.url, "#{@micropost.url}" %>
             </span>
         </span>
       </td>

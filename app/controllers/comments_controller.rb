@@ -51,6 +51,10 @@ class CommentsController < ApplicationController
 
   # DELETE /comments/1 or /comments/1.json
   def destroy
+    @comments = Comment.where(parent_id: @comment.id)
+    @comments.each do |comment|
+      comment.destroy
+    end
     if @comment.destroy
     respond_to do |format|
       format.html { redirect_to user_comments_url }
