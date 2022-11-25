@@ -5,7 +5,185 @@ info:
   version: 1.0.0
   description: "This is the Open API documentation for the REST API of our beloved application **Hacker News** deployed at <'nomServer'/>. <br>All operations are executable."
 
-  servers:
-    - url: #to be determined
+schemes:
+  - http
 
-  paths:
+basePath: /api/v1
+consumes:
+  - application/json
+produces:
+  - application/hal+json
+
+tags:
+  - name: Micropost
+  - name: Comment
+  - name: Comment_like
+  - name: Like
+  - name: User
+
+securityDefinitions:
+  token:
+    type: apiKey
+    name: token
+    in: header
+
+security:
+  - token: []
+
+definitions:
+  Micropost:
+    type: object
+    properties:
+      id:
+        type: number
+        format: integer
+        description: Unique identifier representing specific micropost
+      title:
+        type: string
+        description: Brief text from the header of the micropost
+      url:
+        type: string
+        description: Url of the micropost
+      text:
+        type: string
+        description: Main body of the micropost
+      user_id:
+        type: number
+        description: User owner's id
+      created_at:
+        type: string
+        format: date
+        description: Date when the micropost was created
+      updated_at:
+        type: string
+        format: date
+        description: Date when the micropost was lastly updated
+    example:
+      id: 1
+      title: "Saludant"
+      url: ""
+      text: "Bon dia!"
+      user_id: 1
+      created_at: "2022-11-23T16:00:00"
+      updated_at: "2022-11-23T16:00:00"
+
+  Comment:
+    type: object
+    properties:
+      id:
+        type: number
+        format: integer
+        description: Unique identifier representing specific commment
+      micropost_id:
+        type: number
+        format: integer
+        description: Unique identifier representing the micropost which has this comment
+      user_id:
+        type: number
+        format: integer
+        description: User owner's id
+      text:
+        type: string
+        description: Main body of the comment
+      created_at:
+        type: string
+        format: date
+        description: Date when the comment was created
+      updated_at:
+        type: string
+        format: date
+        description: Date when the comment was lastly updated
+    example:
+      id: 1
+      micropost_id: 1
+      user_id: 2
+      text: "Nice post!"
+      created_at: "2022-11-23T17:00:00"
+      updated_at: "2022-11-23T17:00:00"
+
+  Comment_like:
+    type: object
+    properties:
+      id:
+        type: number
+        format: integer
+        description: Unique identifier representing specific like
+      comment_id:
+        type: number
+        format: integer
+        description: Unique identifier representing the comment which has this like
+      user_id:
+        type: number
+        format: integer
+        description: User owner's like
+      created_at:
+        type: string
+        format: date
+        description: Date when the like was posted
+      updated_at:
+        type: string
+        format: date
+        description: Date when the like was posted(dummy attribute)
+    example:
+      id: 1
+      comment_id: 1
+      user_id: 3
+      created_at: "2022-11-23T18:00:00"
+      updated_at: "2022-11-23T18:00:00"
+
+  Like:
+    type: object
+    properties:
+      micropost_id:
+        type: number
+        format: integer
+        description: Unique identifier representing the micropost which has this like
+      user_id:
+        type: number
+        format: integer
+        description: User owner's like
+      created_at:
+        type: string
+        format: date
+        description: Date when the like was posted
+      updated_at:
+        type: string
+        format: date
+        description: Date when the like was posted(dummy attribute)
+    example:
+      micropost_id: 1
+      user_id: 1
+      created_at: "2022-11-23T19:00:00"
+      updated_at: "2022-11-23T19:00:00"
+
+  User:
+    type: object
+    properties:
+      id:
+        type: number
+        format: integer
+        description: Unique identifier representing specific user
+      name:
+        type: string
+        description: User's name
+      email:
+        type: string
+        description: User's email
+      about:
+        type: string
+        description: User's description
+      created_at:
+        type: string
+        format: date
+        description: Date when the user was created
+      updated_at:
+        type: string
+        format: date
+        description: Date when the user last modified its about
+    example:
+      id: 1
+      name: "Example"
+      email: "example@email.com"
+      about: "I'm from Barcelona!"
+      created_at: "2022-11-15T10:00:00"
+      updated_at: "2022-11-16T10:00:00"
