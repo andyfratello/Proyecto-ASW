@@ -374,6 +374,14 @@ input {
   padding-left: -10px;
 }
 
+.API_txt {
+  padding-left: 0;
+}
+
+.API_title {
+  padding-left: -10px;
+}
+
 .upvoted_button_c {
   font-size: 8pt;
   color: #9a9a9a;
@@ -572,8 +580,8 @@ input {
 }
 
 table.taula_edit_comment td {
-  margin: 0px 0px 0px 0px;
-  padding: 0px 0px 0px 0px;
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
 }
 
 table.taula_edit_comment {
@@ -614,7 +622,7 @@ table.taula_edit_comment {
 }
 
 .reply_reply_button {
-    padding-left: 0px;
+    padding-left: 0;
 }
 
 .vote_reply {

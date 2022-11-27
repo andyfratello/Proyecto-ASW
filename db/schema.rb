@@ -24,9 +24,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_10_214153) do
     t.integer "micropost_id", null: false
     t.integer "user_id"
     t.text "text"
+    t.integer "parent_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "parent_id"
     t.index ["micropost_id"], name: "index_comments_on_micropost_id"
   end
 
