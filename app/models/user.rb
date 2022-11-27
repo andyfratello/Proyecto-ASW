@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: [:google_oauth2]
 
+  before_create :set_api_key
   has_many :microposts
   has_many :comments
   has_many :likes, dependent: :destroy
@@ -27,5 +28,13 @@ class User < ApplicationRecord
     else
       return @user.email
     end
+  end
+
+  def generate_api_key
+    SecureRandom.base58(24)
+  end
+
+  def set_api_key
+    self.api_key = generate_api_key
   end
 end

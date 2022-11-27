@@ -3,22 +3,33 @@ class MicropostsController < ApplicationController
 
   # GET /microposts or /microposts.json
   def index
-    @microposts = Micropost.all
+    api_key = request.headers[:HTTP_X_API_KEY]
+    if api_key.nil?
+      render :json => { "status" => "401", "error" => "No Api key provided."}, status: :unauthorized
+    else
+      @user = User.find_by_api_key(api_key)
+      if @user.nil?
+        render :json => { "status" => "401", "error" => "No User found with the Api key provided."}, status: :unauthorized
+      else
+        @microposts = Micropost.all
 
-    sort = params[:sort]
-    type = params[:type]
-    user = params[:user]
+        sort = params[:sort]
+        type = params[:type]
+        user = params[:user]
 
-    if sort == 'date'
-      @microposts = Micropost.order(created_at: :desc)
-    elsif type == 'ask'
-      @microposts = Micropost.where(url: [nil, ""])
+        if sort == 'date'
+          @microposts = Micropost.order(created_at: :desc)
+        elsif type == 'ask'
+          @microposts = Micropost.where(url: [nil, ""])
 
-    elsif user != nil
-      @microposts = Micropost.where(user_id: user).order(created_at: :desc)
+        elsif user != nil
+          @microposts = Micropost.where(user_id: user).order(created_at: :desc)
+        end
+
+      end
+
     end
   end
-
   # GET /microposts/1 or /microposts/1.json
   def show
     @micropost = Micropost.find(params[:id])
