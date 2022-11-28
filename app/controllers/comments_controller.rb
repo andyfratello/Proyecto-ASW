@@ -29,6 +29,7 @@ class CommentsController < ApplicationController
     respond_to do |format|
       if @comment.text != "" && @comment.save
         format.html { redirect_to  micropost_path(@micropost) }
+        format.json { render :show, status: :created, location: micropost_path(@comment.micropost_id) }
       else
         format.json { render json: @micropost.errors, status: :unprocessable_entity }
       end
