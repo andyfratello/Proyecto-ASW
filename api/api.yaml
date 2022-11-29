@@ -13,6 +13,12 @@ paths:
         - Micropost
       summary: Returns Micropost list
       operationId: getAllMicroposts
+      parameters:
+        - in: query
+          name: user
+          schema:
+            type: integer
+          description: User's microposts
       responses:
         200:
           description: Successful operation
@@ -43,7 +49,7 @@ paths:
       operationId: postMicropost
       requestBody:
         description: Micropost identifier
-        required: false
+        required: true
         content:
           application/json:
             schema:
@@ -64,6 +70,8 @@ paths:
               examples:
                 errorExample:
                   $ref: '#/components/examples/error401'
+
+  /microposts/{id}.json:
     put:
       tags:
         - Micropost
@@ -71,8 +79,16 @@ paths:
         - apiKey: []
       summary: Edit Micropost
       operationId: putMicropost
+      parameters:
+        - name: id
+          in: path
+          description: Micropost identifier
+          required: true
+          schema:
+            type: integer
+            format: int64
       requestBody:
-        description: Micropost edited info
+        description: Micropost identifier
         required: true
         content:
           application/json:
@@ -99,6 +115,14 @@ paths:
         - Micropost
       summary: Delete Micropost
       operationId: deleteMicropost
+      parameters:
+        - name: id
+          in: path
+          description: Micropost identifier
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
         204:
           description: Micropost deleted
@@ -133,37 +157,8 @@ paths:
                   $ref: '#/components/examples/error403'
       security:
         - apiKey: []
-  /users/{id}/microposts.json:
-    get:
-      tags:
-        - Micropost
-      summary: Get user's Microposts
-      operationId: getUserMicroposts
-      parameters:
-        - name: id
-          in: path
-          description: User identifier
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        200:
-          description: User Microposts returned successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Micropost'
-        404:
-          description: 'Error: User Not Found'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResult'
-              examples:
-                errorExample:
-                  $ref: '#/components/examples/error404'
-  /likes/{id}.json:  # /microposts/{id}/likes:
+
+  /microposts/{id}/likes.json:
     post:
       tags:
         - Micropost
@@ -177,7 +172,8 @@ paths:
           description: Micropost identifier
           required: true
           schema:
-            $ref: '#/components/schemas/LikeCreate'
+            type: integer
+            format: int64
       responses:
         200:
           description: Created successfully
@@ -748,16 +744,19 @@ components:
     MicropostCreate:
       type: object
       properties:
-        user_id:
-          type: integer
-          format: int64
-          description: Owner of the micropost
+        title:
+          type: string
+          description: Micropost title
         url:
           type: string
           description: Micropost url
         text:
           type: string
           description: Micropost body
+        user_id:
+          type: integer
+          format: int64
+          description: Owner of the micropost
     MicropostUpdate:
       type: object
       properties:
