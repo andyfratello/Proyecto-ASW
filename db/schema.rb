@@ -24,6 +24,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_27_183339) do
     t.integer "micropost_id", null: false
     t.integer "user_id"
     t.text "text"
+    t.integer "likes_count", default: 0
     t.integer "parent_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -44,6 +45,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_27_183339) do
     t.text "url"
     t.text "text"
     t.integer "user_id"
+    t.integer "likes_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
