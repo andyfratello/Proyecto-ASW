@@ -15,19 +15,16 @@ class MicropostsController < ApplicationController
     elsif type == 'ask'
       @microposts = Micropost.where(url: [nil, ""])
 
-      if api_key.nil?
-        render :json => { "status" => "401", "error" => "No Api key provided." }, status: :unauthorized
-      else
-        @user = User.find_by_api_key(api_key)
-        if @user.nil?
-          render :json => { "status" => "401", "error" => "No User found with the Api key provided." }, status: :unauthorized
-        elsif user != nil
+    elsif user != nil
+      #if api_key.nil?
+      #render :json => { "status" => "401", "error" => "No Api key provided." }, status: :unauthorized
+      #else
+      # @user = User.find_by_api_key(api_key)
+      #if @user.nil?
+      #render :json => { "status" => "401", "error" => "No User found with the Api key provided." }, status: :unauthorized
           @microposts = Micropost.where(user_id: user).order(created_at: :desc)
-        end
-
-      end
-
     end
+
   end
 
   # GET /microposts/1 or /microposts/1.json
@@ -48,7 +45,9 @@ class MicropostsController < ApplicationController
   # POST /microposts or /microposts.json
   def create
     @micropost = Micropost.new(micropost_params)
-    @micropost.user_id = current_user.id
+    unless current_user.nil?
+      @micropost.user_id = current_user.id
+    end
 
     respond_to do |format|
       if micropost_params[:url] != "" && Micropost.exists?(url: micropost_params[:url])
