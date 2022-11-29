@@ -11,7 +11,7 @@
               </a>
             </td>
             <td style="line-height:12pt; height:10px;">
-              <span class="pagetop"><b class="=hname"><%= link_to 'Hacker News', microposts_url, class: 'ruby_link' %></b></span>
+              <span class="pagetop"><b class="=hname"><%= link_to 'Hacker News', microposts_url(:sort => "likes"), class: 'ruby_link' %></b></span>
               <span class="pagetop_new"><%= link_to 'new', microposts_url(:sort => "date"), class: 'ruby_link' %></span>
               <% if current_user %>
                 | <span class="pagetop"><a href="/users/<%= current_user.id %>/comments"> threads </a> </span>
