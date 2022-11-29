@@ -44,10 +44,24 @@ class MicropostsController < ApplicationController
 
   # POST /microposts or /microposts.json
   def create
+    api_key = request.headers[:HTTP_X_API_KEY]
     @micropost = Micropost.new(micropost_params)
-    unless current_user.nil?
+
+    if current_user != nil
       @micropost.user_id = current_user.id
+    else
+      #if api_key.nil?
+        #render :json => { "status" => "401", "error" => "No Api key provided." }, status: :unauthorized
+        #else
+        @user = User.find_by_api_key(api_key)
+        #if @user.nil?
+          #render :json => { "status" => "401", "error" => "No User found with the Api key provided." }, status: :unauthorized
+          #else
+          @micropost.user_id = @user.id
+          #end
+        #end
     end
+
 
     respond_to do |format|
       if micropost_params[:url] != "" && Micropost.exists?(url: micropost_params[:url])
@@ -127,6 +141,11 @@ class MicropostsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def micropost_params
-    params.permit(:title, :url, :text, :user_id)
+    if current_user != nil
+      params.require(:micropost).permit(:title, :url, :text, :user_id)
+    else
+      params.permit(:title, :url, :text)
+    end
   end
+
 end
