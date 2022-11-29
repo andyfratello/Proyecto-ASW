@@ -359,6 +359,50 @@ paths:
                   $ref: '#/components/examples/error404'
 
   # COMMENTS OPERATIONS --------------------------------------------------------------
+  /comments.json:
+    get:
+      tags:
+        - Comment
+      summary: Returns Comment list
+      operationId: getAllComments
+      responses:
+        200:
+          description: Comments returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+
+  /comments/{id}.json:
+    get:
+      tags:
+        - Comment
+      summary: Find comment by id
+      operationId: getComment
+      parameters:
+        - name: id
+          in: path
+          description: Comment identifier
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Comment returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        404:
+          description: 'Error: User Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+              examples:
+                errorExample:
+                  $ref: '#/components/examples/error404'
   /users/{id}/comments.json:
     get:
       tags:
