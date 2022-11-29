@@ -41,13 +41,13 @@ paths:
         - apiKey: []
       summary: Create Micropost
       operationId: postMicropost
-      parameters:
-        - name: body
-          in: body
-          description: Micropost identifier
-          required: true
-          schema:
-            $ref: '#/components/schemas/MicropostCreate'
+      requestBody:
+        description: Micropost identifier
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MicropostCreate'
       responses:
         200:
           description: Created successfully
@@ -71,13 +71,13 @@ paths:
         - apiKey: []
       summary: Edit Micropost
       operationId: putMicropost
-      parameters:
-        - name: body
-          in: body
-          description: Micropost edited info
-          required: true
-          schema:
-            $ref: '#/components/schemas/MicropostUpdate'
+      requestBody:
+        description: Micropost edited info
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MicropostUpdate'
       responses:
         200:
           description: Edited successfully
@@ -99,14 +99,6 @@ paths:
         - Micropost
       summary: Delete Micropost
       operationId: deleteMicropost
-      parameters:
-        - name: id
-          in: path
-          description: Micropost identifier
-          required: true
-          schema:
-            type: integer
-            format: int64
       responses:
         204:
           description: Micropost deleted
@@ -302,13 +294,13 @@ paths:
         - apiKey: []
       summary: Edit about
       operationId: changeAbout
-      parameters:
-        - name: about
-          in: body
-          description: Description 'about' to modify
-          required: true
-          schema:
-            $ref: '#/components/schemas/UserUpdate'
+      requestBody:
+        description: Description 'about' to modify
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdate'
       responses:
         200:
           description: Updated successfully
@@ -756,10 +748,6 @@ components:
     MicropostCreate:
       type: object
       properties:
-        id:
-          type: integer
-          format: int64
-          description: Micropost identifier
         user_id:
           type: integer
           format: int64
