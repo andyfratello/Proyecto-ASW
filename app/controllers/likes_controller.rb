@@ -4,13 +4,18 @@ class LikesController < ApplicationController
   def create
     if !(already_liked?)
       @micropost.likes.create(user_id: current_user.id)
+      @micropost.likes_count+=1
+      @micropost.save
     end
+
     redirect_back fallback_location: root_path # redirect_to microposts_path(@micropost)
   end
 
   def destroy
     if already_liked?
       @like.destroy
+      @micropost.likes_count-=1
+      @micropost.save
     end
     redirect_back fallback_location: root_path # redirect_to microposts_path(@micropost)
   end

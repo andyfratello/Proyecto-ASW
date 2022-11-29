@@ -4,7 +4,7 @@ class MicropostsController < ApplicationController
   # GET /microposts or /microposts.json
   def index
     # api_key = request.headers[:HTTP_X_API_KEY]
-    @microposts = Micropost.all
+    @microposts = Micropost.order(likes_count: :desc)
 
     sort = params[:sort]
     type = params[:type]
@@ -12,10 +12,8 @@ class MicropostsController < ApplicationController
 
     if sort == 'date'
       @microposts = Micropost.order(created_at: :desc)
-    elsif sort == 'likes'
-      @microposts = Micropost.order(created_at: :desc)
     elsif type == 'ask'
-      @microposts = Micropost.where(url: [nil, ""])
+      @microposts = Micropost.where(url: [nil, ""]).order(likes_count: :desc)
 
       #  if api_key.nil?
       # render :json => { "status" => "401", "error" => "No Api key provided." }, status: :unauthorized
@@ -23,8 +21,8 @@ class MicropostsController < ApplicationController
       # @user = User.find_by_api_key(api_key)
       # if @user.nil?
       #   render :json => { "status" => "401", "error" => "No User found with the Api key provided." }, status: :unauthorized
-      # elsif user != nil
-      #   @microposts = Micropost.where(user_id: user).order(created_at: :desc)
+      elsif user != nil
+        @microposts = Micropost.where(user_id: user).order(likes_count: :desc)
       # end
 
       # end
@@ -55,7 +53,6 @@ class MicropostsController < ApplicationController
     respond_to do |format|
       if micropost_params[:url] != ""
         if valid_url?(:url.to_s)
-          puts('Entro aqui sosdhsadgaskdjah')
           if Micropost.exists?(url: micropost_params[:url])
             @micropost = Micropost.find_by(url: micropost_params[:url])
             format.html { redirect_to @micropost }
@@ -75,7 +72,6 @@ class MicropostsController < ApplicationController
             end
           end
         else
-          puts('Entro aqui segundo')
             format.html { redirect_to '/microposts/new', notice: "Not a valid URL" }
             format.json { render json: @micropost.errors, status: :bad_request }
         end
