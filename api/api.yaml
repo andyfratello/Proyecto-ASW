@@ -48,7 +48,6 @@ paths:
       summary: Create Micropost
       operationId: postMicropost
       requestBody:
-        description: Micropost identifier
         required: true
         content:
           application/json:
@@ -379,6 +378,35 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Comment'
+    post:
+      tags:
+        - Comment
+      security:
+        - apiKey: []
+      summary: Create comment
+      operationId: postComment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentCreate'
+      responses:
+        200:
+          description: Created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        401:
+          description: 'Error: Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+              examples:
+                errorExample:
+                  $ref: '#/components/examples/error401'
 
   /comments/{id}.json:
     get:
@@ -410,22 +438,27 @@ paths:
               examples:
                 errorExample:
                   $ref: '#/components/examples/error404'
-
-  /microposts/{id}/comments.json:
-    post:
+    put:
       tags:
         - Comment
       security:
         - apiKey: []
       summary: Create comment
-      operationId: postComment
+      operationId: putComment
       parameters:
         - name: id
           in: path
-          description: Micropost identifier
+          description: Comment identifier
           required: true
           schema:
-            $ref: '#/components/schemas/CommentCreate'
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentUpdate'
       responses:
         200:
           description: Created successfully
@@ -442,37 +475,6 @@ paths:
               examples:
                 errorExample:
                   $ref: '#/components/examples/error401'
-    put:
-      tags:
-        - Comment
-      security:
-        - apiKey: []
-      summary: Edit comment
-      operationId: putComment
-      parameters:
-        - name: id
-          in: path
-          description: Micropost identifier
-          required: true
-          schema:
-            $ref: '#/components/schemas/CommentCreate'
-      responses:
-        200:
-          description: Edited successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Comment'
-        401:
-          description: 'Error: Unauthorized'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResult'
-              examples:
-                errorExample:
-                  $ref: '#/components/examples/error401'
-
     delete:
       tags:
         - Comment
@@ -723,6 +725,9 @@ components:
         title:
           type: string
           description: New title
+        url:
+          type: string
+          description: Url micropost
         text:
           type: string
           description: New text
@@ -766,9 +771,21 @@ components:
         micropost_id:
           type: integer
           description: micropost identifier
-        content:
+        user_id:
+          type: integer
+          description: user identifier
+        text:
           type: string
           description: comment content
+        parent_id:
+          type: integer
+          description: parent identifier
+    CommentUpdate:
+      type: object
+      properties:
+        text:
+          type: string
+          description: New text
 
     Comment_like:
       type: object
