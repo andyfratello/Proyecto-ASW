@@ -4,6 +4,14 @@ class CommentsController < ApplicationController
   # GET /comments or /comments.json
   def index
     @comments = Comment.all
+    micropost = params[:micropost]
+    user = params[:user]
+
+    if micropost != nil
+      @comments = Comment.where(micropost_id: micropost).order(created_at: :desc)
+    elsif user != nil
+      @comments = Comment.where(user_id: user).order(created_at: :desc)
+    end
   end
 
   # GET /comments/1 or /comments/1.json
@@ -24,7 +32,9 @@ class CommentsController < ApplicationController
   def create
     @micropost = Micropost.find(params[:micropost_id])
     @comment = @micropost.comments.new(comment_params)
-    @comment.user_id = current_user.id
+    if current_user != nil
+      @comment.user_id = current_user.id
+    end
 
     respond_to do |format|
       if @comment.text != "" && @comment.save
@@ -97,6 +107,10 @@ class CommentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def comment_params
-      params.require(:comment).permit(:text, :user_id, :micropost_id, :parent_id)
+      if current_user != nil
+        params.require(:comment).permit(:text, :user_id, :micropost_id, :parent_id)
+      else
+        params.permit(:text, :user_id, :micropost_id, :parent_id)
+      end
     end
 end

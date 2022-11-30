@@ -283,36 +283,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
-    put:
-      tags:
-        - User
-      security:
-        - apiKey: []
-      summary: Edit about
-      operationId: changeAbout
-      requestBody:
-        description: Description 'about' to modify
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserUpdate'
-      responses:
-        200:
-          description: Updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-        401:
-          description: 'Error: Unauthorized'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResult'
-              examples:
-                errorExample:
-                  $ref: '#/components/examples/error401'
 
   /users/{id}.json:
     get:
@@ -345,6 +315,44 @@ paths:
               examples:
                 errorExample:
                   $ref: '#/components/examples/error404'
+    put:
+      tags:
+        - User
+      security:
+        - apiKey: []
+      summary: Edit about
+      operationId: changeAbout
+      parameters:
+        - name: id
+          in: path
+          description: User identifier
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Description 'about' to modify
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdate'
+      responses:
+        200:
+          description: Updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        401:
+          description: 'Error: Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+              examples:
+                errorExample:
+                  $ref: '#/components/examples/error401'
 
   # COMMENTS OPERATIONS --------------------------------------------------------------
   /comments.json:
@@ -353,6 +361,17 @@ paths:
         - Comment
       summary: Returns Comment list
       operationId: getAllComments
+      parameters:
+        - in: query
+          name: user
+          schema:
+            type: integer
+          description: User's comments
+        - in: query
+          name: micropost
+          schema:
+            type: integer
+          description: Microposts comments
       responses:
         200:
           description: Comments returned successfully
@@ -391,67 +410,8 @@ paths:
               examples:
                 errorExample:
                   $ref: '#/components/examples/error404'
-  /users/{id}/comments.json:
-    get:
-      tags:
-        - Comment
-      summary: Get user's comments
-      operationId: getUserComments
-      parameters:
-        - name: id
-          in: path
-          description: User identifier
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        200:
-          description: User comments returned successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Comment'
-        404:
-          description: 'Error: User Not Found'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResult'
-              examples:
-                errorExample:
-                  $ref: '#/components/examples/error404'
 
   /microposts/{id}/comments.json:
-    get:
-      tags:
-        - Comment
-      summary: Get micropost comments
-      operationId: getMicropostsComments
-      parameters:
-        - name: id
-          in: path
-          description: Micropost identifier
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        200:
-          description: Micropost comments returned successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Comment'
-        404:
-          description: 'Error: User Not Found'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResult'
-              examples:
-                errorExample:
-                  $ref: '#/components/examples/error404'
     post:
       tags:
         - Comment
@@ -753,6 +713,10 @@ components:
         text:
           type: string
           description: Micropost body
+        user_id:
+          type: integer
+          format: int64
+          description: Owner of the micropost
     MicropostUpdate:
       type: object
       properties:
