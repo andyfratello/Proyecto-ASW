@@ -715,10 +715,6 @@ components:
         text:
           type: string
           description: Micropost body
-        user_id:
-          type: integer
-          format: int64
-          description: Owner of the micropost
     MicropostUpdate:
       type: object
       properties:
