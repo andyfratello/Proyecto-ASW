@@ -51,24 +51,32 @@ class MicropostsController < ApplicationController
     @micropost.user_id = current_user.id
 
     respond_to do |format|
-      if micropost_params[:url] != "" && Micropost.exists?(url: micropost_params[:url])
-        @micropost = Micropost.find_by(url: micropost_params[:url])
-        format.html { redirect_to @micropost }
-        # CAMBIAR ^ para que redireccione a la vista
-        format.json { render json: @micropost.errors, status: :unprocessable_entity }
-      end
+      if micropost_params[:url] != ""
+        if valid_url?(:url.to_s)
+          if Micropost.exists?(url: micropost_params[:url])
+            @micropost = Micropost.find_by(url: micropost_params[:url])
+            format.html { redirect_to @micropost }
+            # CAMBIAR ^ para que redireccione a la vista
+            format.json { render json: @micropost.errors, status: :unprocessable_entity }
+          end
 
-      if micropost_params[:url] != "" && micropost_params[:text] != ""
-        @comment = Comment.new
-        @comment.text = @micropost.text
-        @comment.micropost = @micropost
-        @comment.user = current_user
-        @micropost.text = ""
-        if @micropost.save && @comment.save
-          format.html { redirect_to microposts_url(:sort => "date") }
-          format.json { render :show, status: :created, location: @micropost }
+          if micropost_params[:text] != ""
+            @comment = Comment.new
+            @comment.text = @micropost.text
+            @comment.micropost = @micropost
+            @comment.user = current_user
+            @micropost.text = ""
+            if @micropost.save && @comment.save
+              format.html { redirect_to microposts_url(:sort => "date") }
+              format.json { render :show, status: :created, location: @micropost }
+            end
+          end
+        else
+            format.html { redirect_to '/microposts/new', notice: "Not a valid URL" }
+            format.json { render json: @micropost.errors, status: :bad_request }
         end
       end
+
       if @micropost.save
         format.html { redirect_to microposts_url(:sort => "date") }
         format.json { render :show, status: :created, location: @micropost }
@@ -77,7 +85,6 @@ class MicropostsController < ApplicationController
         format.json { render json: @micropost.errors, status: :unprocessable_entity }
       end
     end
-
   end
 
   # PATCH/PUT /microposts/1 or /microposts/1.json
@@ -124,6 +131,15 @@ class MicropostsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_micropost
     @micropost = Micropost.find(params[:id])
+  end
+
+  def valid_url?(url)
+    uri = URI.parse(url)
+    if uri.is_a?(URI::HTTP) && !uri.host.nil?
+      true
+    end
+  rescue URI::InvalidURIError
+    false
   end
 
   # Only allow a list of trusted parameters through.
