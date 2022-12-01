@@ -70,8 +70,14 @@ class UsersController < ApplicationController
         render :json => { "status" => "401", "error" => "No Api key provided." }, status: :unauthorized and return
       end
     else
-      current_user = User.find_by_api_key(api_key)
-      @likes = Like.where(user_id: current_user.id)
+      @user = User.find_by_api_key(api_key)
+      puts(@user.id)
+      puts(params[:id])
+      if @user.id.to_s === params[:id].to_s
+        @likes = Like.where(user_id: @user.id)
+      else
+        render :json => { "status" => "401", "error" => "Only the owner can view its liked microposts." }, status: :unauthorized and return
+      end
     end
     @likes.each do |like|
       @microposts = Micropost.where(id: like.micropost_id)
