@@ -500,7 +500,7 @@ paths:
             type: integer
             format: int64
       responses:
-        204:
+        202:
           description: Comment deleted
           content:
             application/json: {}
