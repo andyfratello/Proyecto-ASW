@@ -61,7 +61,7 @@ class CommentLikesController < ApplicationController
         redirect_back fallback_location: root_path # redirect_to microposts_path(@micropost)
       end
     else
-      render :json => { "status" => "400", "error" => "Can't unlike a comment that didn't like before o already had unliked" }, status: :bad_request
+      render :json => { "status" => "401", "error" => "Can't unlike a comment that didn't like before o already had unliked" }, status: :bad_request
     end
   end
 
