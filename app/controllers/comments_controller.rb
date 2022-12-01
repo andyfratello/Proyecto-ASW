@@ -112,7 +112,7 @@ class CommentsController < ApplicationController
     if @comment.destroy
     respond_to do |format|
       format.html { redirect_to user_comments_url }
-      format.json { head :no_content }
+      format.json { render :json => { "status" => "202", "Accepted" => "The comment has been deleted successfully." }, status: 202 and return }
     end
     end
   end
