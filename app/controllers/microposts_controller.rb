@@ -64,7 +64,7 @@ class MicropostsController < ApplicationController
           @micropost = Micropost.find_by(url: micropost_params[:url])
           format.html { redirect_to @micropost }
           # CAMBIAR ^ para que redireccione a la vista
-          format.json { render json: @micropost.errors, status: :unprocessable_entity }
+          format.json { render json: @micropost, status: :ok }
         end
 
         if micropost_params[:url] != "" && micropost_params[:text] != ""
