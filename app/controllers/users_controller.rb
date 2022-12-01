@@ -8,7 +8,9 @@ class UsersController < ApplicationController
 
   # GET /users/1 or /users/1.json
   def show
-    @user = User.find_by_id(params[:id])
+      @user = User.find_by_id(params[:id])
+      render :json => { "status" => "401", "error" => "The user with the id provided doesn't exists" }, status: :not_found
+
   end
 
   # GET /users/new
@@ -45,7 +47,7 @@ class UsersController < ApplicationController
       if @APIuser.nil?
         render :json => { "status" => "401", "error" => "No User found with the Api key provided." }, status: :unauthorized and return
       elsif @APIuser.id != @user.id
-        render :json => { "status" => "401", "error" => "Only the creator of the micropost can edit it." }, status: :unauthorized and return
+        render :json => { "status" => "401", "error" => "Only the user can edit his biography." }, status: :unauthorized and return
       end
     end
     respond_to do |format|
@@ -135,8 +137,10 @@ class UsersController < ApplicationController
     def set_user
       if params[:id] == "sign_out"
         sign_out current_user
-      else
+      elsif User.where(id: params[:id]).exists?
         @user = User.find(params[:id])
+      else
+        render :json => { "status" => "404", "error" => "The user with the id provided doesn't exist" }, status: :not_found and return
       end
     end
 
