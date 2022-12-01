@@ -30,6 +30,17 @@ class CommentsController < ApplicationController
 
   # POST /comments or /comments.json
   def create
+    api_key = request.headers[:HTTP_X_API_KEY]
+    if api_key.nil?
+      render :json => { "status" => "401", "error" => "No Api key provided." }, status: :unauthorized and return
+    else
+      @APIuser = User.find_by_api_key(api_key)
+      current_user = @APIuser
+      if @APIuser.nil?
+        render :json => { "status" => "401", "error" => "No User found with the Api key provided." }, status: :unauthorized and return
+      end
+    end
+
     @micropost = Micropost.find(params[:micropost_id])
     @comment = @micropost.comments.new(comment_params)
     if current_user != nil
@@ -49,6 +60,17 @@ class CommentsController < ApplicationController
 
   # PATCH/PUT /comments/1 or /comments/1.json
   def update
+    api_key = request.headers[:HTTP_X_API_KEY]
+    if api_key.nil?
+      render :json => { "status" => "401", "error" => "No Api key provided." }, status: :unauthorized and return
+    else
+      @APIuser = User.find_by_api_key(api_key)
+      if @APIuser.nil?
+        render :json => { "status" => "401", "error" => "No User found with the Api key provided." }, status: :unauthorized and return
+      elsif @comment.user_id != @APIuser.id
+        render :json => { "status" => "401", "error" => "Only the creator of the comment can edit it." }, status: :unauthorized and return
+      end
+    end
     respond_to do |format|
       if @comment.update(comment_params)
         format.html { redirect_to micropost_path(@comment.micropost_id)}
@@ -62,6 +84,17 @@ class CommentsController < ApplicationController
 
   # DELETE /comments/1 or /comments/1.json
   def destroy
+    api_key = request.headers[:HTTP_X_API_KEY]
+    if api_key.nil?
+      render :json => { "status" => "401", "error" => "No Api key provided." }, status: :unauthorized and return
+    else
+      @APIuser = User.find_by_api_key(api_key)
+      if @APIuser.nil?
+        render :json => { "status" => "401", "error" => "No User found with the Api key provided." }, status: :unauthorized and return
+      elsif @comment.user_id != @APIuser.id
+        render :json => { "status" => "401", "error" => "Only the creator of the comment can delete it." }, status: :unauthorized and return
+      end
+    end
     @comments = Comment.where(parent_id: @comment.id)
     @comments.each do |comment|
       comment.destroy
