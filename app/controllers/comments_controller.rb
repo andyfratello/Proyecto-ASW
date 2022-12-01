@@ -51,7 +51,14 @@ class CommentsController < ApplicationController
       end
     end
 
-    @micropost = Micropost.find(params[:micropost_id])
+    @micropost = Micropost.where(id: params[:micropost_id]).first
+    if @micropost == nil
+      render :json => { "status" => "404", "error" => "No Micropost found with the id provided." }, status: :not_found and return
+    end
+    parent = Comment.where(id: params[:parent_id]).first
+    if parent == nil
+      render :json => { "status" => "404", "error" => "No Parent Comment found with the id provided." }, status: :not_found and return
+    end
     @comment = @micropost.comments.new(comment_params)
     if current_user != nil
       @comment.user_id = current_user.id

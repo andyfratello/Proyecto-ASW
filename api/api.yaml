@@ -879,17 +879,17 @@ components:
       value:
         status: 400
         error: "Bad Request"
-        message: "Content is too long (maximum is 280 characters)"
+        message: "Bad Request"
     error401:
       value:
         status: 401
         error: "Unauthorized"
-        message: "You provided no api key (X-API-KEY Header)"
+        message: "No Api Key provided"
     error403:
       value:
         status: 403
         error: "Forbidden"
-        message: "Your api key (X-API-KEY Header) is not valid"
+        message: "Forbidden behaviour for that user"
     error404:
       value:
         status: 404
@@ -897,7 +897,7 @@ components:
         message: "No object with that ID"
     error409:
       value:
-        status: 404
+        status: 409
         error: "Conflict"
         message: "Conflict with the operation"
   securitySchemes:
