@@ -36,6 +36,17 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1 or /users/1.json
   def update
+    api_key = request.headers[:HTTP_X_API_KEY]
+    if api_key.nil?
+      render :json => { "status" => "401", "error" => "No Api key provided." }, status: :unauthorized and return
+    else
+      @APIuser = User.find_by_api_key(api_key)
+      if @APIuser.nil?
+        render :json => { "status" => "401", "error" => "No User found with the Api key provided." }, status: :unauthorized and return
+      elsif @APIuser.id != @user.id
+        render :json => { "status" => "401", "error" => "Only the creator of the micropost can edit it." }, status: :unauthorized and return
+      end
+    end
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to '/users/edit' }
