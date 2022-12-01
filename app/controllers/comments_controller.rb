@@ -7,10 +7,20 @@ class CommentsController < ApplicationController
     micropost = params[:micropost]
     user = params[:user]
 
-    if micropost != nil
-      @comments = Comment.where(micropost_id: micropost).order(created_at: :desc)
+    if micropost != nil && user != nil
+      render :json => { "status" => "400", "error" => "Do not fill both fields at the same time." }, status: :bad_request
+    elsif micropost != nil
+      if Comment.where(micropost_id: micropost).exists?
+        @comments = Comment.where(micropost_id: micropost).order(created_at: :desc)
+      else
+        render :json => { "status" => "404", "error" => "This micropost does not exist." }, status: :not_found and return
+      end
     elsif user != nil
-      @comments = Comment.where(user_id: user).order(created_at: :desc)
+      if Comment.where(user_id: user).exists?
+        @comments = Comment.where(user_id: user).order(created_at: :desc)
+      else
+        render :json => { "status" => "404", "error" => "This user does not exist." }, status: :not_found and return
+      end
     end
   end
 
