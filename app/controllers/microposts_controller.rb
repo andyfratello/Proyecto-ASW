@@ -132,7 +132,7 @@ class MicropostsController < ApplicationController
 
       respond_to do |format|
         format.html { redirect_to microposts_url }
-        format.json {"Micropost delete successfully"}
+        render :json => { "status" => "204", "error" => "Micropost delete successfully" }, status: :ok and return
       end
     end
 
@@ -153,8 +153,10 @@ class MicropostsController < ApplicationController
     end
 
     def url_valid?(url)
-      url = URI.parse(url) rescue false
-      url.kind_of?(URI::HTTP) || url.kind_of?(URI::HTTPS)
+      if url != ""
+        url = URI.parse(url) rescue false
+      end
+      url.kind_of?(URI::HTTP) || url.kind_of?(URI::HTTPS) || url === ""
     end
 
     private
