@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   get '/threads', to: 'users#comments', as: 'user_comments'
 
   get '/comments/:id/replies', to: 'comments#reply'
+  post '/comment_likes/:id', to: 'comment_likes#create'
 
   resources :microposts do
     resources :likes

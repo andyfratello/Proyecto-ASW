@@ -17,6 +17,7 @@ gem "omniauth-rails_csrf_protection"
 gem 'devise'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
+gem 'rack-cors'
 
 group :development, :test do
   gem "sqlite3", "1.4.2"

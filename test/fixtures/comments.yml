@@ -4,8 +4,10 @@ one:
   micropost: one
   user_id: 1
   text: MyText
+  parent_id: 1
 
 two:
   micropost: two
   user_id: 1
   text: MyText
+  parent_id: 1

@@ -1,0 +1,910 @@
+openapi: 3.0.1
+info:
+  version: 1.0.0
+  title: Hacker News ASW
+  description: "This is the Open API documentation for the REST API of our beloved application **Hacker News** deployed at <http://127.0.0.1:3000/>."
+servers:
+  - url: 'http://127.0.0.1:3000/'
+paths:
+  # MICROPOST OPERATIONS ---------------------------------------------------------
+  /microposts.json:
+    get:
+      tags:
+        - Micropost
+      summary: Returns Micropost list
+      operationId: getAllMicroposts
+      parameters:
+        - in: query
+          name: user
+          schema:
+            type: integer
+          description: User's microposts
+      responses:
+        200:
+          description: Successful operation
+        401:
+          description: 'Unauthorized user'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+              examples:
+                errorExample:
+                  $ref: '#/components/examples/error401'
+        404:
+          description: 'Error: Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+              examples:
+                errorExample:
+                  $ref: '#/components/examples/error404'
+    post:
+      tags:
+        - Micropost
+      security:
+        - apiKey: []
+      summary: Create Micropost
+      operationId: postMicropost
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MicropostCreate'
+      responses:
+        201:
+          description: Created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Micropost'
+        401:
+          description: 'Error: Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+              examples:
+                errorExample:
+                  $ref: '#/components/examples/error401'
+
+  /microposts/{id}.json:
+    put:
+      tags:
+        - Micropost
+      security:
+        - apiKey: []
+      summary: Edit Micropost
+      operationId: putMicropost
+      parameters:
+        - name: id
+          in: path
+          description: Micropost identifier
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Micropost identifier
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MicropostUpdate'
+      responses:
+        200:
+          description: Edited successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Micropost'
+        401:
+          description: 'Error: Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+              examples:
+                errorExample:
+                  $ref: '#/components/examples/error401'
+    delete:
+      tags:
+        - Micropost
+      summary: Delete Micropost
+      operationId: deleteMicropost
+      parameters:
+        - name: id
+          in: path
+          description: Micropost identifier
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        204:
+          description: Micropost deleted
+          content:
+            application/json: {}
+        404:
+          description: 'Error: Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+              examples:
+                errorExample:
+                  $ref: '#/components/examples/error404'
+        401:
+          description: 'Error: Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+              examples:
+                errorExample:
+                  $ref: '#/components/examples/error401'
+        403:
+          description: 'Error: Forbidden'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+              examples:
+                errorExample:
+                  $ref: '#/components/examples/error403'
+      security:
+        - apiKey: []
+
+  /microposts/{id}/likes.json:
+    post:
+      tags:
+        - Micropost
+      security:
+        - apiKey: []
+      summary: Vote Micropost
+      operationId: voteMicropost
+      parameters:
+        - name: id
+          in: path
+          description: Micropost identifier
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Like'
+        304:
+          description: Not modified
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+              examples:
+                errorExample:
+                  $ref: '#/components/examples/error304'
+        401:
+          description: 'Error: Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+              examples:
+                errorExample:
+                  $ref: '#/components/examples/error401'
+    delete:
+      tags:
+        - Micropost
+      summary: Unvote Micropost
+      operationId: unvoteMicropost
+      parameters:
+        - name: id
+          in: path
+          description: Micropost identifier
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        204:
+          description: Micropost unvoted
+          content:
+            application/json: {}
+        404:
+          description: 'Error: Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+              examples:
+                errorExample:
+                  $ref: '#/components/examples/error404'
+        401:
+          description: 'Error: Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+              examples:
+                errorExample:
+                  $ref: '#/components/examples/error401'
+        403:
+          description: 'Error: Forbidden'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+              examples:
+                errorExample:
+                  $ref: '#/components/examples/error403'
+      security:
+        - apiKey: []
+  /users/upvoted_submissions/{id}.json:
+    get:
+      tags:
+        - Micropost
+      security:
+        - apiKey: []
+      summary: Get upvoted microposts
+      operationId: getUpvotedMicroposts
+      parameters:
+        - name: id
+          in: path
+          description: User identifier
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Upvoted Microposts returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Micropost'
+        404:
+          description: 'Error: User Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+              examples:
+                errorExample:
+                  $ref: '#/components/examples/error404'
+  # USER OPERATIONS --------------------------------------------------------------
+  /users.json:
+    get:
+      tags:
+        - User
+      summary: Returns User list
+      operationId: getAllUsers
+      responses:
+        200:
+          description: Returns all users successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+
+  /users/{id}.json:
+    get:
+      tags:
+        - User
+      summary: Find a user by id
+      description: Returns one user by id
+      operationId: getUserById
+      parameters:
+        - name: id
+          in: path
+          description: User identifier
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: User returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        404:
+          description: 'Error: Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+              examples:
+                errorExample:
+                  $ref: '#/components/examples/error404'
+    put:
+      tags:
+        - User
+      security:
+        - apiKey: []
+      summary: Edit about
+      operationId: changeAbout
+      parameters:
+        - name: id
+          in: path
+          description: User identifier
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Description 'about' to modify
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdate'
+      responses:
+        200:
+          description: Updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        401:
+          description: 'Error: Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+              examples:
+                errorExample:
+                  $ref: '#/components/examples/error401'
+
+  # COMMENTS OPERATIONS --------------------------------------------------------------
+  /comments.json:
+    get:
+      tags:
+        - Comment
+      summary: Returns Comment list
+      operationId: getAllComments
+      parameters:
+        - in: query
+          name: user
+          schema:
+            type: integer
+          description: User's comments
+        - in: query
+          name: micropost
+          schema:
+            type: integer
+          description: Microposts comments
+      responses:
+        200:
+          description: Comments returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+    post:
+      tags:
+        - Comment
+      security:
+        - apiKey: []
+      summary: Create comment
+      operationId: postComment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentCreate'
+      responses:
+        200:
+          description: Created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        401:
+          description: 'Error: Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+              examples:
+                errorExample:
+                  $ref: '#/components/examples/error401'
+
+  /comments/{id}.json:
+    get:
+      tags:
+        - Comment
+      summary: Find comment by id
+      operationId: getComment
+      parameters:
+        - name: id
+          in: path
+          description: Comment identifier
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Comment returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        404:
+          description: 'Error: User Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+              examples:
+                errorExample:
+                  $ref: '#/components/examples/error404'
+    put:
+      tags:
+        - Comment
+      security:
+        - apiKey: []
+      summary: Edit comment
+      operationId: putComment
+      parameters:
+        - name: id
+          in: path
+          description: Comment identifier
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentUpdate'
+      responses:
+        200:
+          description: Created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        401:
+          description: 'Error: Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+              examples:
+                errorExample:
+                  $ref: '#/components/examples/error401'
+    delete:
+      tags:
+        - Comment
+      summary: Delete comment
+      operationId: deleteComment
+      parameters:
+        - name: id
+          in: path
+          description: Comment identifier
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        204:
+          description: Comment deleted
+          content:
+            application/json: {}
+        404:
+          description: 'Error: Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+              examples:
+                errorExample:
+                  $ref: '#/components/examples/error404'
+        401:
+          description: 'Error: Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+              examples:
+                errorExample:
+                  $ref: '#/components/examples/error401'
+        403:
+          description: 'Error: Forbidden'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+              examples:
+                errorExample:
+                  $ref: '#/components/examples/error403'
+      security:
+        - apiKey: []
+
+  /comment_likes/{id}.json:  # /comments/{id}/comment_likes:
+    post:
+      tags:
+        - Comment
+      security:
+        - apiKey: []
+      summary: Vote comment
+      operationId: voteComment
+      parameters:
+        - name: id
+          in: path
+          description: Comment identifier
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment_like'
+        401:
+          description: 'Error: Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+              examples:
+                errorExample:
+                  $ref: '#/components/examples/error401'
+    delete:
+      tags:
+        - Comment
+      summary: Unvote comment
+      operationId: unvoteComment
+      parameters:
+        - name: id
+          in: path
+          description: Comment identifier
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        204:
+          description: Comment unvoted
+          content:
+            application/json: {}
+        404:
+          description: 'Error: Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+              examples:
+                errorExample:
+                  $ref: '#/components/examples/error404'
+        401:
+          description: 'Error: Unauthorized'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+              examples:
+                errorExample:
+                  $ref: '#/components/examples/error401'
+        403:
+          description: 'Error: Forbidden'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+              examples:
+                errorExample:
+                  $ref: '#/components/examples/error403'
+      security:
+        - apiKey: []
+
+
+  /users/upvoted_comments/{id}.json:
+    get:
+      tags:
+        - Comment
+      summary: Get upvoted comments
+      operationId: getUpvotedComments
+      parameters:
+        - name: id
+          in: path
+          description: User identifier
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        201:
+          description: Upvoted comments returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        404:
+          description: 'Error: User Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+              examples:
+                errorExample:
+                  $ref: '#/components/examples/error404'
+      security:
+        - apiKey: []
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: number
+          format: integer
+          description: Unique identifier representing specific user
+        name:
+          type: string
+          description: User's name
+        email:
+          type: string
+          description: User's email
+        about:
+          type: string
+          description: User's description
+        created_at:
+          type: string
+          format: date
+          description: Date when the user was created
+        updated_at:
+          type: string
+          format: date
+          description: Date when the user last modified its about
+    UserUpdate:
+      type: object
+      properties:
+        about:
+          type: string
+          description: nova descripció a actualitzar.
+
+    Micropost:
+      type: object
+      properties:
+        id:
+          type: number
+          format: integer
+          description: Unique identifier representing specific micropost
+        title:
+          type: string
+          description: Brief text from the header of the micropost
+        url:
+          type: string
+          description: Url of the micropost
+        text:
+          type: string
+          description: Main body of the micropost
+        user_id:
+          type: number
+          description: User owner's id
+        created_at:
+          type: string
+          format: date
+          description: Date when the micropost was created
+        updated_at:
+          type: string
+          format: date
+          description: Date when the micropost was lastly updated
+      example:
+        id: 1
+        title: "Saludant"
+        url: ""
+        text: "Bon dia!"
+        user_id: 1
+        created_at: "2022-11-23T16:00:00"
+        updated_at: "2022-11-23T16:00:00"
+    MicropostCreate:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Micropost title
+        url:
+          type: string
+          description: Micropost url
+        text:
+          type: string
+          description: Micropost body
+    MicropostUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+          description: New title
+        url:
+          type: string
+          description: Url micropost
+        text:
+          type: string
+          description: New text
+
+    Comment:
+      type: object
+      properties:
+        id:
+          type: number
+          format: integer
+          description: Unique identifier representing specific commment
+        micropost_id:
+          type: number
+          format: integer
+          description: Unique identifier representing the micropost which has this comment
+        user_id:
+          type: number
+          format: integer
+          description: User owner's id
+        text:
+          type: string
+          description: Main body of the comment
+        created_at:
+          type: string
+          format: date
+          description: Date when the comment was created
+        updated_at:
+          type: string
+          format: date
+          description: Date when the comment was lastly updated
+      example:
+        id: 1
+        micropost_id: 1
+        user_id: 2
+        text: "Nice post!"
+        created_at: "2022-11-23T17:00:00"
+        updated_at: "2022-11-23T17:00:00"
+    CommentCreate:
+      type: object
+      properties:
+        micropost_id:
+          type: integer
+          description: micropost identifier
+        text:
+          type: string
+          description: comment content
+        parent_id:
+          type: integer
+          description: parent identifier
+    CommentUpdate:
+      type: object
+      properties:
+        text:
+          type: string
+          description: New text
+
+    Comment_like:
+      type: object
+      properties:
+        id:
+          type: number
+          format: integer
+          description: Unique identifier representing specific like
+        comment_id:
+          type: number
+          format: integer
+          description: Unique identifier representing the comment which has this like
+        user_id:
+          type: number
+          format: integer
+          description: User owner's like
+        created_at:
+          type: string
+          format: date
+          description: Date when the like was posted
+        updated_at:
+          type: string
+          format: date
+          description: Date when the like was posted(dummy attribute)
+      example:
+        id: 1
+        comment_id: 1
+        user_id: 3
+        created_at: "2022-11-23T18:00:00"
+        updated_at: "2022-11-23T18:00:00"
+    Comment_LikeCreate:
+      type: object
+      properties:
+        comment_id:
+          type: integer
+          description: comment identifier
+
+    Like:
+      type: object
+      properties:
+        micropost_id:
+          type: number
+          format: integer
+          description: Unique identifier representing the micropost which has this like
+        user_id:
+          type: number
+          format: integer
+          description: User owner's like
+        created_at:
+          type: string
+          format: date
+          description: Date when the like was posted
+        updated_at:
+          type: string
+          format: date
+          description: Date when the like was posted(dummy attribute)
+      example:
+        micropost_id: 1
+        user_id: 1
+        created_at: "2022-11-23T19:00:00"
+        updated_at: "2022-11-23T19:00:00"
+    LikeCreate:
+      type: object
+      properties:
+        micropost_id:
+          type: number
+          format: integer
+          description: Unique identifier representing the micropost which has this like
+
+    ErrorResult:
+      type: object
+      properties:
+        status:
+          type: integer
+          enum: [304, 400, 401, 403, 404, 409]
+        error:
+          type: string
+          enum: ["Not Modified", "Bad Request", "Unauthorized", "Forbidden", "Not Found", "Conflict"]
+        message:
+          type: string
+  examples:
+    error304:
+      value:
+        status: 304
+        error: "Not Modified"
+        message: "You have already made this action. You can not do it twice."
+    error400:
+      value:
+        status: 400
+        error: "Bad Request"
+        message: "Content is too long (maximum is 280 characters)"
+    error401:
+      value:
+        status: 401
+        error: "Unauthorized"
+        message: "You provided no api key (X-API-KEY Header)"
+    error403:
+      value:
+        status: 403
+        error: "Forbidden"
+        message: "Your api key (X-API-KEY Header) is not valid"
+    error404:
+      value:
+        status: 404
+        error: "Not Found"
+        message: "No object with that ID"
+    error409:
+      value:
+        status: 404
+        error: "Conflict"
+        message: "Conflict with the operation"
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      name: X-API-KEY #Custom headers in rails apps must have the X- prefix
+      in: header
