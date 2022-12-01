@@ -161,7 +161,10 @@
   </tr>
   <tr style="padding-top: 8px">
     <td>
-      <%= render @micropost.comments.where(parent_id: nil).includes(:user).order(id: :desc) %>
+      <!--
+      estoy aqui
+      -->
+      <%= render @micropost.comments.where(parent_id: nil).includes(:user).order(comment_likes: :desc) %>
     </td>
   </tr>
 </tbody>

@@ -85,7 +85,7 @@ class UsersController < ApplicationController
 
   def comments
     @user = User.find(params[:id])
-    @comments = Comment.where(user_id: @user.id)
+    @comments = Comment.where(user_id: @user.id).order(likes_count: :desc)
     respond_to do |format|
       format.html { render :user_comments}
       format.json { head :no_content }

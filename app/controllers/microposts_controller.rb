@@ -3,8 +3,8 @@ class MicropostsController < ApplicationController
 
   # GET /microposts or /microposts.json
   def index
-    api_key = request.headers[:HTTP_X_API_KEY]
-    @microposts = Micropost.all
+    # api_key = request.headers[:HTTP_X_API_KEY]
+    @microposts = Micropost.order(likes_count: :desc)
 
     sort = params[:sort]
     type = params[:type]
@@ -13,16 +13,11 @@ class MicropostsController < ApplicationController
     if sort == 'date'
       @microposts = Micropost.order(created_at: :desc)
     elsif type == 'ask'
-      @microposts = Micropost.where(url: [nil, ""])
+      @microposts = Micropost.where(url: [nil, ""]).order(likes_count: :desc)
 
-    elsif user != nil
-      #if api_key.nil?
-      #render :json => { "status" => "401", "error" => "No Api key provided." }, status: :unauthorized
-      #else
-      # @user = User.find_by_api_key(api_key)
-      #if @user.nil?
-      #render :json => { "status" => "401", "error" => "No User found with the Api key provided." }, status: :unauthorized
-      @microposts = Micropost.where(user_id: user).order(created_at: :desc)
+      elsif user != nil
+        @microposts = Micropost.where(user_id: user).order(likes_count: :desc)
+
     end
 
   end
@@ -91,11 +86,24 @@ class MicropostsController < ApplicationController
           format.json { render json: @micropost.errors, status: :unprocessable_entity }
         end
       end
-
     end
 
     # PATCH/PUT /microposts/1 or /microposts/1.json
     def update
+      api_key = request.headers[:HTTP_X_API_KEY]
+      if api_key.nil?
+        render :json => { "status" => "401", "error" => "No Api key provided." }, status: :unauthorized and return
+      else
+        @user = User.find_by_api_key(api_key)
+        if @user.nil?
+          render :json => { "status" => "401", "error" => "No User found with the Api key provided." }, status: :unauthorized and return
+        elsif @micropost.user_id != @user.id
+          render :json => { "status" => "401", "error" => "Only the creator of the micropost can edit it." }, status: :unauthorized and return
+          unless url_valid?(micropost_params[:url])
+            render :json => { "status" => "400", "error" => "No valid URL provided" }, status: :bad_request and return
+          end
+        end
+      end
       respond_to do |format|
         if @micropost.update(micropost_params)
           format.html { redirect_to micropost_url(@micropost) }
@@ -109,11 +117,22 @@ class MicropostsController < ApplicationController
 
     # DELETE /microposts/1 or /microposts/1.json
     def destroy
+      api_key = request.headers[:HTTP_X_API_KEY]
+      if api_key.nil?
+        render :json => { "status" => "401", "error" => "No Api key provided." }, status: :unauthorized and return
+      else
+        @user = User.find_by_api_key(api_key)
+        if @user.nil?
+          render :json => { "status" => "401", "error" => "No User found with the Api key provided." }, status: :unauthorized and return
+        elsif @micropost.user_id != @user.id
+          render :json => { "status" => "401", "error" => "Only the creator of the micropost can delete it." }, status: :unauthorized and return
+        end
+      end
       @micropost.destroy
 
       respond_to do |format|
         format.html { redirect_to microposts_url }
-        format.json { head :no_content }
+        format.json {"Micropost delete successfully"}
       end
     end
 
@@ -142,7 +161,11 @@ class MicropostsController < ApplicationController
 
     # Use callbacks to share common setup or constraints between actions.
     def set_micropost
-      @micropost = Micropost.find(params[:id])
+      if Micropost.exists?(params[:id])
+        @micropost = Micropost.find(params[:id])
+      elsif @micropost.nil?
+        render :json => { "status" => "404", "error" => "No Micropost with the id provided found." }, status: :not_found
+      end
     end
 
     # Only allow a list of trusted parameters through.

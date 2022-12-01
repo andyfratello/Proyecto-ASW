@@ -11,12 +11,15 @@ class CommentLikesController < ApplicationController
     # @comment.comment_likes.create(user_id: current_user.id)
     #end
     @comment.comment_likes.create(user_id: current_user.id)
+    @comment.likes_count+=1
+    @comment.save
     redirect_back fallback_location: root_path # redirect_to microposts_path(@micropost)
   end
 
   # DELETE /comment_likes/1 or /comment_likes/1.json
   def destroy
     if already_liked?
+      @comment.likes_count-=1
       @comment_like.destroy
     end
     redirect_back fallback_location: root_path # redirect_to microposts_path(@micropost)
