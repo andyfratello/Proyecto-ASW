@@ -83,8 +83,6 @@ class UsersController < ApplicationController
       end
     else
       @user = User.find_by_api_key(api_key)
-      puts(@user.id)
-      puts(params[:id])
       if @user.id.to_s === params[:id].to_s
         @likes = Like.where(user_id: @user.id)
       else
@@ -101,13 +99,25 @@ class UsersController < ApplicationController
   end
 
   def upvoted_comments
+    api_key = request.headers[:HTTP_X_API_KEY]
+    if api_key.nil?
+      render :json => { "status" => "401", "error" => "No Api key provided." }, status: :unauthorized and return
+    else
+      @APIuser = User.find_by_api_key(api_key)
+      current_user = @APIuser
+      if @APIuser.nil?
+        render :json => { "status" => "401", "error" => "No User found with the Api key provided." }, status: :unauthorized and return
+      elsif params[:id].to_s != @APIuser.id.to_s
+        render :json => { "status" => "401", "error" => "Only the owner can view its liked microposts." }, status: :unauthorized and return
+      end
+    end
     @comment_likes = CommentLike.where(user_id: current_user.id)
     # @likes.each do |like|
     # @microposts = Micropost.where(id: like.micropost_id)
     #end
     respond_to do |format|
       format.html { render :user_upvoted_comments}
-      format.json { head :no_content }
+      format.json { render :json => @comment_likes, status: :created }
     end
   end
 
