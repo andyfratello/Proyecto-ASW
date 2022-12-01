@@ -62,13 +62,23 @@ class UsersController < ApplicationController
   end
 
   def submissions
-    @likes = Like.where(user_id: current_user.id)
-    # @likes.each do |like|
-    # @microposts = Micropost.where(id: like.micropost_id)
-    #end
+    api_key = request.headers[:HTTP_X_API_KEY]
+    if api_key.nil?
+      if current_user
+        @likes = Like.where(user_id: current_user.id)
+      else
+        render :json => { "status" => "401", "error" => "No Api key provided." }, status: :unauthorized and return
+      end
+    else
+      current_user = User.find_by_api_key(api_key)
+      @likes = Like.where(user_id: current_user.id)
+    end
+    @likes.each do |like|
+      @microposts = Micropost.where(id: like.micropost_id)
+    end
     respond_to do |format|
       format.html { render :user_submissions}
-      format.json { head :no_content }
+      format.json { render :json => @microposts, status: :created }
     end
   end
 
