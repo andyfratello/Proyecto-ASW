@@ -95,9 +95,6 @@ class LikesController < ApplicationController
     api_key = request.headers[:HTTP_X_API_KEY]
     @user = User.find_by_api_key(api_key)
 
-    if current_user.nil?
-      current_user = @user
-    end
 
     Like.where(user_id: @user.id, micropost_id: params[:micropost_id]).exists?
   end
