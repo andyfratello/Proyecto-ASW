@@ -9,8 +9,6 @@ class UsersController < ApplicationController
   # GET /users/1 or /users/1.json
   def show
       @user = User.find_by_id(params[:id])
-      render :json => { "status" => "401", "error" => "The user with the id provided doesn't exists" }, status: :not_found
-
   end
 
   # GET /users/new

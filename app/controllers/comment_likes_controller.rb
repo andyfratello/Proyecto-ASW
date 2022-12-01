@@ -1,9 +1,9 @@
 class CommentLikesController < ApplicationController
-  before_action :find_comment
   before_action :find_comment_like, only: [:destroy]
 
   # POST /comment_likes or /comment_likes.json
   def create
+    @comment = Comment.where(id: params[:id]).first
     api_key = request.headers[:HTTP_X_API_KEY]
     if api_key.nil?
       render :json => { "status" => "401", "error" => "No Api key provided." }, status: :unauthorized and return
@@ -21,6 +21,9 @@ class CommentLikesController < ApplicationController
     # @comment = Comment.find_by(params[:comment_id])
     # @comment.comment_likes.create(user_id: current_user.id)
     #end
+    if current_user.nil?
+      current_user = @APIuser
+    end
     @comment.comment_likes.create(user_id: current_user.id)
     @comment.likes_count+=1
     @comment.save
@@ -29,11 +32,20 @@ class CommentLikesController < ApplicationController
 
   # DELETE /comment_likes/1 or /comment_likes/1.json
   def destroy
+    @comment = Comment.where(id: params[:id]).first
     if already_liked?
       @comment.likes_count-=1
       @comment_like.destroy
+      if current_user != nil
+        redirect_back fallback_location: root_path # redirect_to microposts_path(@micropost)
+      else
+        respond_to do |format|
+          format.json { render @micropost, status: :ok, location: @micropost }
+        end
+      end
+    else
+      render :json => { "status" => "400", "error" => "Can't unlike a micropost that didn't like before" }, status: :bad_request
     end
-    redirect_back fallback_location: root_path # redirect_to microposts_path(@micropost)
   end
 
   def find_comment_like
