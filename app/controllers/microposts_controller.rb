@@ -71,7 +71,7 @@ class MicropostsController < ApplicationController
           @comment = Comment.new
           @comment.text = @micropost.text
           @comment.micropost = @micropost
-          @comment.user = current_user
+          @comment.user = @user
           @micropost.text = ""
           if @micropost.save && @comment.save
             format.html { redirect_to microposts_url(:sort => "date") }
