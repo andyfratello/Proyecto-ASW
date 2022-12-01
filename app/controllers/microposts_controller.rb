@@ -104,6 +104,9 @@ class MicropostsController < ApplicationController
           end
         end
       end
+      if @micropost.url != "" && !params[:text].nil?
+        render :json => { "status" => "400", "error" => "Cannot fill the text field of a Micropost with URL" }, status: :bad_request and return
+      end
       respond_to do |format|
         if @micropost.update(micropost_params)
           format.html { redirect_to micropost_url(@micropost) }
