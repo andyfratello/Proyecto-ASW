@@ -10,13 +10,13 @@ class CommentsController < ApplicationController
     if micropost != nil && user != nil
       render :json => { "status" => "400", "error" => "Do not fill both fields at the same time." }, status: :bad_request
     elsif micropost != nil
-      if Comment.where(micropost_id: micropost).exists?
-        @comments = Comment.where(micropost_id: micropost).order(created_at: :desc)
+      if Micropost.where(id: micropost).exists?
+          @comments = Comment.where(micropost_id: micropost).order(created_at: :desc)
       else
         render :json => { "status" => "404", "error" => "This micropost does not exist." }, status: :not_found and return
       end
     elsif user != nil
-      if Comment.where(user_id: user).exists?
+      if User.where(id: user).exists?
         @comments = Comment.where(user_id: user).order(created_at: :desc)
       else
         render :json => { "status" => "404", "error" => "This user does not exist." }, status: :not_found and return
@@ -51,7 +51,14 @@ class CommentsController < ApplicationController
       end
     end
 
-    @micropost = Micropost.find(params[:micropost_id])
+    @micropost = Micropost.where(id: params[:micropost_id]).first
+    if @micropost == nil
+      render :json => { "status" => "404", "error" => "No Micropost found with the id provided." }, status: :not_found and return
+    end
+    parent = Comment.where(id: params[:parent_id]).first
+    if parent == nil
+      render :json => { "status" => "404", "error" => "No Parent Comment found with the id provided." }, status: :not_found and return
+    end
     @comment = @micropost.comments.new(comment_params)
     if current_user != nil
       @comment.user_id = current_user.id
@@ -112,7 +119,7 @@ class CommentsController < ApplicationController
     if @comment.destroy
     respond_to do |format|
       format.html { redirect_to user_comments_url }
-      format.json { head :no_content }
+      format.json { render :json => { "status" => "202", "Accepted" => "The comment has been deleted successfully." }, status: 202 and return }
     end
     end
   end

@@ -54,7 +54,7 @@ paths:
             schema:
               $ref: '#/components/schemas/MicropostCreate'
       responses:
-        201:
+        200:
           description: Created successfully
           content:
             application/json:
@@ -494,13 +494,13 @@ paths:
       parameters:
         - name: id
           in: path
-          description: Comment identifier
+          description: Micropost identifier
           required: true
           schema:
             type: integer
             format: int64
       responses:
-        204:
+        202:
           description: Comment deleted
           content:
             application/json: {}
@@ -630,7 +630,7 @@ paths:
             type: integer
             format: int64
       responses:
-        201:
+        200:
           description: Upvoted comments returned successfully
           content:
             application/json:
@@ -645,8 +645,6 @@ paths:
               examples:
                 errorExample:
                   $ref: '#/components/examples/error404'
-      security:
-        - apiKey: []
 
 components:
   schemas:
@@ -657,9 +655,6 @@ components:
           type: number
           format: integer
           description: Unique identifier representing specific user
-        name:
-          type: string
-          description: User's name
         email:
           type: string
           description: User's email
@@ -674,6 +669,7 @@ components:
           type: string
           format: date
           description: Date when the user last modified its about
+
     UserUpdate:
       type: object
       properties:
@@ -716,6 +712,7 @@ components:
         user_id: 1
         created_at: "2022-11-23T16:00:00"
         updated_at: "2022-11-23T16:00:00"
+
     MicropostCreate:
       type: object
       properties:
@@ -728,15 +725,13 @@ components:
         text:
           type: string
           description: Micropost body
+
     MicropostUpdate:
       type: object
       properties:
         title:
           type: string
           description: New title
-        url:
-          type: string
-          description: Url micropost
         text:
           type: string
           description: New text
@@ -774,6 +769,7 @@ components:
         text: "Nice post!"
         created_at: "2022-11-23T17:00:00"
         updated_at: "2022-11-23T17:00:00"
+
     CommentCreate:
       type: object
       properties:
@@ -853,6 +849,7 @@ components:
         user_id: 1
         created_at: "2022-11-23T19:00:00"
         updated_at: "2022-11-23T19:00:00"
+
     LikeCreate:
       type: object
       properties:
@@ -882,17 +879,17 @@ components:
       value:
         status: 400
         error: "Bad Request"
-        message: "Content is too long (maximum is 280 characters)"
+        message: "Bad Request"
     error401:
       value:
         status: 401
         error: "Unauthorized"
-        message: "You provided no api key (X-API-KEY Header)"
+        message: "No Api Key provided"
     error403:
       value:
         status: 403
         error: "Forbidden"
-        message: "Your api key (X-API-KEY Header) is not valid"
+        message: "Forbidden behaviour for that user"
     error404:
       value:
         status: 404
@@ -900,7 +897,7 @@ components:
         message: "No object with that ID"
     error409:
       value:
-        status: 404
+        status: 409
         error: "Conflict"
         message: "Conflict with the operation"
   securitySchemes:
