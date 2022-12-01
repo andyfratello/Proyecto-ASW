@@ -164,7 +164,7 @@
       <!--
       estoy aqui
       -->
-      <%= render @micropost.comments.where(parent_id: nil).includes(:user).order(comment_likes: :desc) %>
+      <%= render @micropost.comments.where(parent_id: nil).includes(:user).order(likes_count: :desc) %>
     </td>
   </tr>
 </tbody>
