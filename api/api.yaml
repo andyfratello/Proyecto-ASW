@@ -645,6 +645,8 @@ paths:
               examples:
                 errorExample:
                   $ref: '#/components/examples/error404'
+      security:
+        - apiKey: []
 
 components:
   schemas:
