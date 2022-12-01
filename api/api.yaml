@@ -180,6 +180,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Like'
+        304:
+          description: Not modified
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+              examples:
+                errorExample:
+                  $ref: '#/components/examples/error304'
         401:
           description: 'Error: Unauthorized'
           content:
@@ -443,7 +452,7 @@ paths:
         - Comment
       security:
         - apiKey: []
-      summary: Create comment
+      summary: Edit comment
       operationId: putComment
       parameters:
         - name: id
@@ -633,7 +642,6 @@ paths:
               examples:
                 errorExample:
                   $ref: '#/components/examples/error404'
-
 
 components:
   schemas:
@@ -856,13 +864,18 @@ components:
       properties:
         status:
           type: integer
-          enum: [400, 401, 403, 404, 409]
+          enum: [304, 400, 401, 403, 404, 409]
         error:
           type: string
-          enum: ["Bad Request", "Unauthorized", "Forbidden", "Not Found", "Conflict"]
+          enum: ["Not Modified", "Bad Request", "Unauthorized", "Forbidden", "Not Found", "Conflict"]
         message:
           type: string
   examples:
+    error304:
+      value:
+        status: 304
+        error: "Not Modified"
+        message: "You have already made this action. You can not do it twice."
     error400:
       value:
         status: 400
