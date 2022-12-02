@@ -619,6 +619,8 @@ paths:
     get:
       tags:
         - Comment
+      security:
+        - apiKey: []
       summary: Get upvoted comments
       operationId: getUpvotedComments
       parameters:
