@@ -2,9 +2,9 @@ openapi: 3.0.1
 info:
   version: 1.0.0
   title: Hacker News ASW
-  description: "This is the Open API documentation for the REST API of our beloved application **Hacker News** deployed at <http://127.0.0.1:3000/>."
+  description: "This is the Open API documentation for the REST API of our beloved application **Hacker News** deployed at <https://mysite-ujgs.onrender.com/>."
 servers:
-  - url: 'http://127.0.0.1:3000/'
+  - url: 'https://mysite-ujgs.onrender.com/'
 paths:
   # MICROPOST OPERATIONS ---------------------------------------------------------
   /microposts.json:
@@ -753,6 +753,9 @@ components:
           type: number
           format: integer
           description: User owner's id
+        text:
+          type: string
+          description: Main body of the comment
         created_at:
           type: string
           format: date
@@ -765,6 +768,7 @@ components:
         id: 1
         micropost_id: 1
         user_id: 2
+        text: "Nice post!"
         created_at: "2022-11-23T17:00:00"
         updated_at: "2022-11-23T17:00:00"
 
