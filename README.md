@@ -11,6 +11,6 @@ https://tree.taiga.io/project/herrero-ruby-on-rails/timeline
 | David Pérez             | davidpb0              | davidpb              |
 | David Herrero           | davidherrero1         | Herrero              |
 
-Our webapp: https://fathomless-sierra-31789.herokuapp.com/
+Our webapp (1r sprint): https://fathomless-sierra-31789.herokuapp.com/
 
-Our API: https://mysite-ujgs.onrender.com/
+Our API (2n sprint): https://mysite-ujgs.onrender.com/
