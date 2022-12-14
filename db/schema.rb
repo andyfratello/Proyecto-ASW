@@ -45,6 +45,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_01_214153) do
     t.text "url"
     t.text "text"
     t.integer "user_id"
+    t.string "creator_name"
     t.integer "likes_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

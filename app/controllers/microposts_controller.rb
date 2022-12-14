@@ -44,6 +44,7 @@ class MicropostsController < ApplicationController
 
     if current_user != nil
       @micropost.user_id = current_user.id
+      @micropost.creator_name = current_user.email
     elsif api_key.nil?
       render :json => { "status" => "401", "error" => "No Api key provided." }, status: :unauthorized and return
     else
@@ -52,6 +53,7 @@ class MicropostsController < ApplicationController
         render :json => { "status" => "401", "error" => "No User found with the Api key provided." }, status: :unauthorized and return
       else
         @micropost.user_id = @user.id
+        @micropost.creator_name = @user.email
           unless url_valid?(micropost_params[:url])
             render :json => { "status" => "400", "error" => "No valid URL provided" }, status: :bad_request and return
 
@@ -176,7 +178,7 @@ class MicropostsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def micropost_params
       if current_user != nil
-        params.require(:micropost).permit(:title, :url, :text, :user_id)
+        params.require(:micropost).permit(:title, :url, :text, :user_id, :creator_name)
       else
         params.permit(:title, :url, :text)
       end
