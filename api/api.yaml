@@ -2,9 +2,9 @@ openapi: 3.0.1
 info:
   version: 1.0.0
   title: Hacker News ASW
-  description: "This is the Open API documentation for the REST API of our beloved application **Hacker News** deployed at <https://mysite-ujgs.onrender.com/>."
+  description: "This is the Open API documentation for the REST API of our beloved application **Hacker News** deployed at <https://mysite-2ok7.onrender.com/>."
 servers:
-  - url: 'https://mysite-ujgs.onrender.com/'
+  - url: 'https://mysite-2ok7.onrender.com/'
 paths:
   # MICROPOST OPERATIONS ---------------------------------------------------------
   /microposts.json:
