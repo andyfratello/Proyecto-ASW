@@ -64,6 +64,7 @@ class CommentsController < ApplicationController
     @comment = @micropost.comments.new(comment_params)
     if current_user != nil
       @comment.user_id = current_user.id
+      @comment.creator_name = current_user.email
     end
 
     respond_to do |format|
