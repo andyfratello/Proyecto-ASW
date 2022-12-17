@@ -85,12 +85,19 @@ class UsersController < ApplicationController
       @user = User.find_by_api_key(api_key)
       if @user.id.to_s === params[:id].to_s
         @likes = Like.where(user_id: @user.id)
+        @likes.each do |like|
+          print(like.micropost_id, " ")
+        end
       else
         render :json => { "status" => "401", "error" => "Only the owner can view its liked microposts." }, status: :unauthorized and return
       end
     end
     @likes.each do |like|
+      print(like.micropost_id, " ")
       @microposts = Micropost.where(id: like.micropost_id)
+    end
+    @microposts.each do |micropost|
+      print(micropost.id, " ")
     end
     respond_to do |format|
       format.html { render :user_submissions}
@@ -100,21 +107,25 @@ class UsersController < ApplicationController
 
   def upvoted_comments
     api_key = request.headers[:HTTP_X_API_KEY]
-    if api_key.nil?
-      render :json => { "status" => "401", "error" => "No Api key provided." }, status: :unauthorized and return
-    else
-      @APIuser = User.find_by_api_key(api_key)
-      current_user = @APIuser
-      if @APIuser.nil?
-        render :json => { "status" => "401", "error" => "No User found with the Api key provided." }, status: :unauthorized and return
-      elsif params[:id].to_s != @APIuser.id.to_s
-        render :json => { "status" => "401", "error" => "Only the owner can view its liked microposts." }, status: :unauthorized and return
+    if current_user.nil?
+      if api_key.nil?
+        render :json => { "status" => "401", "error" => "No Api key provided." }, status: :unauthorized and return
+      else
+        @user = User.find_by_api_key(api_key)
+        if @user.nil?
+          render :json => { "status" => "401", "error" => "No User found with the Api key provided." }, status: :unauthorized and return
+        elsif params[:id].to_s != @user.id.to_s
+          render :json => { "status" => "401", "error" => "Only the owner can view its liked comments." }, status: :unauthorized and return
+        end
       end
+    else
+      @user = current_user
     end
-    @comment_likes = CommentLike.where(user_id: current_user.id)
-    # @likes.each do |like|
-    # @microposts = Micropost.where(id: like.micropost_id)
-    #end
+
+    @comment_likes = CommentLike.where(user_id: @user.id)
+    @comment_likes.each do |like|
+      print(like.id)
+    end
     respond_to do |format|
       format.html { render :user_upvoted_comments}
       format.json { render :json => @comment_likes, status: :created }

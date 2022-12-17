@@ -8,23 +8,28 @@ class CommentLikesController < ApplicationController
       render :json => { "status" => "401", "error" => "Comment not found." }, status: :not_found and return
     end
     api_key = request.headers[:HTTP_X_API_KEY]
-    if api_key.nil?
-      render :json => { "status" => "401", "error" => "No Api key provided." }, status: :unauthorized and return
-    else
-      @APIuser = User.find_by_api_key(api_key)
-      if @APIuser.nil?
-        render :json => { "status" => "401", "error" => "No User found with the Api key provided." }, status: :unauthorized and return
-      elsif @comment.user_id == @APIuser.id
-        render :json => { "status" => "401", "error" => "The creator of the comment can't like it." }, status: :unauthorized and return
+    if current_user.nil?
+      if api_key.nil?
+        render :json => { "status" => "401", "error" => "No Api key provided." }, status: :unauthorized and return
+      else
+        @user = User.find_by_api_key(api_key)
+        print(@comment.id)
+        print(@user.id)
+        if @user.nil?
+          print("AQUI NO ENTRO")
+          render :json => { "status" => "401", "error" => "No User found with the Api key provided." }, status: :unauthorized and return
+        elsif @comment.user_id == @user.id
+          render :json => { "status" => "401", "error" => "The creator of the comment can't like it." }, status: :unauthorized and return
+        end
       end
+    else
+      print("llego aqui")
+      @user = current_user
     end
     if already_liked_vote?(@comment.id)
       render :json => { "status" => "401", "error" => "Can't like the same comment." }, status: :unauthorized
     else
-      if current_user.nil?
-        current_user = @APIuser
-      end
-      @comment.comment_likes.create(user_id: current_user.id)
+      @comment.comment_likes.create(user_id: @user.id)
       @comment.likes_count+=1
       @comment.save
       respond_to do |format|

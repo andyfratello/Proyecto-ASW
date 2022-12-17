@@ -41,14 +41,17 @@ class CommentsController < ApplicationController
   # POST /comments or /comments.json
   def create
     api_key = request.headers[:HTTP_X_API_KEY]
-    if api_key.nil?
-      render :json => { "status" => "401", "error" => "No Api key provided." }, status: :unauthorized and return
-    else
-      @APIuser = User.find_by_api_key(api_key)
-      current_user = @APIuser
-      if @APIuser.nil?
-        render :json => { "status" => "401", "error" => "No User found with the Api key provided." }, status: :unauthorized and return
+    if current_user.nil?
+      if api_key.nil?
+        render :json => { "status" => "401", "error" => "No Api key provided." }, status: :unauthorized and return
+      else
+        @user = User.find_by_api_key(api_key)
+        if @user.nil?
+          render :json => { "status" => "401", "error" => "No User found with the Api key provided." }, status: :unauthorized and return
+        end
       end
+    else
+      @user = current_user
     end
 
     @micropost = Micropost.where(id: params[:micropost_id]).first
@@ -62,9 +65,9 @@ class CommentsController < ApplicationController
       end
     end
     @comment = @micropost.comments.new(comment_params)
-    if current_user != nil
-      @comment.user_id = current_user.id
-      @comment.creator_name = current_user.email
+    unless @user.nil?
+      @comment.user_id = @user.id
+      @comment.creator_name = @user.email
     end
 
     respond_to do |format|
@@ -166,4 +169,4 @@ class CommentsController < ApplicationController
         params.permit(:text, :user_id, :micropost_id, :parent_id)
       end
     end
-end
+  end
