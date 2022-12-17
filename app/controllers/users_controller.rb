@@ -85,20 +85,15 @@ class UsersController < ApplicationController
       @user = User.find_by_api_key(api_key)
       if @user.id.to_s === params[:id].to_s
         @likes = Like.where(user_id: @user.id)
-        @likes.each do |like|
-          print(like.micropost_id, " ")
-        end
       else
         render :json => { "status" => "401", "error" => "Only the owner can view its liked microposts." }, status: :unauthorized and return
       end
     end
-    @likes.each do |like|
-      print(like.micropost_id, " ")
-      @microposts = Micropost.where(id: like.micropost_id)
+    @microposts = []
+    for like in @likes
+      @microposts << Micropost.find_by_id(like.micropost_id)
     end
-    @microposts.each do |micropost|
-      print(micropost.id, " ")
-    end
+
     respond_to do |format|
       format.html { render :user_submissions}
       format.json { render :json => @microposts, status: :created }
@@ -122,7 +117,7 @@ class UsersController < ApplicationController
       @user = current_user
     end
 
-    @comment_likes = CommentLike.where(user_id: @user.id)
+    @comment_likes = CommentLike.find_by_user_id(@user.id)
     @comment_likes.each do |like|
       print(like.id)
     end
