@@ -35,6 +35,9 @@ class LikesController < ApplicationController
         @micropost.likes.create(user_id: @user.id)
         @micropost.likes_count += 1
         @micropost.save
+        respond_to do |format|
+          format.json { render @micropost, status: :ok, location: @micropost }
+        end
       end
     end
 
@@ -60,7 +63,7 @@ class LikesController < ApplicationController
 
     if already_liked_unvote?
       @like.destroy
-      @micropost.likes_count-=1
+      @micropost.likes_count -= 1
       @micropost.save
 
       if current_user != nil
@@ -81,6 +84,7 @@ class LikesController < ApplicationController
   end
 
   private
+
   def already_liked_unvote?
     api_key = request.headers[:HTTP_X_API_KEY]
     @user = User.find_by_api_key(api_key)
@@ -95,7 +99,6 @@ class LikesController < ApplicationController
   def already_liked_vote?
     api_key = request.headers[:HTTP_X_API_KEY]
     @user = User.find_by_api_key(api_key)
-
 
     Like.where(user_id: @user.id, micropost_id: params[:micropost_id]).exists?
   end
