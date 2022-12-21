@@ -1,17 +1,15 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: %i[ show edit update destroy like unlike]
-
   # GET /comments or /comments.json
   def index
     @comments = Comment.all
     micropost = params[:micropost]
     user = params[:user]
-
     if micropost != nil && user != nil
       render :json => { "status" => "400", "error" => "Do not fill both fields at the same time." }, status: :bad_request
     elsif micropost != nil
       if Micropost.where(id: micropost).exists?
-          @comments = Comment.where(micropost_id: micropost).order(created_at: :desc)
+        @comments = Comment.where(micropost_id: micropost).order(created_at: :desc)
       else
         render :json => { "status" => "404", "error" => "This micropost does not exist." }, status: :not_found and return
       end
@@ -23,21 +21,17 @@ class CommentsController < ApplicationController
       end
     end
   end
-
   # GET /comments/1 or /comments/1.json
   def show
     @comment = Comment.find(params[:id])
   end
-
   # GET /comments/new
   def new
     @comment = Comment.new
   end
-
   # GET /comments/1/edit
   def edit
   end
-
   # POST /comments or /comments.json
   def create
     api_key = request.headers[:HTTP_X_API_KEY]
@@ -75,9 +69,7 @@ class CommentsController < ApplicationController
         format.json { render json: @micropost.errors, status: :unprocessable_entity }
       end
     end
-
   end
-
   # PATCH/PUT /comments/1 or /comments/1.json
   def update
     api_key = request.headers[:HTTP_X_API_KEY]
@@ -101,7 +93,6 @@ class CommentsController < ApplicationController
       end
     end
   end
-
   # DELETE /comments/1 or /comments/1.json
   def destroy
     api_key = request.headers[:HTTP_X_API_KEY]
@@ -120,13 +111,12 @@ class CommentsController < ApplicationController
       comment.destroy
     end
     if @comment.destroy
-    respond_to do |format|
-      format.html { redirect_to user_comments_url }
-      format.json { render :json => { "status" => "202", "Accepted" => "The comment has been deleted successfully." }, status: 202 and return }
-    end
+      respond_to do |format|
+        format.html { redirect_to user_comments_url }
+        format.json { render :json => { "status" => "202", "Accepted" => "The comment has been deleted successfully." }, status: 202 and return }
+      end
     end
   end
-
   def comment_like
     @comment.save
     respond_to do |format|
@@ -134,7 +124,6 @@ class CommentsController < ApplicationController
       format.json { head :no_content }
     end
   end
-
   def comment_unlike
     @comment.save
     respond_to do |format|
@@ -142,7 +131,6 @@ class CommentsController < ApplicationController
       format.json { head :no_content }
     end
   end
-
   def reply
     @comment = Comment.find(params[:id])
     @micropost = @comment.micropost_id
@@ -151,19 +139,17 @@ class CommentsController < ApplicationController
       format.json { head :no_content }
     end
   end
-
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_comment
-      @comment = Comment.find(params[:id])
+  # Use callbacks to share common setup or constraints between actions.
+  def set_comment
+    @comment = Comment.find(params[:id])
+  end
+  # Only allow a list of trusted parameters through.
+  def comment_params
+    if current_user != nil
+      params.require(:comment).permit(:text, :user_id, :micropost_id, :parent_id)
+    else
+      params.permit(:text, :user_id, :micropost_id, :parent_id)
     end
-
-    # Only allow a list of trusted parameters through.
-    def comment_params
-      if current_user != nil
-        params.require(:comment).permit(:text, :user_id, :micropost_id, :parent_id)
-      else
-        params.permit(:text, :user_id, :micropost_id, :parent_id)
-      end
-    end
+  end
 end

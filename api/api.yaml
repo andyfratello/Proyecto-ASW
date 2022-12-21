@@ -2,9 +2,10 @@ openapi: 3.0.1
 info:
   version: 1.0.0
   title: Hacker News ASW
-  description: "This is the Open API documentation for the REST API of our beloved application **Hacker News** deployed at <https://mysite-2ok7.onrender.com/>."
+  description: "This is the Open API documentation for the REST API of our beloved application **Hacker News** deployed at <https://mysite-mnjc.onrender.com/>."
 servers:
-  - url: 'https://mysite-2ok7.onrender.com/'
+  - url: 'https://mysite-mnjc.onrender.com/'
+  # - url: 'http://127.0.0.1:3000/'
 paths:
   # MICROPOST OPERATIONS ---------------------------------------------------------
   /microposts.json:
@@ -19,6 +20,16 @@ paths:
           schema:
             type: integer
           description: User's microposts
+        - in: query
+          name: sort
+          schema:
+            type: string
+          description: Microposts by date
+        - in: query
+          name: type
+          schema:
+            type: string
+          description: Microposts ask
       responses:
         200:
           description: Successful operation
@@ -71,6 +82,35 @@ paths:
                   $ref: '#/components/examples/error401'
 
   /microposts/{id}.json:
+    get:
+      tags:
+        - Micropost
+      summary: Find Micropost by id
+      operationId: getAMicroposts
+      parameters:
+        - name: id
+          in: path
+          description: Micropost identifier
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Micropost returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Micropost'
+        404:
+          description: 'Error: User Not Found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResult'
+              examples:
+                errorExample:
+                  $ref: '#/components/examples/error404'
     put:
       tags:
         - Micropost
@@ -696,7 +736,7 @@ components:
           type: string
           description: Main body of the micropost
         user_id:
-          type: number
+          type: object
           description: User owner's id
         created_at:
           type: string

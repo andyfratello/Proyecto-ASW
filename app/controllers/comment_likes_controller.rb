@@ -1,6 +1,5 @@
 class CommentLikesController < ApplicationController
   before_action :find_comment_like, only: [:destroy]
-
   # POST /comment_likes or /comment_likes.json
   def create
     @comment = Comment.where(id: params[:id]).first
@@ -32,7 +31,6 @@ class CommentLikesController < ApplicationController
       end
     end
   end
-
   # DELETE /comment_likes/1 or /comment_likes/1.json
   def destroy
     @comment = Comment.where(id: params[:id]).first
@@ -64,29 +62,22 @@ class CommentLikesController < ApplicationController
       render :json => { "status" => "401", "error" => "Can't unlike a comment that didn't like before o already had unliked" }, status: :bad_request
     end
   end
-
   def find_comment_like
     @comment_like = CommentLike.where(comment_id: params[:id]).first
   end
-
   private
-    def already_liked_vote?(id)
-      api_key = request.headers[:HTTP_X_API_KEY]
-      @user = User.find_by_api_key(api_key)
-
-      CommentLike.where(user_id: @user.id, comment_id: id).exists?
-    end
-    # Use callbacks to share common setup or constraints between actions.
-
+  def already_liked_vote?(id)
+    api_key = request.headers[:HTTP_X_API_KEY]
+    @user = User.find_by_api_key(api_key)
+    CommentLike.where(user_id: @user.id, comment_id: id).exists?
+  end
+  # Use callbacks to share common setup or constraints between actions.
   def already_liked_unvote?(id)
     api_key = request.headers[:HTTP_X_API_KEY]
     @user = User.find_by_api_key(api_key)
-
     CommentLike.where(user_id: @user.id, comment_id: id).exists?
   end
-
   def find_comment
     @comment = Comment.find_by(id: params[:comment_id])
   end
-
 end

@@ -8,10 +8,12 @@ class LikesController < ApplicationController
     end
 
     unless current_user.nil?
-      unless already_liked_vote? ?
-               @micropost.likes.create(user_id: current_user.id) :
-               @micropost.likes_count += 1
+      unless already_liked_vote?
+        @micropost.likes.create(user_id: current_user.id)
+        @micropost.likes_count += 1
         @micropost.save
+      else
+        render :json => { "status" => "400", "error" => "This user has already voted this micropost." }, status: :bad_request and return
       end
     end
 
@@ -26,22 +28,17 @@ class LikesController < ApplicationController
         render :json => { "status" => "401", "error" => "The creator of the micropost can't like it." }, status: :unauthorized and return
       end
     end
-    if current_user == nil
-      current_user = @user
-    end
-
-    if already_liked_vote?
-      render :json => { "status" => "400", "error" => "This user has already voted this micropost." }, status: :bad_request and return
-    else
-      @micropost.likes.create(user_id: current_user.id)
-      @micropost.likes_count += 1
-      @micropost.save
-      respond_to do |format|
-        format.json { render @micropost, status: :ok, location: @micropost }
+    if current_user.nil?
+      if already_liked_vote?
+        render :json => { "status" => "400", "error" => "This user has already voted this micropost." }, status: :bad_request and return
+      else
+        @micropost.likes.create(user_id: @user.id)
+        @micropost.likes_count += 1
+        @micropost.save
       end
-
-      redirect_back fallback_location: root_path # redirect_to microposts_path(@micropost)
     end
+
+    redirect_back fallback_location: root_path # redirect_to microposts_path(@micropost)
   end
 
   def destroy
@@ -63,7 +60,7 @@ class LikesController < ApplicationController
 
     if already_liked_unvote?
       @like.destroy
-      @micropost.likes_count -= 1
+      @micropost.likes_count-=1
       @micropost.save
 
       if current_user != nil
@@ -84,7 +81,6 @@ class LikesController < ApplicationController
   end
 
   private
-
   def already_liked_unvote?
     api_key = request.headers[:HTTP_X_API_KEY]
     @user = User.find_by_api_key(api_key)
@@ -99,6 +95,7 @@ class LikesController < ApplicationController
   def already_liked_vote?
     api_key = request.headers[:HTTP_X_API_KEY]
     @user = User.find_by_api_key(api_key)
+
 
     Like.where(user_id: @user.id, micropost_id: params[:micropost_id]).exists?
   end
