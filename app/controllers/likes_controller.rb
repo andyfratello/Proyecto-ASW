@@ -35,13 +35,15 @@ class LikesController < ApplicationController
         @micropost.likes.create(user_id: @user.id)
         @micropost.likes_count += 1
         @micropost.save
-        respond_to do |format|
-          format.json { render @micropost, status: :ok, location: @micropost }
+        if current_user != nil
+          redirect_back fallback_location: root_path # redirect_to microposts_path(@micropost)
+        else
+          respond_to do |format|
+            format.json { render @micropost, status: :ok, location: @micropost }
+          end
         end
       end
     end
-
-    redirect_back fallback_location: root_path # redirect_to microposts_path(@micropost)
   end
 
   def destroy
